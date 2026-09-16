@@ -1,0 +1,57 @@
+{
+  "schema_version": "2.0.0",
+  "manifest_type": "CC2 Analysis Dataset Manifest",
+  "processing_timestamp": "2026-09-16T20:22:07.669292+00:00",
+  "experiment_ids": [
+    "exp-20260916-105426-2820c0",
+    "exp-20260916-105447-453a14",
+    "exp-20260916-105528-ba33df",
+    "exp-20260916-105609-94ad61",
+    "exp-20260916-110655-920b1e",
+    "exp-20260916-111643-e9d268",
+    "exp-20260916-111705-86eddd",
+    "exp-20260916-111744-b6ca9b",
+    "exp-20260916-111824-1722b1",
+    "exp-20260916-191221-b4fe93",
+    "exp-20260916-191826-6e7de2",
+    "exp-20260916-201721-7be525",
+    "exp-cc2-phase1",
+    "exp-cc2-phase3",
+    "exp-test-lxc",
+    "exp-test-vbox"
+  ],
+  "environments": [
+    "host",
+    "kvm",
+    "lxc",
+    "virtualbox"
+  ],
+  "benchmarks": [
+    "app_latency",
+    "cpu_deterministic",
+    "disk_fio",
+    "isolation_audit",
+    "memory_deterministic",
+    "network_iperf3",
+    "network_ping",
+    "scheduling_deterministic",
+    "startup_lifecycle",
+    "syscall_deterministic"
+  ],
+  "total_raw_runs_ingested": 819,
+  "workload_sha256_digests": {
+    "cpu_workload": "212853035b582f238058b8d436fecf1f25bd5ff249965c7467336903a563fd9f",
+    "memory_workload": "1bbf56eae471571293a033c266978f5f63df9ef8dfb0badbae30802b8c28d544",
+    "scheduling_workload": "2c69d4493ed25e1ba413c2710191861ee98e88fc597a7bfc6cccc1020fb472b7",
+    "syscall_workload": "9e9f18e0e7f5e7cd5d6e772a89b816ff8b3f408bde2c5295186a44ade3d186b1"
+  },
+  "validation_summary": {
+    "total_scanned": 819,
+    "valid_files": 819,
+    "invalid_files": 0,
+    "validation_status": "PASS"
+  },
+  "input_raw_locations": [
+    "/home/karthik-chakala/Downloads/CC2/results/raw"
+  ]
+}

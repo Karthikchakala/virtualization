@@ -1,0 +1,94 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-201721-7be525",
+  "run_id": "isolation_audit-kvm-94041cf4",
+  "environment": "kvm",
+  "benchmark": "isolation_audit",
+  "timestamp": "2026-09-16T20:20:11.971532+00:00",
+  "command": "audit_isolation kvm",
+  "workload": {
+    "name": "isolation_audit",
+    "path": "isolation_audit",
+    "sha256": null,
+    "size_bytes": null,
+    "verified": true
+  },
+  "environment_identity": {
+    "environment": "kvm",
+    "classification": "Kernel-based Hardware Virtualization (Type-1 / Type-1-like)",
+    "virtualization_type": "type1",
+    "kernel_release": null,
+    "os_release": "Ubuntu (KVM Guest)",
+    "hostname": "ubuntu24.04",
+    "vcpus": 2,
+    "memory_mb": 2048,
+    "ip_address": "192.168.122.179",
+    "mac_address": null,
+    "hypervisor_version": "QEMU/KVM (libvirt)",
+    "systemd_detect_virt": "kvm",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "vm_name": "ubuntu24.04",
+      "libvirt_uri": "qemu:///system"
+    }
+  },
+  "parameters": {},
+  "execution": {
+    "exit_code": 0,
+    "duration_sec": 0.1,
+    "timed_out": false,
+    "status": "success"
+  },
+  "metrics": {
+    "status": "success",
+    "isolation_audit": {
+      "environment": "kvm",
+      "systemd_detect_virt": "none",
+      "uname": "",
+      "is_shared_kernel": false,
+      "cgroup_self": "",
+      "namespaces_pid1": {},
+      "ip_addr": "",
+      "findmnt": ""
+    },
+    "is_shared_kernel": false,
+    "systemd_detect_virt": "none",
+    "kernel_release": "",
+    "telemetry": {},
+    "hypervisor_telemetry": {
+      "timestamp": 1789590011.894139,
+      "environment": "kvm",
+      "vm_name": "ubuntu24.04",
+      "domstats": {
+        "cpu.time": "22296908000",
+        "cpu.user": "18956618000",
+        "cpu.system": "3340290000",
+        "cpu.cache.monitor.count": "0",
+        "cpu.haltpoll.success.time": "82936844",
+        "cpu.haltpoll.fail.time": "109264449",
+        "balloon.current": "2097152",
+        "balloon.maximum": "2097152",
+        "balloon.swap_in": "0",
+        "balloon.swap_out": "0",
+        "balloon.major_fault": "0",
+        "balloon.minor_fault": "0",
+        "balloon.unused": "1810768",
+        "balloon.available": "1931196",
+        "balloon.usable": "1737084",
+        "balloon.last-update": "1789589897",
+        "balloon.disk_caches": "82824",
+        "balloon.hugetlb_pgalloc": "0",
+        "balloon.hugetlb_pgfail": "0",
+        "balloon.rss": "629120"
+      },
+      "cpu_time_ns": 22296908000,
+      "balloon_current_kb": 2097152,
+      "host_qemu_pid": 70045,
+      "host_qemu_vsz_kb": 3288796,
+      "host_qemu_rss_kb": 629720
+    }
+  },
+  "stdout": "{\"environment\": \"kvm\", \"systemd_detect_virt\": \"none\", \"uname\": \"\", \"is_shared_kernel\": false, \"cgroup_self\": \"\", \"namespaces_pid1\": {}, \"ip_addr\": \"\", \"findmnt\": \"\"}",
+  "stderr": "",
+  "status": "success"
+}

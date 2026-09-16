@@ -1,0 +1,39 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-105426-2820c0",
+  "environment": "host",
+  "benchmark": "disk_fio",
+  "run_id": "disk_fio-host-32b140b6",
+  "timestamp": "2026-09-16T10:54:30.757875+00:00",
+  "command": "fio safe_file=/home/karthik-chakala/Downloads/CC2/results/test_disk_host.dat",
+  "exit_code": 0,
+  "stdout": "{\"status\": \"unavailable\", \"reason\": \"fio binary not found on host. No mock data generated.\"}",
+  "stderr": "fio binary not found on host. No mock data generated.",
+  "metrics": {
+    "telemetry": {},
+    "fio_results": {
+      "status": "unavailable",
+      "reason": "fio binary not found on host. No mock data generated."
+    },
+    "metadata": {
+      "environment": "host",
+      "target_name": null,
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T10:54:27.954207+00:00",
+        "loadavg": [
+          3.02001953125,
+          3.203125,
+          3.06787109375
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2437596,
+        "mem_available_kb": 9343568,
+        "cpu_user_ticks": 938135,
+        "cpu_system_ticks": 195630,
+        "cpu_idle_ticks": 7067434
+      },
+      "experiment_id": "exp-20260916-105426-2820c0"
+    }
+  },
+  "status": "unavailable"
+}

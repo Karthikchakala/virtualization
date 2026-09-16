@@ -1,0 +1,278 @@
+{
+  "report_type": "CC2 Comparative Virtualization Performance Summary",
+  "generated_at": "2026-09-16T20:22:06.922841+00:00",
+  "total_evaluated_runs": 258,
+  "status_breakdown": {
+    "success": 233,
+    "unavailable": 21,
+    "failed": 4
+  },
+  "evaluated_environments": [
+    "host",
+    "kvm",
+    "lxc",
+    "virtualbox"
+  ],
+  "evaluated_benchmarks": [
+    "app_latency",
+    "cpu_deterministic",
+    "disk_fio",
+    "isolation_audit",
+    "memory_deterministic",
+    "network_iperf3",
+    "network_ping",
+    "scheduling_deterministic",
+    "startup_lifecycle",
+    "syscall_deterministic"
+  ],
+  "host_system": {
+    "os": "Ubuntu 24.04.5 LTS",
+    "kernel": "7.0.0-31-generic",
+    "cpu": "12th Gen Intel(R) Core(TM) i5-12450H",
+    "cores": "12",
+    "memory": "15987828 kB"
+  },
+  "performance_matrix": {
+    "virtualbox": {
+      "cpu_gflops": {
+        "mean": 2.669824,
+        "cv_percent": 56.8092,
+        "p50": 2.1881
+      },
+      "ctx_switch_latency_us": {
+        "mean": 2.272286,
+        "cv_percent": 10.0142,
+        "p50": 2.164
+      },
+      "network_ping_avg_ms": {
+        "mean": 0.064,
+        "p50": 0.064
+      },
+      "syscall_latency_ns": {
+        "mean": 94.628571,
+        "cv_percent": 12.2621,
+        "p50": 96.92
+      },
+      "memory_throughput_mb_s": {
+        "mean": 3923.822857,
+        "cv_percent": 11.788,
+        "p50": 3966.41
+      }
+    },
+    "kvm": {
+      "network_ping_avg_ms": {
+        "mean": 0.0635,
+        "p50": 0.0635
+      },
+      "cpu_gflops": {
+        "mean": 4.347371,
+        "cv_percent": 24.4607,
+        "p50": 4.248
+      },
+      "memory_throughput_mb_s": {
+        "mean": 3814.282857,
+        "cv_percent": 8.1224,
+        "p50": 3695.17
+      },
+      "syscall_latency_ns": {
+        "mean": 92.845714,
+        "cv_percent": 8.0647,
+        "p50": 93.27
+      },
+      "ctx_switch_latency_us": {
+        "mean": 2.295429,
+        "cv_percent": 5.8306,
+        "p50": 2.241
+      }
+    },
+    "host": {
+      "ctx_switch_latency_us": {
+        "mean": 2.318333,
+        "cv_percent": 8.2575,
+        "p50": 2.329
+      },
+      "cpu_gflops": {
+        "mean": 4.236683,
+        "cv_percent": 23.6969,
+        "p50": 4.27665
+      },
+      "syscall_latency_ns": {
+        "mean": 92.865556,
+        "cv_percent": 20.6529,
+        "p50": 87.91
+      },
+      "memory_throughput_mb_s": {
+        "mean": 3827.6475,
+        "cv_percent": 12.7033,
+        "p50": 4056.995
+      },
+      "network_ping_avg_ms": {
+        "mean": 0.062333,
+        "p50": 0.06
+      }
+    },
+    "lxc": {
+      "syscall_latency_ns": {
+        "mean": 95.271429,
+        "cv_percent": 13.9933,
+        "p50": 97.05
+      },
+      "network_ping_avg_ms": {
+        "mean": 0.0715,
+        "p50": 0.0715
+      },
+      "cpu_gflops": {
+        "mean": 3.230158,
+        "cv_percent": 37.2384,
+        "p50": 2.7641
+      },
+      "memory_throughput_mb_s": {
+        "mean": 3027.293333,
+        "cv_percent": 19.9946,
+        "p50": 3071.49
+      },
+      "ctx_switch_latency_us": {
+        "mean": 2.338857,
+        "cv_percent": 9.6441,
+        "p50": 2.452
+      }
+    }
+  },
+  "checksum_verification": {
+    "syscall_deterministic": {
+      "lxc": {
+        "is_deterministic": false,
+        "checksums": [
+          "0x6064d32b729fa80e",
+          "0x8a5081c1a372888c",
+          "0x9643f85f82791982",
+          "0x9b4c2685256ea103",
+          "0x433d90b5783ac70a",
+          "0x32fb2f0b38dbe0fd",
+          "0x910337ad2e878cb2"
+        ]
+      },
+      "kvm": {
+        "is_deterministic": false,
+        "checksums": [
+          "0x4c71aed72497dee2",
+          "0xdc591ba62631b261",
+          "0xf753c048781a5ec4",
+          "0xc4f68c2760895b71",
+          "0xc5ca2f51f1247543",
+          "0xb00cfad0fd26ee96",
+          "0x592776962dc0eb8e"
+        ]
+      },
+      "virtualbox": {
+        "is_deterministic": false,
+        "checksums": [
+          "0xfbc7e36a77e1e25e",
+          "0x717269f4eeb6314d",
+          "0x9f365b9b7b6a391a",
+          "0x693c89040e68474d",
+          "0x34fa6fc5607fe01b",
+          "0xcd19496e99074b11",
+          "0xd9df67da4d7ecee8"
+        ]
+      },
+      "host": {
+        "is_deterministic": false,
+        "checksums": [
+          "0x606fe1fbd9c9fb8f",
+          "0xd6261e2aca13295d",
+          "0x2a065e92e3fbd310",
+          "0xee97d293c5e9c013",
+          "0x2ef026f20d0418c1",
+          "0xb40b947990846fbc",
+          "0xe841ac675554599f",
+          "0x4d1280357144741b",
+          "0x85f3e98d8aa50d7b"
+        ]
+      }
+    },
+    "cpu_deterministic": {
+      "kvm": {
+        "is_deterministic": true,
+        "checksums": [
+          "0x14f89d07d5f05d52"
+        ]
+      },
+      "virtualbox": {
+        "is_deterministic": false,
+        "checksums": [
+          "0x323f16b5e587eefe",
+          "0x14f89d07d5f05d52",
+          "0x45e2faefbfda0725"
+        ]
+      },
+      "host": {
+        "is_deterministic": false,
+        "checksums": [
+          "0xa05074ea2a890136",
+          "0x14f89d07d5f05d52"
+        ]
+      },
+      "lxc": {
+        "is_deterministic": false,
+        "checksums": [
+          "0x14f89d07d5f05d52",
+          "0x45e2faefbfda0725"
+        ]
+      }
+    },
+    "scheduling_deterministic": {
+      "host": {
+        "is_deterministic": true,
+        "checksums": [
+          "0x909e926a36d3fca6"
+        ]
+      },
+      "virtualbox": {
+        "is_deterministic": true,
+        "checksums": [
+          "0x909e926a36d3fca6"
+        ]
+      },
+      "kvm": {
+        "is_deterministic": true,
+        "checksums": [
+          "0x909e926a36d3fca6"
+        ]
+      },
+      "lxc": {
+        "is_deterministic": true,
+        "checksums": [
+          "0x909e926a36d3fca6"
+        ]
+      }
+    },
+    "memory_deterministic": {
+      "kvm": {
+        "is_deterministic": true,
+        "checksums": [
+          "0x45b1010d67462470"
+        ]
+      },
+      "virtualbox": {
+        "is_deterministic": true,
+        "checksums": [
+          "0x45b1010d67462470"
+        ]
+      },
+      "lxc": {
+        "is_deterministic": false,
+        "checksums": [
+          "0x45b1010d67462470",
+          "0x0bc3cbc9b2d3cf67"
+        ]
+      },
+      "host": {
+        "is_deterministic": true,
+        "checksums": [
+          "0x45b1010d67462470"
+        ]
+      }
+    }
+  }
+}

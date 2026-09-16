@@ -1,0 +1,15 @@
+{
+  "environment": "lxc",
+  "benchmark": "disk_fio",
+  "run_counts": {
+    "total": 2,
+    "success": 0,
+    "unavailable": 2,
+    "failed": 0
+  },
+  "checksum_analysis": {
+    "is_deterministic": null,
+    "unique_checksums": []
+  },
+  "metrics": {}
+}

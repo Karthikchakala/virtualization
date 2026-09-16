@@ -1,0 +1,15 @@
+{
+  "environment": "lxc",
+  "benchmark": "isolation_audit",
+  "run_counts": {
+    "total": 2,
+    "success": 2,
+    "unavailable": 0,
+    "failed": 0
+  },
+  "checksum_analysis": {
+    "is_deterministic": null,
+    "unique_checksums": []
+  },
+  "metrics": {}
+}

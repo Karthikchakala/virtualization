@@ -1,0 +1,99 @@
+{
+  "package_name": "cc2-common-workloads",
+  "package_version": "1.0.0",
+  "build_timestamp": "2026-09-16T17:39:52.021637+00:00",
+  "compiler": "gcc",
+  "compiler_version": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "compiler_flags": "-O2 -Wall -Wextra -pthread -std=c99 -fno-omit-frame-pointer -static",
+  "linking_mode": "static (portable across Linux kernels without glibc dynamic dependency)",
+  "host_architecture": "x86_64",
+  "workloads": [
+    {
+      "workload_name": "cpu_deterministic",
+      "version": "1.0.0",
+      "binary": "cpu_workload",
+      "relative_path": "dist/cpu_workload",
+      "description": "Deterministic double-precision matrix multiplication with FNV-1a checksum",
+      "parameters_supported": [
+        "--size",
+        "--iterations",
+        "--warmup",
+        "--threads"
+      ],
+      "sha256": "212853035b582f238058b8d436fecf1f25bd5ff249965c7467336903a563fd9f",
+      "file_size_bytes": 935832,
+      "status": "built"
+    },
+    {
+      "workload_name": "memory_deterministic",
+      "version": "1.0.0",
+      "binary": "memory_workload",
+      "relative_path": "dist/memory_workload",
+      "description": "Deterministic sequential write, read-accumulate, and stride memory benchmark",
+      "parameters_supported": [
+        "--buffer-mb",
+        "--passes",
+        "--stride"
+      ],
+      "sha256": "1bbf56eae471571293a033c266978f5f63df9ef8dfb0badbae30802b8c28d544",
+      "file_size_bytes": 785344,
+      "status": "built"
+    },
+    {
+      "workload_name": "workload_runner_script",
+      "version": "1.0.0",
+      "binary": "run_workload.sh",
+      "relative_path": "dist/run_workload.sh",
+      "description": "Standardized POSIX wrapper script for guest workload invocation",
+      "parameters_supported": [
+        "cpu",
+        "memory"
+      ],
+      "sha256": "c1e8acb1ccc1b44cea728474669332d6209f1b436fdb72122c0c0385c90ca25f",
+      "file_size_bytes": 954,
+      "status": "built"
+    },
+    {
+      "workload_name": "syscall_deterministic",
+      "version": "1.0.0",
+      "binary": "syscall_workload",
+      "relative_path": "dist/syscall_workload",
+      "description": "Deterministic raw system call latency and throughput benchmark",
+      "parameters_supported": [
+        "--iterations",
+        "--warmup"
+      ],
+      "sha256": "9e9f18e0e7f5e7cd5d6e772a89b816ff8b3f408bde2c5295186a44ade3d186b1",
+      "file_size_bytes": 785344,
+      "status": "built"
+    },
+    {
+      "workload_name": "scheduling_deterministic",
+      "version": "1.0.0",
+      "binary": "scheduling_workload",
+      "relative_path": "dist/scheduling_workload",
+      "description": "Deterministic context switch and process scheduling latency benchmark",
+      "parameters_supported": [
+        "--iterations",
+        "--warmup"
+      ],
+      "sha256": "2c69d4493ed25e1ba413c2710191861ee98e88fc597a7bfc6cccc1020fb472b7",
+      "file_size_bytes": 825464,
+      "status": "built"
+    },
+    {
+      "workload_name": "http_health_app",
+      "version": "1.0.0",
+      "binary": "http_health_app.py",
+      "relative_path": "dist/http_health_app.py",
+      "description": "Minimal identical HTTP application serving GET /health for latency benchmarking",
+      "parameters_supported": [
+        "--host",
+        "--port"
+      ],
+      "sha256": "017cb76e9bba79df36c3aba7969fca08db09f019cbce2fd23356dfdb2241227a",
+      "file_size_bytes": 2055,
+      "status": "built"
+    }
+  ]
+}

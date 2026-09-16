@@ -1,0 +1,62 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-105528-ba33df",
+  "environment": "virtualbox",
+  "benchmark": "startup_lifecycle",
+  "run_id": "startup_lifecycle-virtualbox-bd396acd",
+  "timestamp": "2026-09-16T10:55:42.711774+00:00",
+  "command": "measure_startup virtualbox Ubuntu-Server-VBox",
+  "exit_code": 0,
+  "stdout": "{\"vm_name\": \"Ubuntu-Server-VBox\", \"ip\": \"10.0.2.15\", \"phases\": {\"vbox_start\": {\"timestamp\": \"2026-09-16T10:55:41Z\", \"duration_sec\": 0.1859}, \"os_ready\": {\"timestamp\": \"2026-09-16T10:55:41Z\", \"duration_sec\": 0.0823, \"achieved\": true}, \"network_ready\": {\"timestamp\": \"2026-09-16T10:55:41Z\", \"duration_sec\": 0.0968, \"achieved\": true}, \"application_ready\": {\"timestamp\": \"2026-09-16T10:55:42Z\", \"duration_sec\": 1.0003, \"achieved\": false}}, \"total_startup_duration_sec\": 1.4749, \"status\": \"success\"}",
+  "stderr": "",
+  "metrics": {
+    "telemetry": {},
+    "startup_phases": {
+      "vm_name": "Ubuntu-Server-VBox",
+      "ip": "10.0.2.15",
+      "phases": {
+        "vbox_start": {
+          "timestamp": "2026-09-16T10:55:41Z",
+          "duration_sec": 0.1859
+        },
+        "os_ready": {
+          "timestamp": "2026-09-16T10:55:41Z",
+          "duration_sec": 0.0823,
+          "achieved": true
+        },
+        "network_ready": {
+          "timestamp": "2026-09-16T10:55:41Z",
+          "duration_sec": 0.0968,
+          "achieved": true
+        },
+        "application_ready": {
+          "timestamp": "2026-09-16T10:55:42Z",
+          "duration_sec": 1.0003,
+          "achieved": false
+        }
+      },
+      "total_startup_duration_sec": 1.4749,
+      "status": "success"
+    },
+    "metadata": {
+      "environment": "virtualbox",
+      "target_name": "Ubuntu-Server-VBox",
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T10:55:29.499142+00:00",
+        "loadavg": [
+          4.48876953125,
+          3.59521484375,
+          3.2099609375
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2362596,
+        "mem_available_kb": 9278100,
+        "cpu_user_ticks": 953033,
+        "cpu_system_ticks": 197301,
+        "cpu_idle_ticks": 7123535
+      },
+      "experiment_id": "exp-20260916-105528-ba33df"
+    }
+  },
+  "status": "success"
+}

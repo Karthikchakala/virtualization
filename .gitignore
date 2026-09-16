@@ -1,0 +1,25 @@
+# ==============================================================================
+# CC2 Git Ignore Configuration
+# Enforces non-negotiable security boundaries for secrets and credentials.
+# ==============================================================================
+
+# Environment & Secret files - NEVER COMMIT SECRETS
+.env
+.env.*
+!.env.example
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Node / Dashboard dependencies & builds
+node_modules/
+dashboard/dist/
+
+# Temporary test logs and execution scratch
+*.log
+scratch/
+.tools/

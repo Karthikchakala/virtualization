@@ -1,0 +1,84 @@
+# ==============================================================================
+# CC2 Environment Definitions & Non-Secret Topology
+# DO NOT STORE PASSWORDS, PRIVATE KEYS, OR SENSITIVE CREDENTIALS IN THIS FILE.
+# All sensitive credentials must be placed in a local .env file.
+# ==============================================================================
+
+version: "1.0.0"
+
+environments:
+  host:
+    name: "host"
+    display_name: "Host Ubuntu Baseline"
+    classification: "Bare-Metal Reference (Zero Virtualization Overhead)"
+    virtualization_type: "none"
+    transport: "local"
+    target_path: "/tmp/cc2_workloads"
+    specs:
+      expected_cpus: 12
+      expected_ram_mb: 16384
+    management:
+      command: "none"
+    timeouts:
+      readiness_sec: 1
+      shutdown_sec: 0
+
+  kvm:
+    name: "kvm"
+    display_name: "KVM / QEMU"
+    classification: "Kernel-based Hardware Virtualization (Type-1 / Type-1-like)"
+    virtualization_type: "type1"
+    vm_name: "ubuntu24.04"
+    transport: "ssh"
+    default_ssh_port: 22
+    target_path: "/tmp/cc2_workloads"
+    specs:
+      vcpus: 2
+      ram_mb: 2048
+      disk_image: "/var/lib/libvirt/images/ubuntu24.04.qcow2"
+      network_bridge: "virbr0"
+    management:
+      command: "virsh -c qemu:///system"
+    timeouts:
+      readiness_sec: 60
+      shutdown_sec: 30
+
+  virtualbox:
+    name: "virtualbox"
+    display_name: "Oracle VM VirtualBox"
+    classification: "Hosted Hypervisor (Type-2)"
+    virtualization_type: "type2"
+    vm_name: "Ubuntu-Server-VBox"
+    transport: "ssh"
+    default_ssh_host: "127.0.0.1"
+    default_ssh_port: 2222
+    target_path: "/tmp/cc2_workloads"
+    specs:
+      vcpus: 2
+      ram_mb: 2048
+      disk_format: "vdi"
+      network_type: "nat_port_forward"
+    management:
+      command: "VBoxManage"
+    timeouts:
+      readiness_sec: 60
+      shutdown_sec: 30
+
+  lxc:
+    name: "lxc"
+    display_name: "Native Linux Containers (LXC)"
+    classification: "OS-Level Virtualization / Containerization"
+    virtualization_type: "container"
+    container_name: "lxc-ubuntu"
+    transport: "lxc-attach"
+    target_path: "/tmp/cc2_workloads"
+    specs:
+      vcpus: 2
+      ram_mb: 2048
+      cgroup_version: "v2"
+      network_bridge: "lxcbr0"
+    management:
+      command: "lxc-info"
+    timeouts:
+      readiness_sec: 30
+      shutdown_sec: 15

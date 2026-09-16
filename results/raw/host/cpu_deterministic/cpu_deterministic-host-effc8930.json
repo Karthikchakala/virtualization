@@ -1,0 +1,118 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "run_id": "cpu_deterministic-host-effc8930",
+  "environment": "host",
+  "benchmark": "cpu_deterministic",
+  "timestamp": "2026-09-16T19:18:30.807575+00:00",
+  "command": "/tmp/cc2_workloads/cpu_workload --size 400 --iterations 5 --warmup 1 --threads 1",
+  "workload": {
+    "name": "cpu_workload",
+    "path": "/tmp/cc2_workloads/cpu_workload",
+    "sha256": "212853035b582f238058b8d436fecf1f25bd5ff249965c7467336903a563fd9f",
+    "size_bytes": 935832,
+    "verified": true
+  },
+  "environment_identity": {
+    "environment": "host",
+    "classification": "Bare-Metal Reference (Zero Virtualization Overhead)",
+    "virtualization_type": "none",
+    "kernel_release": "7.0.0-31-generic",
+    "os_release": "Ubuntu 24.04.5 LTS",
+    "hostname": "karthik-chakala-Vivobook-ASUSLaptop-K3605ZU-K3605ZU",
+    "vcpus": 12,
+    "memory_mb": 15613,
+    "ip_address": "127.0.0.1",
+    "mac_address": null,
+    "hypervisor_version": null,
+    "systemd_detect_virt": "none (bare-metal)",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "cpu_model": "12th Gen Intel(R) Core(TM) i5-12450H",
+      "logical_cpus": 12
+    }
+  },
+  "parameters": {
+    "size": 400,
+    "iterations": 5,
+    "warmup": 1,
+    "threads": 1
+  },
+  "execution": {
+    "exit_code": 0,
+    "duration_sec": 0.14583456899708835,
+    "timed_out": false,
+    "status": "success"
+  },
+  "metrics": {
+    "workload": "cpu_deterministic",
+    "version": "1.0.0",
+    "parameters": {
+      "matrix_size": 400,
+      "iterations": 5,
+      "warmup": 1,
+      "threads": 1
+    },
+    "results": {
+      "total_flops": 640000000,
+      "warmup_elapsed_sec": 0.032652,
+      "elapsed_sec": 0.101719,
+      "gflops": 6.2918,
+      "checksum": "0x7e83d4c61ad5adb8",
+      "status": "success"
+    },
+    "total_flops": 640000000,
+    "warmup_elapsed_sec": 0.032652,
+    "elapsed_sec": 0.101719,
+    "gflops": 6.2918,
+    "checksum": "0x7e83d4c61ad5adb8",
+    "status": "success",
+    "telemetry": {
+      "status": "success",
+      "user_time_sec": 0.13,
+      "system_time_sec": 0.0,
+      "wall_time_sec": 0.14,
+      "cpu_percentage": 98.0,
+      "max_rss_kb": 4516,
+      "vsz_kb": 0,
+      "minor_page_faults": 1296,
+      "major_page_faults": 0,
+      "total_page_faults": 1296,
+      "voluntary_context_switches": 1,
+      "involuntary_context_switches": 1,
+      "total_context_switches": 2,
+      "exit_code": 0
+    },
+    "hypervisor_telemetry": {
+      "timestamp": 1789586310.806102,
+      "loadavg": [
+        1.478515625,
+        1.19921875,
+        1.080078125
+      ],
+      "logical_cpus": 12,
+      "host_mem_total_kb": 15987832,
+      "host_mem_available_kb": 8846980,
+      "thermals_celsius": {
+        "SEN2": 53.05,
+        "acpitz": 60.0,
+        "iwlwifi_1": 47.0,
+        "TCPU_PCI": 76.0,
+        "SEN5": 22.05,
+        "SEN3": 0.05,
+        "INT3400 Thermal": 20.0,
+        "x86_pkg_temp": 76.0,
+        "TCPU": 76.0,
+        "SEN4": 49.05
+      }
+    },
+    "wall_time_sec": 0.14,
+    "user_time_sec": 0.13,
+    "system_time_sec": 0.0,
+    "cpu_percentage": 98.0,
+    "max_rss_kb": 4516
+  },
+  "stdout": "{\n  \"workload\": \"cpu_deterministic\",\n  \"version\": \"1.0.0\",\n  \"parameters\": {\n    \"matrix_size\": 400,\n    \"iterations\": 5,\n    \"warmup\": 1,\n    \"threads\": 1\n  },\n  \"results\": {\n    \"total_flops\": 640000000,\n    \"warmup_elapsed_sec\": 0.032652,\n    \"elapsed_sec\": 0.101719,\n    \"gflops\": 6.2918,\n    \"checksum\": \"0x7e83d4c61ad5adb8\",\n    \"status\": \"success\"\n  }\n}\n",
+  "stderr": "\tCommand being timed: \"/tmp/cc2_workloads/cpu_workload --size 400 --iterations 5 --warmup 1 --threads 1\"\n\tUser time (seconds): 0.13\n\tSystem time (seconds): 0.00\n\tPercent of CPU this job got: 98%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 0:00.14\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 4516\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 0\n\tMinor (reclaiming a frame) page faults: 1296\n\tVoluntary context switches: 1\n\tInvoluntary context switches: 1\n\tSwaps: 0\n\tFile system inputs: 0\n\tFile system outputs: 0\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 0\n",
+  "status": "success"
+}

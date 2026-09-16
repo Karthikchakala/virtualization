@@ -1,0 +1,66 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-105528-ba33df",
+  "environment": "virtualbox",
+  "benchmark": "app_latency",
+  "run_id": "app_latency-virtualbox-76221414",
+  "timestamp": "2026-09-16T10:55:40.735960+00:00",
+  "command": "http_get_100 http://127.0.0.1:37165/health",
+  "exit_code": 0,
+  "stdout": "{\"status\": \"success\", \"url\": \"http://127.0.0.1:37165/health\", \"requests_completed\": 100, \"total_time_ms\": {\"total_count\": 100, \"valid_count\": 100, \"missing_count\": 0, \"mean\": 0.576941, \"median\": 0.368399, \"min\": 0.162619, \"max\": 22.275229, \"stdev\": 2.197233, \"cv_percent\": 380.842, \"p50\": 0.368399, \"p95\": 0.646795, \"p99\": 1.206472}, \"ttfb_ms\": {\"total_count\": 100, \"valid_count\": 100, \"missing_count\": 0, \"mean\": 0.510209, \"median\": 0.295471, \"min\": 0.131785, \"max\": 22.17246, \"stdev\": 2.191568, \"cv_percent\": 429.543, \"p50\": 0.295471, \"p95\": 0.572159, \"p99\": 0.87099}}",
+  "stderr": "",
+  "metrics": {
+    "telemetry": {},
+    "status": "success",
+    "url": "http://127.0.0.1:37165/health",
+    "requests_completed": 100,
+    "total_time_ms": {
+      "total_count": 100,
+      "valid_count": 100,
+      "missing_count": 0,
+      "mean": 0.576941,
+      "median": 0.368399,
+      "min": 0.162619,
+      "max": 22.275229,
+      "stdev": 2.197233,
+      "cv_percent": 380.842,
+      "p50": 0.368399,
+      "p95": 0.646795,
+      "p99": 1.206472
+    },
+    "ttfb_ms": {
+      "total_count": 100,
+      "valid_count": 100,
+      "missing_count": 0,
+      "mean": 0.510209,
+      "median": 0.295471,
+      "min": 0.131785,
+      "max": 22.17246,
+      "stdev": 2.191568,
+      "cv_percent": 429.543,
+      "p50": 0.295471,
+      "p95": 0.572159,
+      "p99": 0.87099
+    },
+    "metadata": {
+      "environment": "virtualbox",
+      "target_name": "Ubuntu-Server-VBox",
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T10:55:29.499142+00:00",
+        "loadavg": [
+          4.48876953125,
+          3.59521484375,
+          3.2099609375
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2362596,
+        "mem_available_kb": 9278100,
+        "cpu_user_ticks": 953033,
+        "cpu_system_ticks": 197301,
+        "cpu_idle_ticks": 7123535
+      },
+      "experiment_id": "exp-20260916-105528-ba33df"
+    }
+  },
+  "status": "success"
+}

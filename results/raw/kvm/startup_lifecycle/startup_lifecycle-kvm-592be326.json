@@ -1,0 +1,62 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-105447-453a14",
+  "environment": "kvm",
+  "benchmark": "startup_lifecycle",
+  "run_id": "startup_lifecycle-kvm-592be326",
+  "timestamp": "2026-09-16T10:55:03.561860+00:00",
+  "command": "measure_startup kvm ubuntu24.04",
+  "exit_code": 0,
+  "stdout": "{\"vm_name\": \"ubuntu24.04\", \"ip\": null, \"phases\": {\"virsh_start\": {\"timestamp\": \"2026-09-16T10:54:59Z\", \"duration_sec\": 0.6257}, \"guest_available\": {\"timestamp\": \"2026-09-16T10:55:00Z\", \"duration_sec\": 0.0407, \"achieved\": true}, \"network_ready\": {\"timestamp\": \"2026-09-16T10:55:03Z\", \"duration_sec\": null, \"achieved\": false}, \"application_ready\": {\"timestamp\": \"2026-09-16T10:55:03Z\", \"duration_sec\": 0.0, \"achieved\": false}}, \"total_startup_duration_sec\": 3.7456, \"status\": \"failed\"}",
+  "stderr": "",
+  "metrics": {
+    "telemetry": {},
+    "startup_phases": {
+      "vm_name": "ubuntu24.04",
+      "ip": null,
+      "phases": {
+        "virsh_start": {
+          "timestamp": "2026-09-16T10:54:59Z",
+          "duration_sec": 0.6257
+        },
+        "guest_available": {
+          "timestamp": "2026-09-16T10:55:00Z",
+          "duration_sec": 0.0407,
+          "achieved": true
+        },
+        "network_ready": {
+          "timestamp": "2026-09-16T10:55:03Z",
+          "duration_sec": null,
+          "achieved": false
+        },
+        "application_ready": {
+          "timestamp": "2026-09-16T10:55:03Z",
+          "duration_sec": 0.0,
+          "achieved": false
+        }
+      },
+      "total_startup_duration_sec": 3.7456,
+      "status": "failed"
+    },
+    "metadata": {
+      "environment": "kvm",
+      "target_name": "ubuntu24.04",
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T10:54:48.200480+00:00",
+        "loadavg": [
+          2.84033203125,
+          3.14306640625,
+          3.05029296875
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2354676,
+        "mem_available_kb": 9261716,
+        "cpu_user_ticks": 942512,
+        "cpu_system_ticks": 196208,
+        "cpu_idle_ticks": 7086388
+      },
+      "experiment_id": "exp-20260916-105447-453a14"
+    }
+  },
+  "status": "failed"
+}

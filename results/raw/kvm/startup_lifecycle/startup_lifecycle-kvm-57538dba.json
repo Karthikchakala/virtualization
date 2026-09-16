@@ -1,0 +1,113 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "run_id": "startup_lifecycle-kvm-57538dba",
+  "environment": "kvm",
+  "benchmark": "startup_lifecycle",
+  "timestamp": "2026-09-16T19:21:38.605069+00:00",
+  "command": "measure_startup kvm ubuntu24.04",
+  "workload": {
+    "name": "startup_lifecycle",
+    "path": "startup_lifecycle",
+    "sha256": null,
+    "size_bytes": null,
+    "verified": true
+  },
+  "environment_identity": {
+    "environment": "kvm",
+    "classification": "Kernel-based Hardware Virtualization (Type-1 / Type-1-like)",
+    "virtualization_type": "type1",
+    "kernel_release": null,
+    "os_release": "Ubuntu (KVM Guest)",
+    "hostname": "ubuntu24.04",
+    "vcpus": 2,
+    "memory_mb": 2048,
+    "ip_address": "192.168.122.179",
+    "mac_address": null,
+    "hypervisor_version": "QEMU/KVM (libvirt)",
+    "systemd_detect_virt": "kvm",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "vm_name": "ubuntu24.04",
+      "libvirt_uri": "qemu:///system"
+    }
+  },
+  "parameters": {},
+  "execution": {
+    "exit_code": 0,
+    "duration_sec": 15.1176,
+    "timed_out": false,
+    "status": "success"
+  },
+  "metrics": {
+    "status": "success",
+    "startup_phases": {
+      "vm_name": "ubuntu24.04",
+      "ip": "192.168.122.179",
+      "phases": {
+        "virsh_start": {
+          "timestamp": "2026-09-16T19:21:23Z",
+          "duration_sec": 0.0
+        },
+        "guest_available": {
+          "timestamp": "2026-09-16T19:21:23Z",
+          "duration_sec": 0.0339,
+          "achieved": true
+        },
+        "network_ready": {
+          "timestamp": "2026-09-16T19:21:23Z",
+          "duration_sec": 0.0271,
+          "achieved": true
+        },
+        "application_ready": {
+          "timestamp": "2026-09-16T19:21:38Z",
+          "duration_sec": 15.013,
+          "achieved": false
+        }
+      },
+      "total_startup_duration_sec": 15.1176,
+      "status": "success"
+    },
+    "hypervisor_start_sec": null,
+    "os_ready_sec": 0.0339,
+    "network_ready_sec": 0.0271,
+    "app_ready_sec": 15.013,
+    "total_boot_sec": 15.1176,
+    "telemetry": {},
+    "hypervisor_telemetry": {
+      "timestamp": 1789586498.5296988,
+      "environment": "kvm",
+      "vm_name": "ubuntu24.04",
+      "domstats": {
+        "cpu.time": "11852714000",
+        "cpu.user": "10001488000",
+        "cpu.system": "1851225000",
+        "cpu.cache.monitor.count": "0",
+        "cpu.haltpoll.success.time": "69201547",
+        "cpu.haltpoll.fail.time": "83600713",
+        "balloon.current": "2097152",
+        "balloon.maximum": "2097152",
+        "balloon.swap_in": "0",
+        "balloon.swap_out": "0",
+        "balloon.major_fault": "0",
+        "balloon.minor_fault": "0",
+        "balloon.unused": "1814840",
+        "balloon.available": "1931200",
+        "balloon.usable": "1741164",
+        "balloon.last-update": "1789586392",
+        "balloon.disk_caches": "79968",
+        "balloon.hugetlb_pgalloc": "0",
+        "balloon.hugetlb_pgfail": "0",
+        "balloon.rss": "641412"
+      },
+      "cpu_time_ns": 11852714000,
+      "balloon_current_kb": 2097152,
+      "host_qemu_pid": 49174,
+      "host_qemu_vsz_kb": 3306244,
+      "host_qemu_rss_kb": 642136
+    }
+  },
+  "stdout": "{\"vm_name\": \"ubuntu24.04\", \"ip\": \"192.168.122.179\", \"phases\": {\"virsh_start\": {\"timestamp\": \"2026-09-16T19:21:23Z\", \"duration_sec\": 0.0}, \"guest_available\": {\"timestamp\": \"2026-09-16T19:21:23Z\", \"duration_sec\": 0.0339, \"achieved\": true}, \"network_ready\": {\"timestamp\": \"2026-09-16T19:21:23Z\", \"duration_sec\": 0.0271, \"achieved\": true}, \"application_ready\": {\"timestamp\": \"2026-09-16T19:21:38Z\", \"duration_sec\": 15.013, \"achieved\": false}}, \"total_startup_duration_sec\": 15.1176, \"status\": \"success\"}",
+  "stderr": "",
+  "status": "success"
+}

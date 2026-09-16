@@ -1,0 +1,37 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-105609-94ad61",
+  "environment": "lxc",
+  "benchmark": "network_iperf3",
+  "run_id": "network_iperf3-lxc-06fe02f8",
+  "timestamp": "2026-09-16T10:56:22.238805+00:00",
+  "command": "iperf3 -c 10.0.3.1",
+  "exit_code": -1,
+  "stdout": "{\"status\": \"unavailable\", \"reason\": \"iperf3 binary not found on host. Zero values will not be fabricated.\"}",
+  "stderr": "iperf3 binary not found on host. Zero values will not be fabricated.",
+  "metrics": {
+    "telemetry": {},
+    "status": "unavailable",
+    "reason": "iperf3 binary not found on host. Zero values will not be fabricated.",
+    "metadata": {
+      "environment": "lxc",
+      "target_name": "lxc-ubuntu",
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T10:56:11.124272+00:00",
+        "loadavg": [
+          3.81982421875,
+          3.54150390625,
+          3.20849609375
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2419428,
+        "mem_available_kb": 9337268,
+        "cpu_user_ticks": 962830,
+        "cpu_system_ticks": 198281,
+        "cpu_idle_ticks": 7161032
+      },
+      "experiment_id": "exp-20260916-105609-94ad61"
+    }
+  },
+  "status": "unavailable"
+}

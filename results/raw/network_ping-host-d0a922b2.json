@@ -1,0 +1,91 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-105426-2820c0",
+  "environment": "host",
+  "benchmark": "network_ping",
+  "run_id": "network_ping-host-d0a922b2",
+  "timestamp": "2026-09-16T10:54:38.941244+00:00",
+  "command": "ping -c 5 -W 1 127.0.0.1",
+  "exit_code": 0,
+  "stdout": "PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.\n64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.047 ms\n64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.036 ms\n64 bytes from 127.0.0.1: icmp_seq=3 ttl=64 time=0.068 ms\n64 bytes from 127.0.0.1: icmp_seq=4 ttl=64 time=0.070 ms\n64 bytes from 127.0.0.1: icmp_seq=5 ttl=64 time=0.035 ms\n\n--- 127.0.0.1 ping statistics ---\n5 packets transmitted, 5 received, 0% packet loss, time 4083ms\nrtt min/avg/max/mdev = 0.035/0.051/0.070/0.015 ms\n",
+  "stderr": "",
+  "metrics": {
+    "telemetry": {
+      "time_v": {
+        "status": "success",
+        "user_time_sec": 0.0,
+        "system_time_sec": 0.0,
+        "wall_time_sec": 4.08,
+        "cpu_percentage": 0.0,
+        "max_rss_kb": 2676,
+        "vsz_kb": 0,
+        "minor_page_faults": 119,
+        "major_page_faults": 0,
+        "total_page_faults": 119,
+        "voluntary_context_switches": 5,
+        "involuntary_context_switches": 0,
+        "total_context_switches": 5,
+        "exit_code": 0,
+        "raw_time_v": "\tCommand being timed: \"ping -c 5 -W 1 127.0.0.1\"\n\tUser time (seconds): 0.00\n\tSystem time (seconds): 0.00\n\tPercent of CPU this job got: 0%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 0:04.08\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 2676\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 0\n\tMinor (reclaiming a frame) page faults: 119\n\tVoluntary context switches: 5\n\tInvoluntary context switches: 0\n\tSwaps: 0\n\tFile system inputs: 0\n\tFile system outputs: 0\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 0\n"
+      },
+      "perf": {
+        "status": "unavailable",
+        "reason": "Hardware counters restricted (Error:)",
+        "cycles": null,
+        "instructions": null,
+        "context_switches": null,
+        "cpu_migrations": null,
+        "page_faults": null
+      },
+      "wall_time_sec": 4.08,
+      "user_time_sec": 0.0,
+      "system_time_sec": 0.0,
+      "cpu_percentage": 0.0,
+      "max_rss_kb": 2676,
+      "vsz_kb": 0,
+      "page_faults": {
+        "minor": 119,
+        "major": 0,
+        "total": 119
+      },
+      "context_switches": {
+        "voluntary": 5,
+        "involuntary": 0,
+        "total": 5
+      }
+    },
+    "wall_time_sec": 4.08,
+    "user_time_sec": 0.0,
+    "system_time_sec": 0.0,
+    "cpu_percentage": 0.0,
+    "max_rss_kb": 2676,
+    "status": "success",
+    "target_ip": "127.0.0.1",
+    "packets_transmitted": 5,
+    "packet_loss_percent": 0.0,
+    "rtt_min_ms": 0.034,
+    "rtt_avg_ms": 0.049,
+    "rtt_max_ms": 0.079,
+    "rtt_mdev_ms": 0.016,
+    "metadata": {
+      "environment": "host",
+      "target_name": null,
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T10:54:27.954207+00:00",
+        "loadavg": [
+          3.02001953125,
+          3.203125,
+          3.06787109375
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2437596,
+        "mem_available_kb": 9343568,
+        "cpu_user_ticks": 938135,
+        "cpu_system_ticks": 195630,
+        "cpu_idle_ticks": 7067434
+      },
+      "experiment_id": "exp-20260916-105426-2820c0"
+    }
+  },
+  "status": "success"
+}

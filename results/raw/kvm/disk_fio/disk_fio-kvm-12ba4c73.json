@@ -1,0 +1,62 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "run_id": "disk_fio-kvm-12ba4c73",
+  "environment": "kvm",
+  "benchmark": "disk_fio",
+  "timestamp": "2026-09-16T19:20:55.205973+00:00",
+  "command": "fio --name=cc2_disk_test --filename=/tmp/cc2_disk_test_kvm.dat --size=16m --direct=1 --rw=readwrite --bs=4k --ioengine=sync --runtime=3 --time_based=0 --output-format=json",
+  "workload": {
+    "name": "fio",
+    "path": "fio",
+    "sha256": null,
+    "size_bytes": null,
+    "verified": false
+  },
+  "environment_identity": {
+    "environment": "kvm",
+    "classification": "Kernel-based Hardware Virtualization (Type-1 / Type-1-like)",
+    "virtualization_type": "type1",
+    "kernel_release": null,
+    "os_release": "Ubuntu (KVM Guest)",
+    "hostname": "ubuntu24.04",
+    "vcpus": 2,
+    "memory_mb": 2048,
+    "ip_address": "192.168.122.179",
+    "mac_address": null,
+    "hypervisor_version": "QEMU/KVM (libvirt)",
+    "systemd_detect_virt": "kvm",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "vm_name": "ubuntu24.04",
+      "libvirt_uri": "qemu:///system"
+    }
+  },
+  "parameters": {
+    "file_size_mb": 16,
+    "runtime_sec": 3
+  },
+  "execution": {
+    "exit_code": 0,
+    "duration_sec": 0.0,
+    "timed_out": false,
+    "status": "unavailable"
+  },
+  "metrics": {
+    "status": "unavailable",
+    "reason": "fio binary not found in kvm. No mock data generated.",
+    "fio_results": {
+      "status": "unavailable",
+      "reason": "fio binary not found in kvm. No mock data generated."
+    },
+    "read_iops": null,
+    "write_iops": null,
+    "read_throughput_mb_s": null,
+    "write_throughput_mb_s": null,
+    "p95_lat_ms": null,
+    "telemetry": {}
+  },
+  "stdout": "{\"status\": \"unavailable\", \"reason\": \"fio binary not found in kvm. No mock data generated.\"}",
+  "stderr": "fio binary not found in kvm. No mock data generated.",
+  "status": "unavailable"
+}

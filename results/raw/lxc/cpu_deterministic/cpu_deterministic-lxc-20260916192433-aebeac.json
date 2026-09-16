@@ -1,0 +1,36 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "run_id": "cpu_deterministic-lxc-20260916192433-aebeac",
+  "environment": "lxc",
+  "benchmark": "cpu_deterministic",
+  "timestamp": "2026-09-16T19:24:33.281799+00:00",
+  "command": "cpu_deterministic",
+  "workload": {
+    "name": "cpu_workload",
+    "verified": false
+  },
+  "environment_identity": {
+    "environment": "lxc",
+    "status": "failed"
+  },
+  "parameters": {
+    "size": 400,
+    "iterations": 5,
+    "warmup": 1,
+    "threads": 1
+  },
+  "execution": {
+    "exit_code": -1,
+    "duration_sec": 0.0,
+    "timed_out": false,
+    "status": "failed"
+  },
+  "metrics": {
+    "status": "failed",
+    "reason": "lxc-start failed: lxc-start: lxc-ubuntu: ../src/lxc/tools/lxc_start.c: main: 266 No container config specified"
+  },
+  "stdout": "",
+  "stderr": "lxc-start failed: lxc-start: lxc-ubuntu: ../src/lxc/tools/lxc_start.c: main: 266 No container config specified",
+  "status": "failed"
+}

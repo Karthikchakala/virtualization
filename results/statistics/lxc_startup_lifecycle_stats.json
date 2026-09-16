@@ -1,0 +1,15 @@
+{
+  "environment": "lxc",
+  "benchmark": "startup_lifecycle",
+  "run_counts": {
+    "total": 2,
+    "success": 0,
+    "unavailable": 0,
+    "failed": 2
+  },
+  "checksum_analysis": {
+    "is_deterministic": null,
+    "unique_checksums": []
+  },
+  "metrics": {}
+}

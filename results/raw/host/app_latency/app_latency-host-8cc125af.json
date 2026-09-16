@@ -1,0 +1,137 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "run_id": "app_latency-host-8cc125af",
+  "environment": "host",
+  "benchmark": "app_latency",
+  "timestamp": "2026-09-16T19:19:21.376927+00:00",
+  "command": "http_get_100 http://127.0.0.1:40849/health",
+  "workload": {
+    "name": "http_health_app",
+    "path": "http_health_app.py",
+    "sha256": null,
+    "size_bytes": null,
+    "verified": true
+  },
+  "environment_identity": {
+    "environment": "host",
+    "classification": "Bare-Metal Reference (Zero Virtualization Overhead)",
+    "virtualization_type": "none",
+    "kernel_release": "7.0.0-31-generic",
+    "os_release": "Ubuntu 24.04.5 LTS",
+    "hostname": "karthik-chakala-Vivobook-ASUSLaptop-K3605ZU-K3605ZU",
+    "vcpus": 12,
+    "memory_mb": 15613,
+    "ip_address": "127.0.0.1",
+    "mac_address": null,
+    "hypervisor_version": null,
+    "systemd_detect_virt": "none (bare-metal)",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "cpu_model": "12th Gen Intel(R) Core(TM) i5-12450H",
+      "logical_cpus": 12
+    }
+  },
+  "parameters": {
+    "requests": 100,
+    "endpoint": "/health"
+  },
+  "execution": {
+    "exit_code": 0,
+    "duration_sec": 0.5,
+    "timed_out": false,
+    "status": "success"
+  },
+  "metrics": {
+    "status": "success",
+    "url": "http://127.0.0.1:40849/health",
+    "requests_attempted": 100,
+    "requests_completed": 100,
+    "http_200_count": 100,
+    "connect_ms": {
+      "mean": 0.044231,
+      "median": 0.034183,
+      "p50": 0.034183,
+      "p95": 0.121544,
+      "p99": 0.141993,
+      "min": 0.011961,
+      "max": 0.169375,
+      "stdev": 0.033758
+    },
+    "ttfb_ms": {
+      "mean": 0.169162,
+      "median": 0.138174,
+      "p50": 0.138174,
+      "p95": 0.415962,
+      "p99": 0.710117,
+      "min": 0.05861,
+      "max": 0.711845,
+      "stdev": 0.123259
+    },
+    "total_ms": {
+      "mean": 0.205316,
+      "median": 0.171721,
+      "p50": 0.171721,
+      "p95": 0.492879,
+      "p99": 0.72058,
+      "min": 0.077128,
+      "max": 0.759739,
+      "stdev": 0.137259
+    },
+    "total_time_ms": {
+      "total_count": 100,
+      "valid_count": 100,
+      "missing_count": 0,
+      "mean": 0.205316,
+      "median": 0.171721,
+      "min": 0.077128,
+      "max": 0.759739,
+      "stdev": 0.137259,
+      "cv_percent": 66.8527,
+      "p50": 0.171721,
+      "p95": 0.492879,
+      "p99": 0.72058
+    },
+    "total_duration_ms": {
+      "total_count": 100,
+      "valid_count": 100,
+      "missing_count": 0,
+      "mean": 0.205316,
+      "median": 0.171721,
+      "min": 0.077128,
+      "max": 0.759739,
+      "stdev": 0.137259,
+      "cv_percent": 66.8527,
+      "p50": 0.171721,
+      "p95": 0.492879,
+      "p99": 0.72058
+    },
+    "telemetry": {},
+    "hypervisor_telemetry": {
+      "timestamp": 1789586361.3749695,
+      "loadavg": [
+        1.009765625,
+        1.10498046875,
+        1.0537109375
+      ],
+      "logical_cpus": 12,
+      "host_mem_total_kb": 15987832,
+      "host_mem_available_kb": 8909928,
+      "thermals_celsius": {
+        "SEN2": 52.05,
+        "acpitz": 57.0,
+        "iwlwifi_1": 45.0,
+        "TCPU_PCI": 61.0,
+        "SEN5": 22.05,
+        "SEN3": 0.05,
+        "INT3400 Thermal": 20.0,
+        "x86_pkg_temp": 61.0,
+        "TCPU": 61.0,
+        "SEN4": 49.05
+      }
+    }
+  },
+  "stdout": "{\"status\": \"success\", \"url\": \"http://127.0.0.1:40849/health\", \"requests_attempted\": 100, \"requests_completed\": 100, \"http_200_count\": 100, \"connect_ms\": {\"mean\": 0.044231, \"median\": 0.034183, \"p50\": 0.034183, \"p95\": 0.121544, \"p99\": 0.141993, \"min\": 0.011961, \"max\": 0.169375, \"stdev\": 0.033758}, \"ttfb_ms\": {\"mean\": 0.169162, \"median\": 0.138174, \"p50\": 0.138174, \"p95\": 0.415962, \"p99\": 0.710117, \"min\": 0.05861, \"max\": 0.711845, \"stdev\": 0.123259}, \"total_ms\": {\"mean\": 0.205316, \"median\": 0.171721, \"p50\": 0.171721, \"p95\": 0.492879, \"p99\": 0.72058, \"min\": 0.077128, \"max\": 0.759739, \"stdev\": 0.137259}, \"total_time_ms\": {\"total_count\": 100, \"valid_count\": 100, \"missing_count\": 0, \"mean\": 0.205316, \"median\": 0.171721, \"min\": 0.077128, \"max\": 0.759739, \"stdev\": 0.137259, \"cv_percent\": 66.8527, \"p50\": 0.171721, \"p95\": 0.492879, \"p99\": 0.72058}, \"total_duration_ms\": {\"total_count\": 100, \"valid_count\": 100, \"missing_count\": 0, \"mean\": 0.205316, \"median\": 0.171721, \"min\": 0.077128, \"max\": 0.759739, \"stdev\": 0.137259, \"cv_percent\": 66.8527, \"p50\": 0.171721, \"p95\": 0.492879, \"p99\": 0.72058}}",
+  "stderr": "",
+  "status": "success"
+}

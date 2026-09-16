@@ -1,0 +1,66 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-105426-2820c0",
+  "environment": "host",
+  "benchmark": "app_latency",
+  "run_id": "app_latency-host-b083c82e",
+  "timestamp": "2026-09-16T10:54:39.038792+00:00",
+  "command": "http_get_100 http://127.0.0.1:48701/health",
+  "exit_code": 0,
+  "stdout": "{\"status\": \"success\", \"url\": \"http://127.0.0.1:48701/health\", \"requests_completed\": 100, \"total_time_ms\": {\"total_count\": 100, \"valid_count\": 100, \"missing_count\": 0, \"mean\": 0.562843, \"median\": 0.244051, \"min\": 0.161234, \"max\": 20.268694, \"stdev\": 2.037266, \"cv_percent\": 361.9601, \"p50\": 0.244051, \"p95\": 0.697217, \"p99\": 4.179581}, \"ttfb_ms\": {\"total_count\": 100, \"valid_count\": 100, \"missing_count\": 0, \"mean\": 0.470316, \"median\": 0.200846, \"min\": 0.132392, \"max\": 20.208659, \"stdev\": 2.004359, \"cv_percent\": 426.1726, \"p50\": 0.200846, \"p95\": 0.494679, \"p99\": 2.058115}}",
+  "stderr": "",
+  "metrics": {
+    "telemetry": {},
+    "status": "success",
+    "url": "http://127.0.0.1:48701/health",
+    "requests_completed": 100,
+    "total_time_ms": {
+      "total_count": 100,
+      "valid_count": 100,
+      "missing_count": 0,
+      "mean": 0.562843,
+      "median": 0.244051,
+      "min": 0.161234,
+      "max": 20.268694,
+      "stdev": 2.037266,
+      "cv_percent": 361.9601,
+      "p50": 0.244051,
+      "p95": 0.697217,
+      "p99": 4.179581
+    },
+    "ttfb_ms": {
+      "total_count": 100,
+      "valid_count": 100,
+      "missing_count": 0,
+      "mean": 0.470316,
+      "median": 0.200846,
+      "min": 0.132392,
+      "max": 20.208659,
+      "stdev": 2.004359,
+      "cv_percent": 426.1726,
+      "p50": 0.200846,
+      "p95": 0.494679,
+      "p99": 2.058115
+    },
+    "metadata": {
+      "environment": "host",
+      "target_name": null,
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T10:54:27.954207+00:00",
+        "loadavg": [
+          3.02001953125,
+          3.203125,
+          3.06787109375
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2437596,
+        "mem_available_kb": 9343568,
+        "cpu_user_ticks": 938135,
+        "cpu_system_ticks": 195630,
+        "cpu_idle_ticks": 7067434
+      },
+      "experiment_id": "exp-20260916-105426-2820c0"
+    }
+  },
+  "status": "success"
+}

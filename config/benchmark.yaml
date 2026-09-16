@@ -1,0 +1,156 @@
+# ==============================================================================
+# CC2 Declarative Benchmark Configurations
+# Scientific Protocol: 1 warmup run, 5 measured runs per domain (canonical full mode)
+# ==============================================================================
+
+version: "1.0.0"
+
+benchmarks:
+  cpu_deterministic:
+    enabled: true
+    domain: "compute"
+    workload_name: "cpu_workload"
+    description: "Deterministic double-precision matrix multiplication with FNV-1a checksum"
+    command_template: "{binary_path} --size {size} --iterations {iterations} --warmup {warmup} --threads {threads}"
+    parameters:
+      size: 400
+      iterations: 5
+      warmup: 1
+      threads: 1
+    canonical_invariants:
+      total_flops: 640000000
+      expected_checksum: "0x7e83d4c61ad5adb8"
+    runs:
+      warmup: 1
+      measured: 5
+    timeout_sec: 60
+    stabilization_sec: 2
+
+  memory_deterministic:
+    enabled: true
+    domain: "memory"
+    workload_name: "memory_workload"
+    description: "Deterministic sequential write, read-accumulate, and strided memory benchmark"
+    command_template: "{binary_path} --buffer-mb {buffer_mb} --passes {passes} --stride {stride}"
+    parameters:
+      buffer_mb: 128
+      passes: 4
+      stride: 64
+    runs:
+      warmup: 1
+      measured: 5
+    timeout_sec: 60
+    stabilization_sec: 2
+
+  syscall_deterministic:
+    enabled: true
+    domain: "syscall"
+    workload_name: "syscall_workload"
+    description: "Deterministic raw getpid() system call latency and throughput benchmark"
+    command_template: "{binary_path} --iterations {iterations} --warmup {warmup}"
+    parameters:
+      iterations: 200000
+      warmup: 5000
+    runs:
+      warmup: 1
+      measured: 5
+    timeout_sec: 60
+    stabilization_sec: 2
+
+  scheduling_deterministic:
+    enabled: true
+    domain: "scheduling"
+    workload_name: "scheduling_workload"
+    description: "Deterministic context switch and process scheduling latency benchmark"
+    command_template: "{binary_path} --iterations {iterations} --warmup {warmup}"
+    parameters:
+      iterations: 20000
+      warmup: 1000
+    canonical_invariants:
+      expected_checksum: "0x909e926a36d3fca6"
+    runs:
+      warmup: 1
+      measured: 5
+    timeout_sec: 60
+    stabilization_sec: 2
+
+  disk_fio:
+    enabled: true
+    domain: "storage"
+    workload_name: "fio"
+    description: "Safe regular file FIO storage benchmark (strictly rejects block devices)"
+    parameters:
+      file_size_mb: 16
+      runtime_sec: 3
+      ioengine: "sync"
+      direct: 1
+    runs:
+      warmup: 0
+      measured: 5
+    timeout_sec: 60
+    stabilization_sec: 2
+
+  network_ping:
+    enabled: true
+    domain: "network_latency"
+    workload_name: "ping"
+    description: "ICMP echo request latency measurement against controlled local gateway"
+    command_template: "ping -c {count} -W 1 {target_ip}"
+    parameters:
+      count: 5
+    runs:
+      warmup: 0
+      measured: 5
+    timeout_sec: 30
+    stabilization_sec: 1
+
+  network_iperf3:
+    enabled: true
+    domain: "network_throughput"
+    workload_name: "iperf3"
+    description: "Standardized single-stream TCP throughput benchmark"
+    command_template: "iperf3 -c {target_ip} -t {duration} -P {streams} -J"
+    parameters:
+      duration: 10
+      streams: 1
+    runs:
+      warmup: 0
+      measured: 5
+    timeout_sec: 60
+    stabilization_sec: 2
+
+  app_latency:
+    enabled: true
+    domain: "application"
+    workload_name: "http_health_app"
+    description: "100 sequential HTTP GET requests measuring connect time, TTFB, and duration"
+    parameters:
+      requests: 100
+      port: 8080
+    runs:
+      warmup: 0
+      measured: 5
+    timeout_sec: 60
+    stabilization_sec: 2
+
+  startup_lifecycle:
+    enabled: true
+    domain: "virtualization_lifecycle"
+    workload_name: "lifecycle_probe"
+    description: "Multi-phase boot timing: hypervisor init, OS ready, network ready, app ready"
+    runs:
+      warmup: 0
+      measured: 3
+    timeout_sec: 90
+    stabilization_sec: 2
+
+  isolation_audit:
+    enabled: true
+    domain: "isolation"
+    workload_name: "isolation_probe"
+    description: "Kernel release, namespaces (/proc/self/ns), and cgroups verification"
+    runs:
+      warmup: 0
+      measured: 1
+    timeout_sec: 30
+    stabilization_sec: 1

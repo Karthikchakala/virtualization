@@ -1,0 +1,631 @@
+{
+  "schema_version": "2.0.0",
+  "description": "Descriptive empirical performance and variability summary per virtualization tier.",
+  "invariants": "Strictly non-evaluative; zero ranking, winner, or score fields.",
+  "environments": {
+    "host": {
+      "environment": "host",
+      "benchmarks_evaluated": {
+        "app_latency": {
+          "run_counts": {
+            "total": 15,
+            "success": 15,
+            "failed": 0,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "cpu_deterministic": {
+          "run_counts": {
+            "total": 30,
+            "success": 30,
+            "failed": 0,
+            "unavailable": 0
+          },
+          "quality_flag": "FAILED",
+          "checksum_deterministic": false,
+          "primary_measurements": {
+            "gflops": {
+              "mean": 4.54512,
+              "median": 4.4613,
+              "cv_percent": 28.2276,
+              "p95": 6.27344,
+              "quality_flag": "FAILED"
+            }
+          }
+        },
+        "disk_fio": {
+          "run_counts": {
+            "total": 15,
+            "success": 0,
+            "failed": 0,
+            "unavailable": 15
+          },
+          "quality_flag": "UNAVAILABLE",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "isolation_audit": {
+          "run_counts": {
+            "total": 15,
+            "success": 15,
+            "failed": 0,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "memory_deterministic": {
+          "run_counts": {
+            "total": 30,
+            "success": 30,
+            "failed": 0,
+            "unavailable": 0
+          },
+          "quality_flag": "FAILED",
+          "checksum_deterministic": false,
+          "primary_measurements": {
+            "throughput_mb_s": {
+              "mean": 4362.112,
+              "median": 4164.6,
+              "cv_percent": 22.815,
+              "p95": 6121.628,
+              "quality_flag": "FAILED"
+            }
+          }
+        },
+        "network_iperf3": {
+          "run_counts": {
+            "total": 6,
+            "success": 0,
+            "failed": 0,
+            "unavailable": 6
+          },
+          "quality_flag": "UNAVAILABLE",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "network_ping": {
+          "run_counts": {
+            "total": 15,
+            "success": 15,
+            "failed": 0,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {
+            "rtt_avg_ms": {
+              "mean": 0.070267,
+              "median": 0.07,
+              "cv_percent": 20.9882,
+              "p95": 0.092,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "scheduling_deterministic": {
+          "run_counts": {
+            "total": 27,
+            "success": 27,
+            "failed": 0,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": true,
+          "primary_measurements": {
+            "switches_per_sec": {
+              "mean": 422239.584074,
+              "median": 431039.17,
+              "cv_percent": 20.4846,
+              "p95": 509741.97,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "startup_lifecycle": {
+          "run_counts": {
+            "total": 15,
+            "success": 0,
+            "failed": 0,
+            "unavailable": 15
+          },
+          "quality_flag": "UNAVAILABLE",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "syscall_deterministic": {
+          "run_counts": {
+            "total": 27,
+            "success": 27,
+            "failed": 0,
+            "unavailable": 0
+          },
+          "quality_flag": "FAILED",
+          "checksum_deterministic": false,
+          "primary_measurements": {
+            "ops_per_sec": {
+              "mean": 10437317.535185,
+              "median": 11266893.44,
+              "cv_percent": 25.3473,
+              "p95": 13249733.511,
+              "quality_flag": "FAILED"
+            }
+          }
+        }
+      },
+      "summary_timestamp": "2026-09-16T20:22:07.667111+00:00"
+    },
+    "kvm": {
+      "environment": "kvm",
+      "benchmarks_evaluated": {
+        "app_latency": {
+          "run_counts": {
+            "total": 13,
+            "success": 4,
+            "failed": 0,
+            "unavailable": 9
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "cpu_deterministic": {
+          "run_counts": {
+            "total": 23,
+            "success": 14,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": true,
+          "primary_measurements": {
+            "gflops": {
+              "mean": 4.347371,
+              "median": 4.248,
+              "cv_percent": 23.5011,
+              "p95": 5.5313,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "disk_fio": {
+          "run_counts": {
+            "total": 13,
+            "success": 0,
+            "failed": 0,
+            "unavailable": 13
+          },
+          "quality_flag": "UNAVAILABLE",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "isolation_audit": {
+          "run_counts": {
+            "total": 13,
+            "success": 13,
+            "failed": 0,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "memory_deterministic": {
+          "run_counts": {
+            "total": 23,
+            "success": 14,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": true,
+          "primary_measurements": {
+            "throughput_mb_s": {
+              "mean": 3814.282857,
+              "median": 3695.17,
+              "cv_percent": 7.8037,
+              "p95": 4253.48,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "network_iperf3": {
+          "run_counts": {
+            "total": 4,
+            "success": 0,
+            "failed": 0,
+            "unavailable": 4
+          },
+          "quality_flag": "UNAVAILABLE",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "network_ping": {
+          "run_counts": {
+            "total": 13,
+            "success": 4,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {
+            "rtt_avg_ms": {
+              "mean": 0.0635,
+              "median": 0.0635,
+              "cv_percent": 6.3645,
+              "p95": 0.067,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "scheduling_deterministic": {
+          "run_counts": {
+            "total": 23,
+            "success": 14,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": true,
+          "primary_measurements": {
+            "switches_per_sec": {
+              "mean": 436925.915714,
+              "median": 446291.61,
+              "cv_percent": 5.5689,
+              "p95": 472846.7,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "startup_lifecycle": {
+          "run_counts": {
+            "total": 13,
+            "success": 9,
+            "failed": 4,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "syscall_deterministic": {
+          "run_counts": {
+            "total": 23,
+            "success": 14,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "FAILED",
+          "checksum_deterministic": false,
+          "primary_measurements": {
+            "ops_per_sec": {
+              "mean": 10828167.087143,
+              "median": 10721069.09,
+              "cv_percent": 7.4447,
+              "p95": 11839456.73,
+              "quality_flag": "FAILED"
+            }
+          }
+        }
+      },
+      "summary_timestamp": "2026-09-16T20:22:07.667133+00:00"
+    },
+    "virtualbox": {
+      "environment": "virtualbox",
+      "benchmarks_evaluated": {
+        "app_latency": {
+          "run_counts": {
+            "total": 13,
+            "success": 4,
+            "failed": 0,
+            "unavailable": 9
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "cpu_deterministic": {
+          "run_counts": {
+            "total": 70,
+            "success": 61,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "FAILED",
+          "checksum_deterministic": false,
+          "primary_measurements": {
+            "gflops": {
+              "mean": 2.646366,
+              "median": 1.9878,
+              "cv_percent": 56.3124,
+              "p95": 5.5046,
+              "quality_flag": "FAILED"
+            }
+          }
+        },
+        "disk_fio": {
+          "run_counts": {
+            "total": 13,
+            "success": 0,
+            "failed": 0,
+            "unavailable": 13
+          },
+          "quality_flag": "UNAVAILABLE",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "isolation_audit": {
+          "run_counts": {
+            "total": 13,
+            "success": 13,
+            "failed": 0,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "memory_deterministic": {
+          "run_counts": {
+            "total": 23,
+            "success": 14,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": true,
+          "primary_measurements": {
+            "throughput_mb_s": {
+              "mean": 3923.822857,
+              "median": 3966.41,
+              "cv_percent": 11.3256,
+              "p95": 4428.81,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "network_iperf3": {
+          "run_counts": {
+            "total": 4,
+            "success": 0,
+            "failed": 0,
+            "unavailable": 4
+          },
+          "quality_flag": "UNAVAILABLE",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "network_ping": {
+          "run_counts": {
+            "total": 13,
+            "success": 4,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {
+            "rtt_avg_ms": {
+              "mean": 0.064,
+              "median": 0.064,
+              "cv_percent": 1.8042,
+              "p95": 0.065,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "scheduling_deterministic": {
+          "run_counts": {
+            "total": 23,
+            "success": 14,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": true,
+          "primary_measurements": {
+            "switches_per_sec": {
+              "mean": 443764.454286,
+              "median": 462087.34,
+              "cv_percent": 9.3831,
+              "p95": 508544.45,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "startup_lifecycle": {
+          "run_counts": {
+            "total": 13,
+            "success": 13,
+            "failed": 0,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "syscall_deterministic": {
+          "run_counts": {
+            "total": 23,
+            "success": 14,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "FAILED",
+          "checksum_deterministic": false,
+          "primary_measurements": {
+            "ops_per_sec": {
+              "mean": 10714283.142857,
+              "median": 10317508.43,
+              "cv_percent": 12.5591,
+              "p95": 12661607.22,
+              "quality_flag": "FAILED"
+            }
+          }
+        }
+      },
+      "summary_timestamp": "2026-09-16T20:22:07.667137+00:00"
+    },
+    "lxc": {
+      "environment": "lxc",
+      "benchmarks_evaluated": {
+        "app_latency": {
+          "run_counts": {
+            "total": 13,
+            "success": 4,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "cpu_deterministic": {
+          "run_counts": {
+            "total": 70,
+            "success": 61,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "FAILED",
+          "checksum_deterministic": false,
+          "primary_measurements": {
+            "gflops": {
+              "mean": 3.229198,
+              "median": 2.7641,
+              "cv_percent": 37.9757,
+              "p95": 5.371,
+              "quality_flag": "FAILED"
+            }
+          }
+        },
+        "disk_fio": {
+          "run_counts": {
+            "total": 13,
+            "success": 0,
+            "failed": 9,
+            "unavailable": 4
+          },
+          "quality_flag": "UNAVAILABLE",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "isolation_audit": {
+          "run_counts": {
+            "total": 13,
+            "success": 4,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "memory_deterministic": {
+          "run_counts": {
+            "total": 70,
+            "success": 61,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "FAILED",
+          "checksum_deterministic": false,
+          "primary_measurements": {
+            "throughput_mb_s": {
+              "mean": 3022.918197,
+              "median": 3071.49,
+              "cv_percent": 20.2743,
+              "p95": 4012.93,
+              "quality_flag": "FAILED"
+            }
+          }
+        },
+        "network_iperf3": {
+          "run_counts": {
+            "total": 4,
+            "success": 0,
+            "failed": 0,
+            "unavailable": 4
+          },
+          "quality_flag": "UNAVAILABLE",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "network_ping": {
+          "run_counts": {
+            "total": 13,
+            "success": 4,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": null,
+          "primary_measurements": {
+            "rtt_avg_ms": {
+              "mean": 0.0715,
+              "median": 0.0715,
+              "cv_percent": 12.1122,
+              "p95": 0.079,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "scheduling_deterministic": {
+          "run_counts": {
+            "total": 23,
+            "success": 14,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "PASS",
+          "checksum_deterministic": true,
+          "primary_measurements": {
+            "switches_per_sec": {
+              "mean": 431299.842857,
+              "median": 407768.66,
+              "cv_percent": 10.0855,
+              "p95": 507596.39,
+              "quality_flag": "PASS"
+            }
+          }
+        },
+        "startup_lifecycle": {
+          "run_counts": {
+            "total": 13,
+            "success": 0,
+            "failed": 13,
+            "unavailable": 0
+          },
+          "quality_flag": "FAILED",
+          "checksum_deterministic": null,
+          "primary_measurements": {}
+        },
+        "syscall_deterministic": {
+          "run_counts": {
+            "total": 23,
+            "success": 14,
+            "failed": 9,
+            "unavailable": 0
+          },
+          "quality_flag": "FAILED",
+          "checksum_deterministic": false,
+          "primary_measurements": {
+            "ops_per_sec": {
+              "mean": 10695976.042857,
+              "median": 10304381.64,
+              "cv_percent": 15.1271,
+              "p95": 14018794.44,
+              "quality_flag": "FAILED"
+            }
+          }
+        }
+      },
+      "summary_timestamp": "2026-09-16T20:22:07.667139+00:00"
+    }
+  }
+}

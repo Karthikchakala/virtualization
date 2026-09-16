@@ -1,0 +1,15 @@
+{
+  "environment": "host",
+  "benchmark": "network_iperf3",
+  "run_counts": {
+    "total": 3,
+    "success": 0,
+    "unavailable": 3,
+    "failed": 0
+  },
+  "checksum_analysis": {
+    "is_deterministic": null,
+    "unique_checksums": []
+  },
+  "metrics": {}
+}

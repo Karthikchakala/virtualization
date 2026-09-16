@@ -1,0 +1,203 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-110655-920b1e",
+  "environment": "host",
+  "benchmark": "app_latency",
+  "run_id": "app_latency-host-f87d513a",
+  "timestamp": "2026-09-16T11:07:08.164075+00:00",
+  "command": "http_get_100 http://127.0.0.1:47281/health",
+  "exit_code": 0,
+  "stdout": "{\"status\": \"success\", \"url\": \"http://127.0.0.1:47281/health\", \"requests_attempted\": 100, \"requests_completed\": 100, \"http_200_count\": 100, \"connect_ms\": {\"mean\": 0.053435, \"median\": 0.027858, \"p50\": 0.027858, \"p95\": 0.179572, \"p99\": 0.31754, \"min\": 0.014014, \"max\": 0.325821, \"stdev\": 0.06138}, \"ttfb_ms\": {\"mean\": 0.217435, \"median\": 0.103454, \"p50\": 0.103454, \"p95\": 0.631406, \"p99\": 1.280436, \"min\": 0.068676, \"max\": 1.616988, \"stdev\": 0.25392}, \"total_ms\": {\"mean\": 0.253778, \"median\": 0.126209, \"p50\": 0.126209, \"p95\": 0.749941, \"p99\": 1.301099, \"min\": 0.090284, \"max\": 1.646426, \"stdev\": 0.266546}, \"total_time_ms\": {\"total_count\": 100, \"valid_count\": 100, \"missing_count\": 0, \"mean\": 0.253778, \"median\": 0.126209, \"min\": 0.090284, \"max\": 1.646426, \"stdev\": 0.266546, \"cv_percent\": 105.0313, \"p50\": 0.126209, \"p95\": 0.749941, \"p99\": 1.301099}, \"total_duration_ms\": {\"total_count\": 100, \"valid_count\": 100, \"missing_count\": 0, \"mean\": 0.253778, \"median\": 0.126209, \"min\": 0.090284, \"max\": 1.646426, \"stdev\": 0.266546, \"cv_percent\": 105.0313, \"p50\": 0.126209, \"p95\": 0.749941, \"p99\": 1.301099}}",
+  "stderr": "",
+  "metrics": {
+    "telemetry": {},
+    "status": "success",
+    "url": "http://127.0.0.1:47281/health",
+    "requests_attempted": 100,
+    "requests_completed": 100,
+    "http_200_count": 100,
+    "connect_ms": {
+      "mean": 0.053435,
+      "median": 0.027858,
+      "p50": 0.027858,
+      "p95": 0.179572,
+      "p99": 0.31754,
+      "min": 0.014014,
+      "max": 0.325821,
+      "stdev": 0.06138
+    },
+    "ttfb_ms": {
+      "mean": 0.217435,
+      "median": 0.103454,
+      "p50": 0.103454,
+      "p95": 0.631406,
+      "p99": 1.280436,
+      "min": 0.068676,
+      "max": 1.616988,
+      "stdev": 0.25392
+    },
+    "total_ms": {
+      "mean": 0.253778,
+      "median": 0.126209,
+      "p50": 0.126209,
+      "p95": 0.749941,
+      "p99": 1.301099,
+      "min": 0.090284,
+      "max": 1.646426,
+      "stdev": 0.266546
+    },
+    "total_time_ms": {
+      "total_count": 100,
+      "valid_count": 100,
+      "missing_count": 0,
+      "mean": 0.253778,
+      "median": 0.126209,
+      "min": 0.090284,
+      "max": 1.646426,
+      "stdev": 0.266546,
+      "cv_percent": 105.0313,
+      "p50": 0.126209,
+      "p95": 0.749941,
+      "p99": 1.301099
+    },
+    "total_duration_ms": {
+      "total_count": 100,
+      "valid_count": 100,
+      "missing_count": 0,
+      "mean": 0.253778,
+      "median": 0.126209,
+      "min": 0.090284,
+      "max": 1.646426,
+      "stdev": 0.266546,
+      "cv_percent": 105.0313,
+      "p50": 0.126209,
+      "p95": 0.749941,
+      "p99": 1.301099
+    },
+    "metadata": {
+      "environment": "host",
+      "target_name": null,
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T11:06:56.284773+00:00",
+        "loadavg": [
+          2.92041015625,
+          3.1455078125,
+          3.0986328125
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2059156,
+        "mem_available_kb": 8993428,
+        "cpu_user_ticks": 1111559,
+        "cpu_system_ticks": 211101,
+        "cpu_idle_ticks": 7762867,
+        "system_state": {
+          "cpu_frequency": {
+            "status": "success",
+            "per_core_khz": {
+              "cpu0": 4351510,
+              "cpu1": 4304216,
+              "cpu10": 3303807,
+              "cpu11": 2116298,
+              "cpu2": 2941797,
+              "cpu3": 3968988,
+              "cpu4": 2347681,
+              "cpu5": 3215968,
+              "cpu6": 4349907,
+              "cpu7": 400000,
+              "cpu8": 2880371,
+              "cpu9": 3302179
+            },
+            "min_khz": 400000,
+            "max_khz": 4351510,
+            "avg_khz": 3123560.17
+          },
+          "cpu_governor": {
+            "status": "success",
+            "per_core": {
+              "cpu0": "powersave",
+              "cpu1": "powersave",
+              "cpu10": "powersave",
+              "cpu11": "powersave",
+              "cpu2": "powersave",
+              "cpu3": "powersave",
+              "cpu4": "powersave",
+              "cpu5": "powersave",
+              "cpu6": "powersave",
+              "cpu7": "powersave",
+              "cpu8": "powersave",
+              "cpu9": "powersave"
+            },
+            "governors": [
+              "powersave"
+            ],
+            "dominant_governor": "powersave"
+          },
+          "load_average": {
+            "load_1m": 2.92,
+            "load_5m": 3.146,
+            "load_15m": 3.099
+          },
+          "thermal": {
+            "status": "success",
+            "zones": [
+              {
+                "zone": "thermal_zone0",
+                "type": "acpitz",
+                "temperature_c": 67.0
+              },
+              {
+                "zone": "thermal_zone1",
+                "type": "INT3400 Thermal",
+                "temperature_c": 20.0
+              },
+              {
+                "zone": "thermal_zone2",
+                "type": "SEN2",
+                "temperature_c": 57.05
+              },
+              {
+                "zone": "thermal_zone3",
+                "type": "SEN3",
+                "temperature_c": 0.05
+              },
+              {
+                "zone": "thermal_zone4",
+                "type": "SEN4",
+                "temperature_c": 54.05
+              },
+              {
+                "zone": "thermal_zone5",
+                "type": "SEN5",
+                "temperature_c": 22.05
+              },
+              {
+                "zone": "thermal_zone6",
+                "type": "TCPU",
+                "temperature_c": 72.0
+              },
+              {
+                "zone": "thermal_zone7",
+                "type": "TCPU_PCI",
+                "temperature_c": 72.0
+              },
+              {
+                "zone": "thermal_zone8",
+                "type": "iwlwifi_1",
+                "temperature_c": 50.0
+              },
+              {
+                "zone": "thermal_zone9",
+                "type": "x86_pkg_temp",
+                "temperature_c": 71.0
+              }
+            ],
+            "max_temp_c": 72.0,
+            "package_temp_c": 72.0
+          }
+        }
+      },
+      "experiment_id": "exp-20260916-110655-920b1e"
+    }
+  },
+  "status": "success"
+}

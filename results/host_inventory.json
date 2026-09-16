@@ -1,0 +1,1254 @@
+{
+  "timestamp": "2026-09-16T10:21:00.226087+00:00",
+  "os": {
+    "hostname": "karthik-chakala-Vivobook-ASUSLaptop-K3605ZU-K3605ZU",
+    "system": "Linux",
+    "kernel_release": "7.0.0-31-generic",
+    "kernel_version": "#31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2",
+    "machine": "x86_64",
+    "os_release": {
+      "PRETTY_NAME": "Ubuntu 24.04.5 LTS",
+      "NAME": "Ubuntu",
+      "VERSION_ID": "24.04",
+      "VERSION": "24.04.5 LTS (Noble Numbat)",
+      "VERSION_CODENAME": "noble",
+      "ID": "ubuntu",
+      "ID_LIKE": "debian",
+      "HOME_URL": "https://www.ubuntu.com/",
+      "SUPPORT_URL": "https://help.ubuntu.com/",
+      "BUG_REPORT_URL": "https://bugs.launchpad.net/ubuntu/",
+      "PRIVACY_POLICY_URL": "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy",
+      "UBUNTU_CODENAME": "noble",
+      "LOGO": "ubuntu-logo"
+    },
+    "virtualization_detected": "none (bare-metal)",
+    "uptime": "15:51:00 up  1:22,  1 user,  load average: 5.12, 3.26, 2.39",
+    "loadavg": "5.12 3.26 2.39 4/1519 29549",
+    "raw_uname": {
+      "command": "uname -a",
+      "exit_code": 0,
+      "stdout": "Linux karthik-chakala-Vivobook-ASUSLaptop-K3605ZU-K3605ZU 7.0.0-31-generic #31~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 10 09:38:02 UTC 2 x86_64 x86_64 x86_64 GNU/Linux",
+      "stderr": "",
+      "execution_time_sec": 0.0031
+    }
+  },
+  "cpu": {
+    "raw_text": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           39 bits physical, 48 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  12\nOn-line CPU(s) list:                     0-11\nVendor ID:                               GenuineIntel\nModel name:                              12th Gen Intel(R) Core(TM) i5-12450H\nCPU family:                              6\nModel:                                   154\nThread(s) per core:                      2\nCore(s) per socket:                      8\nSocket(s):                               1\nStepping:                                3\nCPU(s) scaling MHz:                      74%\nCPU max MHz:                             4400.0000\nCPU min MHz:                             400.0000\nBogoMIPS:                                4992.00\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb intel_pt sha_ni xsaveopt xsavec xgetbv1 xsaves split_lock_detect user_shstk avx_vnni dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req hfi vnmi umip pku ospke waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize arch_lbr ibt flush_l1d arch_capabilities\nVirtualization:                          VT-x\nL1d cache:                               320 KiB (8 instances)\nL1i cache:                               384 KiB (8 instances)\nL2 cache:                                7 MiB (5 instances)\nL3 cache:                                12 MiB (1 instance)\nNUMA node(s):                            1\nNUMA node0 CPU(s):                       0-11\nVulnerability Gather data sampling:      Not affected\nVulnerability Ghostwrite:                Not affected\nVulnerability Indirect target selection: Not affected\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Not affected\nVulnerability Old microcode:             Not affected\nVulnerability Reg file data sampling:    Mitigation; Clear Register File\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI BHI_DIS_S\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Mitigation; IBPB before exit to userspace",
+    "parsed": {
+      "Architecture": "x86_64",
+      "CPU op-mode(s)": "32-bit, 64-bit",
+      "Address sizes": "39 bits physical, 48 bits virtual",
+      "Byte Order": "Little Endian",
+      "CPU(s)": "12",
+      "On-line CPU(s) list": "0-11",
+      "Vendor ID": "GenuineIntel",
+      "Model name": "12th Gen Intel(R) Core(TM) i5-12450H",
+      "CPU family": "6",
+      "Model": "154",
+      "Thread(s) per core": "2",
+      "Core(s) per socket": "8",
+      "Socket(s)": "1",
+      "Stepping": "3",
+      "CPU(s) scaling MHz": "74%",
+      "CPU max MHz": "4400.0000",
+      "CPU min MHz": "400.0000",
+      "BogoMIPS": "4992.00",
+      "Flags": "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb ssbd ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb intel_pt sha_ni xsaveopt xsavec xgetbv1 xsaves split_lock_detect user_shstk avx_vnni dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp hwp_pkg_req hfi vnmi umip pku ospke waitpkg gfni vaes vpclmulqdq rdpid movdiri movdir64b fsrm md_clear serialize arch_lbr ibt flush_l1d arch_capabilities",
+      "Virtualization": "VT-x",
+      "L1d cache": "320 KiB (8 instances)",
+      "L1i cache": "384 KiB (8 instances)",
+      "L2 cache": "7 MiB (5 instances)",
+      "L3 cache": "12 MiB (1 instance)",
+      "NUMA node(s)": "1",
+      "NUMA node0 CPU(s)": "0-11",
+      "Vulnerability Gather data sampling": "Not affected",
+      "Vulnerability Ghostwrite": "Not affected",
+      "Vulnerability Indirect target selection": "Not affected",
+      "Vulnerability Itlb multihit": "Not affected",
+      "Vulnerability L1tf": "Not affected",
+      "Vulnerability Mds": "Not affected",
+      "Vulnerability Meltdown": "Not affected",
+      "Vulnerability Mmio stale data": "Not affected",
+      "Vulnerability Old microcode": "Not affected",
+      "Vulnerability Reg file data sampling": "Mitigation; Clear Register File",
+      "Vulnerability Retbleed": "Not affected",
+      "Vulnerability Spec rstack overflow": "Not affected",
+      "Vulnerability Spec store bypass": "Mitigation; Speculative Store Bypass disabled via prctl",
+      "Vulnerability Spectre v1": "Mitigation; usercopy/swapgs barriers and __user pointer sanitization",
+      "Vulnerability Spectre v2": "Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI BHI_DIS_S",
+      "Vulnerability Srbds": "Not affected",
+      "Vulnerability Tsa": "Not affected",
+      "Vulnerability Tsx async abort": "Not affected",
+      "Vulnerability Vmscape": "Mitigation; IBPB before exit to userspace"
+    },
+    "model_name": "12th Gen Intel(R) Core(TM) i5-12450H",
+    "hardware_virt_support": {
+      "intel_vmx": true,
+      "amd_svm": false,
+      "supported": true
+    },
+    "logical_cpus": 12
+  },
+  "memory": {
+    "raw_human": "total        used        free      shared  buff/cache   available\nMem:            15Gi       6.5Gi       2.9Gi       781Mi       6.9Gi       8.7Gi\nSwap:          4.0Gi          0B       4.0Gi",
+    "raw_bytes": "total        used        free      shared  buff/cache   available\nMem:     16371535872  6978179072  3159031808   821530624  7409061888  9393356800\nSwap:     4294963200           0  4294963200",
+    "total_kb": "15987828 kB",
+    "free_kb": "3084992 kB",
+    "available_kb": "9173200 kB",
+    "swap_total_kb": "4194300 kB",
+    "swap_free_kb": "4194300 kB"
+  },
+  "storage": {
+    "lsblk": {
+      "blockdevices": [
+        {
+          "name": "loop0",
+          "size": "214.5M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/brave/678"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop1",
+          "size": "4K",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/bare/5"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop2",
+          "size": "179.3M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/chromium/3520"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop3",
+          "size": "528.4M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/code/261"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop4",
+          "size": "528.4M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/code/262"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop5",
+          "size": "63.8M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/core20/2866"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop6",
+          "size": "74M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/core22/2292"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop7",
+          "size": "74M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/core22/2437"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop8",
+          "size": "66.8M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/core24/1643"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop9",
+          "size": "47.9M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/cups/1238"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop10",
+          "size": "251.7M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/firefox/7766"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop11",
+          "size": "18.5M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/firmware-updater/210"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop12",
+          "size": "16.5M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/firmware-updater/226"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop13",
+          "size": "531.4M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/gnome-42-2204/247"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop14",
+          "size": "531.5M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/gnome-42-2204/263"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop15",
+          "size": "614.5M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/gnome-46-2404/164"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop16",
+          "size": "91.7M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/gtk-common-themes/1535"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop17",
+          "size": "10.8M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/snap-store/1270"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop18",
+          "size": "402M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/mesa-2404/1839"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop19",
+          "size": "48.1M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/snapd/25935"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop20",
+          "size": "576K",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/snapd-desktop-integration/343"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop21",
+          "size": "828K",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/snapd-desktop-integration/391"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "loop22",
+          "size": "11.8M",
+          "type": "loop",
+          "mountpoints": [
+            "/snap/snap-store/1390"
+          ],
+          "fstype": "squashfs",
+          "model": null,
+          "rota": false
+        },
+        {
+          "name": "nvme0n1",
+          "size": "476.9G",
+          "type": "disk",
+          "mountpoints": [
+            null
+          ],
+          "fstype": null,
+          "model": "Micron_2400_MTFDKBA512QFM",
+          "rota": false,
+          "children": [
+            {
+              "name": "nvme0n1p1",
+              "size": "260M",
+              "type": "part",
+              "mountpoints": [
+                "/boot/efi"
+              ],
+              "fstype": "vfat",
+              "model": null,
+              "rota": false
+            },
+            {
+              "name": "nvme0n1p2",
+              "size": "16M",
+              "type": "part",
+              "mountpoints": [
+                null
+              ],
+              "fstype": null,
+              "model": null,
+              "rota": false
+            },
+            {
+              "name": "nvme0n1p3",
+              "size": "405.4G",
+              "type": "part",
+              "mountpoints": [
+                null
+              ],
+              "fstype": "ntfs",
+              "model": null,
+              "rota": false
+            },
+            {
+              "name": "nvme0n1p4",
+              "size": "1G",
+              "type": "part",
+              "mountpoints": [
+                null
+              ],
+              "fstype": "ntfs",
+              "model": null,
+              "rota": false
+            },
+            {
+              "name": "nvme0n1p5",
+              "size": "260M",
+              "type": "part",
+              "mountpoints": [
+                null
+              ],
+              "fstype": "vfat",
+              "model": null,
+              "rota": false
+            },
+            {
+              "name": "nvme0n1p6",
+              "size": "70G",
+              "type": "part",
+              "mountpoints": [
+                "/"
+              ],
+              "fstype": "ext4",
+              "model": null,
+              "rota": false
+            }
+          ]
+        }
+      ]
+    },
+    "findmnt": {
+      "filesystems": [
+        {
+          "target": "/",
+          "source": "/dev/nvme0n1p6",
+          "fstype": "ext4",
+          "options": "rw,relatime",
+          "children": [
+            {
+              "target": "/sys",
+              "source": "sysfs",
+              "fstype": "sysfs",
+              "options": "rw,nosuid,nodev,noexec,relatime",
+              "children": [
+                {
+                  "target": "/sys/kernel/security",
+                  "source": "securityfs",
+                  "fstype": "securityfs",
+                  "options": "rw,nosuid,nodev,noexec,relatime"
+                },
+                {
+                  "target": "/sys/fs/cgroup",
+                  "source": "cgroup2",
+                  "fstype": "cgroup2",
+                  "options": "rw,nosuid,nodev,noexec,relatime"
+                },
+                {
+                  "target": "/sys/fs/pstore",
+                  "source": "none",
+                  "fstype": "pstore",
+                  "options": "rw,nosuid,nodev,noexec,relatime"
+                },
+                {
+                  "target": "/sys/firmware/efi/efivars",
+                  "source": "efivarfs",
+                  "fstype": "efivarfs",
+                  "options": "rw,nosuid,nodev,noexec,relatime"
+                },
+                {
+                  "target": "/sys/fs/bpf",
+                  "source": "bpf",
+                  "fstype": "bpf",
+                  "options": "rw,nosuid,nodev,noexec,relatime,mode=700"
+                },
+                {
+                  "target": "/sys/kernel/debug",
+                  "source": "debugfs",
+                  "fstype": "debugfs",
+                  "options": "rw,nosuid,nodev,noexec,relatime"
+                },
+                {
+                  "target": "/sys/kernel/tracing",
+                  "source": "tracefs",
+                  "fstype": "tracefs",
+                  "options": "rw,nosuid,nodev,noexec,relatime"
+                },
+                {
+                  "target": "/sys/fs/fuse/connections",
+                  "source": "fusectl",
+                  "fstype": "fusectl",
+                  "options": "rw,nosuid,nodev,noexec,relatime"
+                },
+                {
+                  "target": "/sys/kernel/config",
+                  "source": "configfs",
+                  "fstype": "configfs",
+                  "options": "rw,nosuid,nodev,noexec,relatime"
+                }
+              ]
+            },
+            {
+              "target": "/proc",
+              "source": "proc",
+              "fstype": "proc",
+              "options": "rw,nosuid,nodev,noexec,relatime",
+              "children": [
+                {
+                  "target": "/proc/sys/fs/binfmt_misc",
+                  "source": "systemd-1",
+                  "fstype": "autofs",
+                  "options": "rw,relatime,fd=32,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=8829",
+                  "children": [
+                    {
+                      "target": "/proc/sys/fs/binfmt_misc",
+                      "source": "binfmt_misc",
+                      "fstype": "binfmt_misc",
+                      "options": "rw,nosuid,nodev,noexec,relatime"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "target": "/dev",
+              "source": "udev",
+              "fstype": "devtmpfs",
+              "options": "rw,nosuid,relatime,size=6970824k,nr_inodes=1742706,mode=755,inode64",
+              "children": [
+                {
+                  "target": "/dev/pts",
+                  "source": "devpts",
+                  "fstype": "devpts",
+                  "options": "rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000"
+                },
+                {
+                  "target": "/dev/shm",
+                  "source": "tmpfs",
+                  "fstype": "tmpfs",
+                  "options": "rw,nosuid,nodev,inode64"
+                },
+                {
+                  "target": "/dev/hugepages",
+                  "source": "hugetlbfs",
+                  "fstype": "hugetlbfs",
+                  "options": "rw,nosuid,nodev,relatime,pagesize=2M"
+                },
+                {
+                  "target": "/dev/mqueue",
+                  "source": "mqueue",
+                  "fstype": "mqueue",
+                  "options": "rw,nosuid,nodev,noexec,relatime"
+                }
+              ]
+            },
+            {
+              "target": "/run",
+              "source": "tmpfs",
+              "fstype": "tmpfs",
+              "options": "rw,nosuid,nodev,noexec,relatime,size=1598784k,mode=755,inode64",
+              "children": [
+                {
+                  "target": "/run/lock",
+                  "source": "tmpfs",
+                  "fstype": "tmpfs",
+                  "options": "rw,nosuid,nodev,noexec,relatime,size=5120k,inode64"
+                },
+                {
+                  "target": "/run/qemu",
+                  "source": "tmpfs",
+                  "fstype": "tmpfs",
+                  "options": "rw,nosuid,nodev,relatime,mode=755,inode64"
+                },
+                {
+                  "target": "/run/snapd/ns",
+                  "source": "tmpfs[/snapd/ns]",
+                  "fstype": "tmpfs",
+                  "options": "rw,nosuid,nodev,noexec,relatime,size=1598784k,mode=755,inode64",
+                  "children": [
+                    {
+                      "target": "/run/snapd/ns/cups.mnt",
+                      "source": "nsfs[mnt:[4026532984]]",
+                      "fstype": "nsfs",
+                      "options": "rw"
+                    },
+                    {
+                      "target": "/run/snapd/ns/snapd-desktop-integration.mnt",
+                      "source": "nsfs[mnt:[4026533156]]",
+                      "fstype": "nsfs",
+                      "options": "rw"
+                    },
+                    {
+                      "target": "/run/snapd/ns/brave.mnt",
+                      "source": "nsfs[mnt:[4026533223]]",
+                      "fstype": "nsfs",
+                      "options": "rw"
+                    },
+                    {
+                      "target": "/run/snapd/ns/snap-store.mnt",
+                      "source": "nsfs[mnt:[4026533168]]",
+                      "fstype": "nsfs",
+                      "options": "rw"
+                    },
+                    {
+                      "target": "/run/snapd/ns/firefox.mnt",
+                      "source": "nsfs[mnt:[4026533165]]",
+                      "fstype": "nsfs",
+                      "options": "rw"
+                    },
+                    {
+                      "target": "/run/snapd/ns/firmware-updater.mnt",
+                      "source": "nsfs[mnt:[4026533166]]",
+                      "fstype": "nsfs",
+                      "options": "rw"
+                    }
+                  ]
+                },
+                {
+                  "target": "/run/user/1000",
+                  "source": "tmpfs",
+                  "fstype": "tmpfs",
+                  "options": "rw,nosuid,nodev,relatime,size=1598780k,nr_inodes=399695,mode=700,uid=1000,gid=1000,inode64",
+                  "children": [
+                    {
+                      "target": "/run/user/1000/doc",
+                      "source": "portal",
+                      "fstype": "fuse.portal",
+                      "options": "rw,nosuid,nodev,relatime,user_id=1000,group_id=1000"
+                    },
+                    {
+                      "target": "/run/user/1000/gvfs",
+                      "source": "gvfsd-fuse",
+                      "fstype": "fuse.gvfsd-fuse",
+                      "options": "rw,nosuid,nodev,relatime,user_id=1000,group_id=1000"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "target": "/snap/bare/5",
+              "source": "/dev/loop1",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/brave/678",
+              "source": "/dev/loop0",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/chromium/3520",
+              "source": "/dev/loop2",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/code/261",
+              "source": "/dev/loop3",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/code/262",
+              "source": "/dev/loop4",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/core20/2866",
+              "source": "/dev/loop5",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/core22/2292",
+              "source": "/dev/loop6",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/core22/2437",
+              "source": "/dev/loop7",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/cups/1238",
+              "source": "/dev/loop9",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/core24/1643",
+              "source": "/dev/loop8",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/firefox/7766",
+              "source": "/dev/loop10",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/firmware-updater/210",
+              "source": "/dev/loop11",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/firmware-updater/226",
+              "source": "/dev/loop12",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/gnome-42-2204/247",
+              "source": "/dev/loop13",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/gnome-42-2204/263",
+              "source": "/dev/loop14",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/gnome-46-2404/164",
+              "source": "/dev/loop15",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/gtk-common-themes/1535",
+              "source": "/dev/loop16",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/snap-store/1270",
+              "source": "/dev/loop17",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/mesa-2404/1839",
+              "source": "/dev/loop18",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/snapd/25935",
+              "source": "/dev/loop19",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/snapd-desktop-integration/343",
+              "source": "/dev/loop20",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/snap/snapd-desktop-integration/391",
+              "source": "/dev/loop21",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/boot/efi",
+              "source": "/dev/nvme0n1p1",
+              "fstype": "vfat",
+              "options": "rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro"
+            },
+            {
+              "target": "/snap/snap-store/1390",
+              "source": "/dev/loop22",
+              "fstype": "squashfs",
+              "options": "ro,nodev,relatime,errors=continue,threads=single"
+            },
+            {
+              "target": "/var/lib/lxcfs",
+              "source": "lxcfs",
+              "fstype": "fuse.lxcfs",
+              "options": "rw,nosuid,nodev,relatime,user_id=0,group_id=0,allow_other"
+            }
+          ]
+        }
+      ]
+    },
+    "df_raw": "Filesystem      Size  Used Avail Use% Mounted on\ntmpfs           1.6G  3.7M  1.6G   1% /run\n/dev/nvme0n1p6   69G   34G   31G  53% /\ntmpfs           7.7G  139M  7.5G   2% /dev/shm\ntmpfs           5.0M   12K  5.0M   1% /run/lock\nefivarfs        192K  139K   49K  75% /sys/firmware/efi/efivars\ntmpfs           7.7G     0  7.7G   0% /run/qemu\n/dev/nvme0n1p1  256M   79M  178M  31% /boot/efi\ntmpfs           1.6G  144K  1.6G   1% /run/user/1000"
+  },
+  "network": {
+    "interfaces": [
+      {
+        "ifindex": 1,
+        "ifname": "lo",
+        "flags": [
+          "LOOPBACK",
+          "UP",
+          "LOWER_UP"
+        ],
+        "mtu": 65536,
+        "qdisc": "noqueue",
+        "operstate": "UNKNOWN",
+        "group": "default",
+        "txqlen": 1000,
+        "link_type": "loopback",
+        "address": "00:00:00:00:00:00",
+        "broadcast": "00:00:00:00:00:00",
+        "addr_info": [
+          {
+            "family": "inet",
+            "local": "127.0.0.1",
+            "prefixlen": 8,
+            "scope": "host",
+            "label": "lo",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          },
+          {
+            "family": "inet6",
+            "local": "::1",
+            "prefixlen": 128,
+            "scope": "host",
+            "noprefixroute": true,
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          }
+        ]
+      },
+      {
+        "ifindex": 3,
+        "ifname": "wlo1",
+        "flags": [
+          "BROADCAST",
+          "MULTICAST",
+          "UP",
+          "LOWER_UP"
+        ],
+        "mtu": 1500,
+        "qdisc": "noqueue",
+        "operstate": "UP",
+        "group": "default",
+        "txqlen": 1000,
+        "link_type": "ether",
+        "address": "a0:59:50:97:59:50",
+        "broadcast": "ff:ff:ff:ff:ff:ff",
+        "altnames": [
+          "wlp0s20f3"
+        ],
+        "addr_info": [
+          {
+            "family": "inet",
+            "local": "172.16.51.105",
+            "prefixlen": 23,
+            "broadcast": "172.16.51.255",
+            "scope": "global",
+            "dynamic": true,
+            "noprefixroute": true,
+            "label": "wlo1",
+            "valid_life_time": 168166,
+            "preferred_life_time": 168166
+          },
+          {
+            "family": "inet6",
+            "local": "fe80::2e05:15c3:8120:1619",
+            "prefixlen": 64,
+            "scope": "link",
+            "noprefixroute": true,
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          }
+        ]
+      },
+      {
+        "ifindex": 4,
+        "ifname": "virbr0",
+        "flags": [
+          "NO-CARRIER",
+          "BROADCAST",
+          "MULTICAST",
+          "UP"
+        ],
+        "mtu": 1500,
+        "qdisc": "noqueue",
+        "operstate": "DOWN",
+        "group": "default",
+        "txqlen": 1000,
+        "link_type": "ether",
+        "address": "52:54:00:02:74:a2",
+        "broadcast": "ff:ff:ff:ff:ff:ff",
+        "addr_info": [
+          {
+            "family": "inet",
+            "local": "192.168.122.1",
+            "prefixlen": 24,
+            "broadcast": "192.168.122.255",
+            "scope": "global",
+            "label": "virbr0",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          }
+        ]
+      },
+      {
+        "ifindex": 5,
+        "ifname": "lxcbr0",
+        "flags": [
+          "NO-CARRIER",
+          "BROADCAST",
+          "MULTICAST",
+          "UP"
+        ],
+        "mtu": 1500,
+        "qdisc": "noqueue",
+        "operstate": "DOWN",
+        "group": "default",
+        "txqlen": 1000,
+        "link_type": "ether",
+        "address": "00:16:3e:00:00:00",
+        "broadcast": "ff:ff:ff:ff:ff:ff",
+        "addr_info": [
+          {
+            "family": "inet",
+            "local": "10.0.3.1",
+            "prefixlen": 24,
+            "broadcast": "10.0.3.255",
+            "scope": "global",
+            "label": "lxcbr0",
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          }
+        ]
+      },
+      {
+        "ifindex": 7,
+        "ifname": "enx00e04c680691",
+        "flags": [
+          "BROADCAST",
+          "MULTICAST",
+          "UP",
+          "LOWER_UP"
+        ],
+        "mtu": 1500,
+        "qdisc": "fq_codel",
+        "operstate": "UP",
+        "group": "default",
+        "txqlen": 1000,
+        "link_type": "ether",
+        "address": "00:e0:4c:68:06:91",
+        "broadcast": "ff:ff:ff:ff:ff:ff",
+        "addr_info": [
+          {
+            "family": "inet",
+            "local": "172.16.112.117",
+            "prefixlen": 23,
+            "broadcast": "172.16.113.255",
+            "scope": "global",
+            "dynamic": true,
+            "noprefixroute": true,
+            "label": "enx00e04c680691",
+            "valid_life_time": 13977,
+            "preferred_life_time": 13977
+          },
+          {
+            "family": "inet6",
+            "local": "2001:db8:1::6c",
+            "prefixlen": 128,
+            "scope": "global",
+            "dynamic": true,
+            "noprefixroute": true,
+            "valid_life_time": 6778,
+            "preferred_life_time": 3178
+          },
+          {
+            "family": "inet6",
+            "local": "fe80::cb36:ecc8:1b6f:9182",
+            "prefixlen": 64,
+            "scope": "link",
+            "noprefixroute": true,
+            "valid_life_time": 4294967295,
+            "preferred_life_time": 4294967295
+          }
+        ]
+      }
+    ],
+    "routes": [
+      {
+        "dst": "default",
+        "gateway": "172.16.112.1",
+        "dev": "enx00e04c680691",
+        "protocol": "dhcp",
+        "prefsrc": "172.16.112.117",
+        "metric": 100,
+        "flags": []
+      },
+      {
+        "dst": "default",
+        "gateway": "172.16.50.1",
+        "dev": "wlo1",
+        "protocol": "dhcp",
+        "prefsrc": "172.16.51.105",
+        "metric": 20600,
+        "flags": []
+      },
+      {
+        "dst": "10.0.3.0/24",
+        "dev": "lxcbr0",
+        "protocol": "kernel",
+        "scope": "link",
+        "prefsrc": "10.0.3.1",
+        "flags": [
+          "linkdown"
+        ]
+      },
+      {
+        "dst": "172.16.50.0/23",
+        "dev": "wlo1",
+        "protocol": "kernel",
+        "scope": "link",
+        "prefsrc": "172.16.51.105",
+        "metric": 600,
+        "flags": []
+      },
+      {
+        "dst": "172.16.112.0/23",
+        "dev": "enx00e04c680691",
+        "protocol": "kernel",
+        "scope": "link",
+        "prefsrc": "172.16.112.117",
+        "metric": 100,
+        "flags": []
+      },
+      {
+        "dst": "192.168.122.0/24",
+        "dev": "virbr0",
+        "protocol": "kernel",
+        "scope": "link",
+        "prefsrc": "192.168.122.1",
+        "flags": [
+          "linkdown"
+        ]
+      }
+    ],
+    "detected_bridges": [
+      "virbr0",
+      "lxcbr0"
+    ],
+    "raw_ip_addr": null,
+    "raw_ip_route": null
+  },
+  "kvm": {
+    "kvm_ok": {
+      "command": "kvm-ok",
+      "exit_code": 0,
+      "stdout": "INFO: /dev/kvm exists\nKVM acceleration can be used",
+      "stderr": "",
+      "execution_time_sec": 0.0059
+    },
+    "dev_kvm_exists": true,
+    "dev_kvm_accessible": true,
+    "kvm_modules": "kvm_intel             540672  0\nkvm                  1507328  1 kvm_intel\nirqbypass              16384  1 kvm",
+    "libvirt_version": "10.0.0",
+    "virsh_available": true,
+    "domains": [
+      {
+        "id": "-",
+        "name": "ubuntu24.04",
+        "state": "shut off",
+        "vcpus": "2",
+        "memory": "2097152 KiB",
+        "dominfo_raw": "Id:             -\nName:           ubuntu24.04\nUUID:           78b1a912-9dd0-46c3-b5bc-f803b24f74f4\nOS Type:        hvm\nState:          shut off\nCPU(s):         2\nMax memory:     2097152 KiB\nUsed memory:    2097152 KiB\nPersistent:     yes\nAutostart:      disable\nManaged save:   no\nSecurity model: apparmor\nSecurity DOI:   0"
+      }
+    ],
+    "raw_domain_list": "Id   Name          State\n------------------------------\n -    ubuntu24.04   shut off"
+  },
+  "virtualbox": {
+    "installed": true,
+    "version": "7.2.16r174877",
+    "kernel_modules": "vboxnetadp             28672  0\nvboxnetflt             40960  0\nvboxdrv               720896  2 vboxnetadp,vboxnetflt",
+    "vms": [
+      {
+        "name": "Ubuntu-Server-VBox",
+        "uuid": "8a699556-1ddf-41cf-b252-c7c8b10255ac",
+        "state": "poweroff",
+        "cpus": "2",
+        "memory_mb": "2048"
+      }
+    ],
+    "running_vms": [],
+    "raw_vms": "\"Ubuntu-Server-VBox\" {8a699556-1ddf-41cf-b252-c7c8b10255ac}",
+    "raw_running_vms": ""
+  },
+  "lxc": {
+    "installed": true,
+    "version": "5.0.3",
+    "binaries": {
+      "lxc_info": "/usr/bin/lxc-info",
+      "lxc_ls": "/usr/bin/lxc-ls",
+      "lxc_start": "/usr/bin/lxc-start",
+      "lxc_stop": "/usr/bin/lxc-stop",
+      "lxc_attach": "/usr/bin/lxc-attach"
+    },
+    "lxc_checkconfig": "LXC version 5.0.3\nKernel configuration not found at /proc/config.gz; searching...\nKernel configuration found at /boot/config-7.0.0-31-generic\n\n--- Namespaces ---\nNamespaces: enabled\nUtsname namespace: enabled\nIpc namespace: enabled\nPid namespace: enabled\nUser namespace: enabled\nNetwork namespace: enabled\n\n--- Control groups ---\nCgroups: enabled\nCgroup namespace: enabled\nCgroup v1 mount points: \nCgroup v2 mount points: \n - /sys/fs/cgroup\nCgroup device: enabled\nCgroup sched: enabled\nCgroup cpu account: enabled\nCgroup memory controller: enabled\nCgroup cpuset: enabled\n\n--- Misc ---\nVeth pair device: enabled, not loaded\nMacvlan: enabled, not loaded\nVlan: enabled, not loaded\nBridges: enabled, loaded\nAdvanced netfilter: enabled, loaded\nCONFIG_IP_NF_TARGET_MASQUERADE: enabled, not loaded\nCONFIG_IP6_NF_TARGET_MASQUERADE: enabled, not loaded\nCONFIG_NETFILTER_XT_TARGET_CHECKSUM: enabled, loaded\nCONFIG_NETFILTER_XT_MATCH_COMMENT: enabled, not loaded\nFUSE (for use with lxcfs): enabled, not loaded\n\n--- Checkpoint/Restore ---\ncheckpoint restore: enabled\nCONFIG_FHANDLE: enabled\nCONFIG_EVENTFD: enabled\nCONFIG_EPOLL: enabled\nCONFIG_UNIX_DIAG: enabled\nCONFIG_INET_DIAG: enabled\nCONFIG_PACKET_DIAG: enabled\nCONFIG_NETLINK_DIAG: enabled\nFile capabilities: enabled\n\nNote : Before booting a new kernel, you can check its configuration\nusage : CONFIG=/path/to/config /usr/bin/lxc-checkconfig",
+    "containers_in_var_lib_lxc": [
+      {
+        "name": "lxc-ubuntu",
+        "path": "/var/lib/lxc/lxc-ubuntu",
+        "is_dir": true
+      }
+    ],
+    "containers_in_user_dir": [],
+    "raw_lxc_ls": "",
+    "subuid_mapping": "karthik-chakala:100000:65536",
+    "subgid_mapping": "karthik-chakala:100000:65536"
+  },
+  "tools": {
+    "fio": {
+      "installed": false,
+      "path": null,
+      "version_summary": null
+    },
+    "iperf3": {
+      "installed": false,
+      "path": null,
+      "version_summary": null
+    },
+    "perf": {
+      "installed": true,
+      "path": "/usr/bin/perf",
+      "version_summary": "perf version 7.0.14"
+    },
+    "strace": {
+      "installed": true,
+      "path": "/usr/bin/strace",
+      "version_summary": "strace -- version 6.8"
+    },
+    "pidstat": {
+      "installed": true,
+      "path": "/usr/bin/pidstat",
+      "version_summary": "Version flag not supported"
+    },
+    "mpstat": {
+      "installed": true,
+      "path": "/usr/bin/mpstat",
+      "version_summary": "Version flag not supported"
+    },
+    "gcc": {
+      "installed": true,
+      "path": "/usr/bin/gcc",
+      "version_summary": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0"
+    },
+    "g++": {
+      "installed": true,
+      "path": "/usr/bin/g++",
+      "version_summary": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0"
+    },
+    "make": {
+      "installed": true,
+      "path": "/usr/bin/make",
+      "version_summary": "GNU Make 4.3"
+    },
+    "clang": {
+      "installed": false,
+      "path": null,
+      "version_summary": null
+    },
+    "python3": {
+      "installed": true,
+      "path": "/usr/bin/python3",
+      "version_summary": "Python 3.12.3"
+    },
+    "node": {
+      "installed": true,
+      "path": "/home/karthik-chakala/.local/bin/node",
+      "version_summary": "v20.18.0"
+    },
+    "npm": {
+      "installed": true,
+      "path": "/home/karthik-chakala/.local/bin/npm",
+      "version_summary": "10.8.2"
+    },
+    "virsh": {
+      "installed": true,
+      "path": "/usr/bin/virsh",
+      "version_summary": "10.0.0"
+    },
+    "VBoxManage": {
+      "installed": true,
+      "path": "/usr/bin/VBoxManage",
+      "version_summary": "7.2.16r174877"
+    },
+    "lxc-ls": {
+      "installed": true,
+      "path": "/usr/bin/lxc-ls",
+      "version_summary": "5.0.3"
+    },
+    "lxc-info": {
+      "installed": true,
+      "path": "/usr/bin/lxc-info",
+      "version_summary": "5.0.3"
+    },
+    "lxc-start": {
+      "installed": true,
+      "path": "/usr/bin/lxc-start",
+      "version_summary": "5.0.3"
+    },
+    "lxc-stop": {
+      "installed": true,
+      "path": "/usr/bin/lxc-stop",
+      "version_summary": "5.0.3"
+    },
+    "bc": {
+      "installed": true,
+      "path": "/usr/bin/bc",
+      "version_summary": "bc 1.07.1"
+    },
+    "jq": {
+      "installed": true,
+      "path": "/usr/bin/jq",
+      "version_summary": "jq-1.7"
+    },
+    "curl": {
+      "installed": true,
+      "path": "/usr/bin/curl",
+      "version_summary": "curl 8.5.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13 zlib/1.3 brotli/1.1.0 zstd/1.5.5 libidn2/2.3.7 libpsl/0.21.2 (+libidn2/2.3.7) libssh/0.10.6/openssl/zlib nghttp2/1.59.0 librtmp/2.3 OpenLDAP/2.6.10"
+    },
+    "wget": {
+      "installed": true,
+      "path": "/usr/bin/wget",
+      "version_summary": "GNU Wget 1.21.4 built on linux-gnu."
+    },
+    "lshw": {
+      "installed": true,
+      "path": "/usr/bin/lshw",
+      "version_summary": "Version flag not supported"
+    },
+    "dmidecode": {
+      "installed": true,
+      "path": "/usr/sbin/dmidecode",
+      "version_summary": "3.5"
+    }
+  }
+}

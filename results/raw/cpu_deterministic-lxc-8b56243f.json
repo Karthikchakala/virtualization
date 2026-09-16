@@ -1,0 +1,109 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-test-lxc",
+  "environment": "lxc",
+  "benchmark": "cpu_deterministic",
+  "run_id": "cpu_deterministic-lxc-8b56243f",
+  "timestamp": "2026-09-16T10:48:43.702268+00:00",
+  "command": "/home/karthik-chakala/Downloads/CC2/workloads/dist/cpu_workload --size 100 --iterations 2 --warmup 0 --threads 1",
+  "exit_code": 0,
+  "stdout": "{\n  \"workload\": \"cpu_deterministic\",\n  \"version\": \"1.0.0\",\n  \"parameters\": {\n    \"matrix_size\": 100,\n    \"iterations\": 2,\n    \"warmup\": 0,\n    \"threads\": 1\n  },\n  \"results\": {\n    \"total_flops\": 4000000,\n    \"warmup_elapsed_sec\": 0.000000,\n    \"elapsed_sec\": 0.000908,\n    \"gflops\": 4.4058,\n    \"checksum\": \"0x45e2faefbfda0725\",\n    \"status\": \"success\"\n  }\n}\n",
+  "stderr": "",
+  "metrics": {
+    "total_flops": 4000000,
+    "warmup_elapsed_sec": 0.0,
+    "elapsed_sec": 0.000908,
+    "gflops": 4.4058,
+    "checksum": "0x45e2faefbfda0725",
+    "status": "success",
+    "parameters": {
+      "matrix_size": 100,
+      "iterations": 2,
+      "warmup": 0,
+      "threads": 1
+    },
+    "telemetry": {
+      "time_v": {
+        "status": "success",
+        "user_time_sec": 0.0,
+        "system_time_sec": 0.0,
+        "wall_time_sec": 0.0,
+        "cpu_percentage": 0.0,
+        "max_rss_kb": 1060,
+        "vsz_kb": 0,
+        "minor_page_faults": 105,
+        "major_page_faults": 0,
+        "total_page_faults": 105,
+        "voluntary_context_switches": 1,
+        "involuntary_context_switches": 0,
+        "total_context_switches": 1,
+        "exit_code": 0,
+        "raw_time_v": "\tCommand being timed: \"/home/karthik-chakala/Downloads/CC2/workloads/dist/cpu_workload --size 100 --iterations 2 --warmup 0 --threads 1\"\n\tUser time (seconds): 0.00\n\tSystem time (seconds): 0.00\n\tPercent of CPU this job got: 0%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 0:00.00\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 1060\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 0\n\tMinor (reclaiming a frame) page faults: 105\n\tVoluntary context switches: 1\n\tInvoluntary context switches: 0\n\tSwaps: 0\n\tFile system inputs: 0\n\tFile system outputs: 0\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 0\n"
+      },
+      "perf": {
+        "status": "unavailable",
+        "reason": "Hardware counters restricted (Error:)",
+        "cycles": null,
+        "instructions": null,
+        "context_switches": null,
+        "cpu_migrations": null,
+        "page_faults": null
+      },
+      "wall_time_sec": 0.0,
+      "user_time_sec": 0.0,
+      "system_time_sec": 0.0,
+      "cpu_percentage": 0.0,
+      "max_rss_kb": 1060,
+      "vsz_kb": 0,
+      "page_faults": {
+        "minor": 105,
+        "major": 0,
+        "total": 105
+      },
+      "context_switches": {
+        "voluntary": 1,
+        "involuntary": 0,
+        "total": 1
+      }
+    },
+    "wall_time_sec": 0.0,
+    "user_time_sec": 0.0,
+    "system_time_sec": 0.0,
+    "cpu_percentage": 0.0,
+    "max_rss_kb": 1060,
+    "container_name": "lxc-ubuntu",
+    "container_state": "STOPPED",
+    "cgroup_telemetry": {
+      "status": "success",
+      "cgroup_path": "/sys/fs/cgroup",
+      "cpu": {
+        "usage_usec": 10607372000,
+        "user_usec": 8687824000,
+        "system_usec": 1919548000,
+        "nice_usec": 19637000,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 0,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0
+      },
+      "memory": {},
+      "io": {
+        "raw_lines": [
+          "7:22 rbytes=408576 wbytes=0 rios=62 wios=0 dbytes=0 dios=0",
+          "7:21 rbytes=527360 wbytes=0 rios=44 wios=0 dbytes=0 dios=0",
+          "7:20 rbytes=59392 wbytes=0 rios=21 wios=0 dbytes=0 dios=0",
+          "7:19 rbytes=1735680 wbytes=0 rios=90 wios=0 dbytes=0 dios=0",
+          "7:18 rbytes=2992128 wbytes=0 rios=134 wios=0 dbytes=0 dios=0"
+        ]
+      }
+    },
+    "kernel_sharing": {
+      "shared": true,
+      "host_kernel": "7.0.0-31-generic",
+      "container_kernel": "7.0.0-31-generic"
+    }
+  },
+  "status": "success"
+}

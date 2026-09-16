@@ -1,0 +1,120 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "run_id": "scheduling_deterministic-host-41c8f110",
+  "environment": "host",
+  "benchmark": "scheduling_deterministic",
+  "timestamp": "2026-09-16T19:19:33.460020+00:00",
+  "command": "/tmp/cc2_workloads/scheduling_workload --iterations 20000 --warmup 1000",
+  "workload": {
+    "name": "scheduling_workload",
+    "path": "/tmp/cc2_workloads/scheduling_workload",
+    "sha256": "2c69d4493ed25e1ba413c2710191861ee98e88fc597a7bfc6cccc1020fb472b7",
+    "size_bytes": 825464,
+    "verified": true
+  },
+  "environment_identity": {
+    "environment": "host",
+    "classification": "Bare-Metal Reference (Zero Virtualization Overhead)",
+    "virtualization_type": "none",
+    "kernel_release": "7.0.0-31-generic",
+    "os_release": "Ubuntu 24.04.5 LTS",
+    "hostname": "karthik-chakala-Vivobook-ASUSLaptop-K3605ZU-K3605ZU",
+    "vcpus": 12,
+    "memory_mb": 15613,
+    "ip_address": "127.0.0.1",
+    "mac_address": null,
+    "hypervisor_version": null,
+    "systemd_detect_virt": "none (bare-metal)",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "cpu_model": "12th Gen Intel(R) Core(TM) i5-12450H",
+      "logical_cpus": 12
+    }
+  },
+  "parameters": {
+    "iterations": 20000,
+    "warmup": 1000
+  },
+  "execution": {
+    "exit_code": 0,
+    "duration_sec": 0.08833055700233672,
+    "timed_out": false,
+    "status": "success"
+  },
+  "metrics": {
+    "workload": "scheduling_deterministic",
+    "version": "1.0.0",
+    "parameters": {
+      "iterations": 20000,
+      "warmup": 1000,
+      "mechanism": "pipe_ping_pong"
+    },
+    "results": {
+      "total_context_switches": 40000,
+      "elapsed_sec": 0.075256,
+      "switches_per_sec": 531516.86,
+      "latency_us": 1.881,
+      "checksum": "0x909e926a36d3fca6",
+      "status": "success"
+    },
+    "total_context_switches": 40000,
+    "elapsed_sec": 0.075256,
+    "switches_per_sec": 531516.86,
+    "latency_us": 1.881,
+    "checksum": "0x909e926a36d3fca6",
+    "status": "success",
+    "telemetry": {
+      "status": "success",
+      "user_time_sec": 0.01,
+      "system_time_sec": 0.06,
+      "wall_time_sec": 0.08,
+      "cpu_percentage": 91.0,
+      "max_rss_kb": 624,
+      "vsz_kb": 0,
+      "minor_page_faults": 60,
+      "major_page_faults": 0,
+      "total_page_faults": 60,
+      "voluntary_context_switches": 41982,
+      "involuntary_context_switches": 17,
+      "total_context_switches": 41999,
+      "exit_code": 0
+    },
+    "hypervisor_telemetry": {
+      "timestamp": 1789586373.457851,
+      "loadavg": [
+        0.85400390625,
+        1.068359375,
+        1.0419921875
+      ],
+      "logical_cpus": 12,
+      "host_mem_total_kb": 15987832,
+      "host_mem_available_kb": 8844544,
+      "thermals_celsius": {
+        "SEN2": 52.05,
+        "acpitz": 57.0,
+        "iwlwifi_1": 47.0,
+        "TCPU_PCI": 66.0,
+        "SEN5": 22.05,
+        "SEN3": 0.05,
+        "INT3400 Thermal": 20.0,
+        "x86_pkg_temp": 66.0,
+        "TCPU": 66.0,
+        "SEN4": 49.05
+      }
+    },
+    "wall_time_sec": 0.08,
+    "user_time_sec": 0.01,
+    "system_time_sec": 0.06,
+    "cpu_percentage": 91.0,
+    "max_rss_kb": 624,
+    "scheduling_telemetry": {
+      "voluntary_context_switches": 41982,
+      "involuntary_context_switches": 17,
+      "total_context_switches": 41999
+    }
+  },
+  "stdout": "{\n  \"workload\": \"scheduling_deterministic\",\n  \"version\": \"1.0.0\",\n  \"parameters\": {\n    \"iterations\": 20000,\n    \"warmup\": 1000,\n    \"mechanism\": \"pipe_ping_pong\"\n  },\n  \"results\": {\n    \"total_context_switches\": 40000,\n    \"elapsed_sec\": 0.075256,\n    \"switches_per_sec\": 531516.86,\n    \"latency_us\": 1.881,\n    \"checksum\": \"0x909e926a36d3fca6\",\n    \"status\": \"success\"\n  }\n}\n",
+  "stderr": "\tCommand being timed: \"/tmp/cc2_workloads/scheduling_workload --iterations 20000 --warmup 1000\"\n\tUser time (seconds): 0.01\n\tSystem time (seconds): 0.06\n\tPercent of CPU this job got: 91%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 0:00.08\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 624\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 0\n\tMinor (reclaiming a frame) page faults: 60\n\tVoluntary context switches: 41982\n\tInvoluntary context switches: 17\n\tSwaps: 0\n\tFile system inputs: 0\n\tFile system outputs: 0\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 0\n",
+  "status": "success"
+}

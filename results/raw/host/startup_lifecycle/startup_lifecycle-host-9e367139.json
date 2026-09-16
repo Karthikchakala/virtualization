@@ -1,0 +1,59 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "run_id": "startup_lifecycle-host-9e367139",
+  "environment": "host",
+  "benchmark": "startup_lifecycle",
+  "timestamp": "2026-09-16T19:19:23.896866+00:00",
+  "command": "measure_startup host host",
+  "workload": {
+    "name": "startup_lifecycle",
+    "path": "startup_lifecycle",
+    "sha256": null,
+    "size_bytes": null,
+    "verified": true
+  },
+  "environment_identity": {
+    "environment": "host",
+    "classification": "Bare-Metal Reference (Zero Virtualization Overhead)",
+    "virtualization_type": "none",
+    "kernel_release": "7.0.0-31-generic",
+    "os_release": "Ubuntu 24.04.5 LTS",
+    "hostname": "karthik-chakala-Vivobook-ASUSLaptop-K3605ZU-K3605ZU",
+    "vcpus": 12,
+    "memory_mb": 15613,
+    "ip_address": "127.0.0.1",
+    "mac_address": null,
+    "hypervisor_version": null,
+    "systemd_detect_virt": "none (bare-metal)",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "cpu_model": "12th Gen Intel(R) Core(TM) i5-12450H",
+      "logical_cpus": 12
+    }
+  },
+  "parameters": {},
+  "execution": {
+    "exit_code": 0,
+    "duration_sec": 0.0,
+    "timed_out": false,
+    "status": "unavailable"
+  },
+  "metrics": {
+    "status": "unavailable",
+    "reason": "Host baseline has zero hypervisor startup duration",
+    "startup_phases": {
+      "status": "unavailable",
+      "reason": "Host baseline has zero hypervisor startup duration"
+    },
+    "hypervisor_start_sec": null,
+    "os_ready_sec": null,
+    "network_ready_sec": null,
+    "app_ready_sec": null,
+    "total_boot_sec": null,
+    "telemetry": {}
+  },
+  "stdout": "{\"status\": \"unavailable\", \"reason\": \"Host baseline has zero hypervisor startup duration\"}",
+  "stderr": "",
+  "status": "unavailable"
+}

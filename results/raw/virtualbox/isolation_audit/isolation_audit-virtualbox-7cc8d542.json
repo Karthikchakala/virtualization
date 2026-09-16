@@ -1,0 +1,72 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "run_id": "isolation_audit-virtualbox-7cc8d542",
+  "environment": "virtualbox",
+  "benchmark": "isolation_audit",
+  "timestamp": "2026-09-16T19:24:24.422223+00:00",
+  "command": "audit_isolation virtualbox",
+  "workload": {
+    "name": "isolation_audit",
+    "path": "isolation_audit",
+    "sha256": null,
+    "size_bytes": null,
+    "verified": true
+  },
+  "environment_identity": {
+    "environment": "virtualbox",
+    "classification": "Hosted Hypervisor (Type-2)",
+    "virtualization_type": "type2",
+    "kernel_release": null,
+    "os_release": "Ubuntu (VirtualBox Guest)",
+    "hostname": "Ubuntu-Server-VBox",
+    "vcpus": 2,
+    "memory_mb": 2048,
+    "ip_address": "127.0.0.1",
+    "mac_address": "08002740B6E5",
+    "hypervisor_version": "VirtualBox 7.2.16r174877",
+    "systemd_detect_virt": "oracle",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "vm_name": "Ubuntu-Server-VBox",
+      "uuid": "8a699556-1ddf-41cf-b252-c7c8b10255ac",
+      "ssh_forwarded_port": 2222
+    }
+  },
+  "parameters": {},
+  "execution": {
+    "exit_code": 0,
+    "duration_sec": 0.1,
+    "timed_out": false,
+    "status": "success"
+  },
+  "metrics": {
+    "status": "success",
+    "isolation_audit": {
+      "environment": "virtualbox",
+      "systemd_detect_virt": "none",
+      "uname": "",
+      "is_shared_kernel": false,
+      "cgroup_self": "",
+      "namespaces_pid1": {},
+      "ip_addr": "",
+      "findmnt": ""
+    },
+    "is_shared_kernel": false,
+    "systemd_detect_virt": "none",
+    "kernel_release": "",
+    "telemetry": {},
+    "hypervisor_telemetry": {
+      "timestamp": 1789586664.3474753,
+      "environment": "virtualbox",
+      "vm_name": "Ubuntu-Server-VBox",
+      "vbox_metrics_raw": "Object          Metric                                   Values\n--------------- ---------------------------------------- --------------------------------------------\nUbuntu-Server-VBox CPU/Load/User                            \nUbuntu-Server-VBox CPU/Load/User:avg                        \nUbuntu-Server-VBox CPU/Load/User:min                        \nUbuntu-Server-VBox CPU/Load/User:max                        \nUbuntu-Server-VBox CPU/Load/Kernel                          \nUbuntu-Server-VBox CPU/Load/Kernel:avg                      \nUbuntu-Server-VBox CPU/Load/Kernel:min                      \nUbuntu-Server-VBox CPU/Load/Kernel:max                      \nUbuntu-Server-VBox RAM/Usage/Used                           \nUbuntu-Server-VBox RAM/Usage/Used:avg                       \nUbuntu-Server-VBox RAM/Usage/Used:min                       \nUbuntu-Server-VBox RAM/Usage/Used:max                       \nUbuntu-Server-VBox Disk/Usage/Used                          \nUbuntu-Server-VBox Disk/Usage/Used:avg                      \nUbuntu-Server-VBox Disk/Usage/Used:min                      \nUbuntu-Server-VBox Disk/Usage/Used:max                      \nUbuntu-Server-VBox Net/Rate/Rx                              \nUbuntu-Server-VBox Net/Rate/Rx:avg                          \nUbuntu-Server-VBox Net/Rate/Rx:min                          \nUbuntu-Server-VBox Net/Rate/Rx:max                          \nUbuntu-Server-VBox Net/Rate/Tx                              \nUbuntu-Server-VBox Net/Rate/Tx:avg                          \nUbuntu-Server-VBox Net/Rate/Tx:min                          \nUbuntu-Server-VBox Net/Rate/Tx:max                          \nUbuntu-Server-VBox Guest/CPU/Load/User                      \nUbuntu-Server-VBox Guest/CPU/Load/User:avg                  \nUbuntu-Server-VBox Guest/CPU/Load/User:min                  \nUbuntu-Server-VBox Guest/CPU/Load/User:max                  \nUbuntu-Server-VBox Guest/CPU/Load/Kernel                    \nUbuntu-Server-VBox Guest/CPU/Load/Kernel:avg                \nUbuntu-Server-VBox Guest/CPU/Load/Kernel:min                \nUbuntu-Server-VBox Guest/CPU/Load/Kernel:max                \nUbuntu-Server-VBox Guest/CPU/Load/Idle                      \nUbuntu-Server-VBox Guest/CPU/Load/Idle:avg                  \nUbuntu-Server-VBox Guest/CPU/Load/Idle:min                  \nUbuntu-Server-VBox Guest/CPU/Load/Idle:max                  \nUbuntu-Server-VBox Guest/RAM/Usage/Total                    \nUbuntu-Server-VBox Guest/RAM/Usage/Total:avg                \nUbuntu-Server-VBox Guest/RAM/Usage/Total:min                \nUbuntu-Server-VBox Guest/RAM/Usage/Total:max                \nUbuntu-Server-VBox Guest/RAM/Usage/Free                     \nUbuntu-Server-VBox Guest/RAM/Usage/Free:avg                 \nUbuntu-Server-VBox Guest/RAM/Usage/Free:min                 \nUbuntu-Server-VBox Guest/RAM/Usage/Free:max                 \nUbuntu-Server-VBox Guest/RAM/Usage/Balloon                  \nUbuntu-Server-VBox Guest/RAM/Usage/Balloon:avg              \nUbuntu-Server-VBox Guest/RAM/Usage/Balloon:min              \nUbuntu-Server-VBox Guest/RAM/Usage/Balloon:max              \nUbuntu-Server-VBox Guest/RAM/Usage/Shared                   \nUbuntu-Server-VBox Guest/RAM/Usage/Shared:avg               \nUbuntu-Server-VBox Guest/RAM/Usage/Shared:min               \nUbuntu-Server-VBox Guest/RAM/Usage/Shared:max               \nUbuntu-Server-VBox Guest/RAM/Usage/Cache                    \nUbuntu-Server-VBox Guest/RAM/Usage/Cache:avg                \nUbuntu-Server-VBox Guest/RAM/Usage/Cache:min                \nUbuntu-Server-VBox Guest/RAM/Usage/Cache:max                \nUbuntu-Server-VBox Guest/Pagefile/Usage/Total               \nUbuntu-Server-VBox Guest/Pagefile/Usage/Total:avg           \nUbuntu-Server-VBox Guest/Pagefile/Usage/Total:min           \nUbuntu-Server-VBox Guest/Pagefile/Usage/Total:max           \n",
+      "host_vbox_pid": 51295,
+      "host_vbox_vsz_kb": 2315152,
+      "host_vbox_rss_kb": 563856
+    }
+  },
+  "stdout": "{\"environment\": \"virtualbox\", \"systemd_detect_virt\": \"none\", \"uname\": \"\", \"is_shared_kernel\": false, \"cgroup_self\": \"\", \"namespaces_pid1\": {}, \"ip_addr\": \"\", \"findmnt\": \"\"}",
+  "stderr": "",
+  "status": "success"
+}

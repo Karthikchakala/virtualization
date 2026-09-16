@@ -1,0 +1,51 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "run_id": "memory_deterministic-kvm-20260916192053-104494",
+  "environment": "kvm",
+  "benchmark": "memory_deterministic",
+  "timestamp": "2026-09-16T19:20:53.553848+00:00",
+  "command": "memory_workload",
+  "workload": {
+    "name": "memory_workload",
+    "sha256": "1bbf56eae471571293a033c266978f5f63df9ef8dfb0badbae30802b8c28d544",
+    "verified": false
+  },
+  "environment_identity": {
+    "environment": "kvm",
+    "classification": "Kernel-based Hardware Virtualization (Type-1 / Type-1-like)",
+    "virtualization_type": "type1",
+    "kernel_release": null,
+    "os_release": "Ubuntu (KVM Guest)",
+    "hostname": "ubuntu24.04",
+    "vcpus": 2,
+    "memory_mb": 2048,
+    "ip_address": "192.168.122.179",
+    "mac_address": null,
+    "hypervisor_version": "QEMU/KVM (libvirt)",
+    "systemd_detect_virt": "kvm",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "vm_name": "ubuntu24.04",
+      "libvirt_uri": "qemu:///system"
+    }
+  },
+  "parameters": {
+    "buffer_mb": 128,
+    "passes": 4,
+    "stride": 64
+  },
+  "execution": {
+    "exit_code": -1,
+    "duration_sec": 0.0,
+    "timed_out": false,
+    "status": "failed"
+  },
+  "metrics": {
+    "status": "failed",
+    "reason": "Workload deployment integrity verification failed: Failed to transfer binary via SSHTransport"
+  },
+  "stdout": "",
+  "stderr": "Workload deployment integrity verification failed: Failed to transfer binary via SSHTransport",
+  "status": "failed"
+}

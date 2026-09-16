@@ -1,0 +1,39 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-105426-2820c0",
+  "environment": "host",
+  "benchmark": "startup_lifecycle",
+  "run_id": "startup_lifecycle-host-820f1610",
+  "timestamp": "2026-09-16T10:54:39.539521+00:00",
+  "command": "measure_startup host host",
+  "exit_code": 0,
+  "stdout": "{\"status\": \"unavailable\", \"reason\": \"Host baseline has zero hypervisor startup duration\"}",
+  "stderr": "",
+  "metrics": {
+    "telemetry": {},
+    "startup_phases": {
+      "status": "unavailable",
+      "reason": "Host baseline has zero hypervisor startup duration"
+    },
+    "metadata": {
+      "environment": "host",
+      "target_name": null,
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T10:54:27.954207+00:00",
+        "loadavg": [
+          3.02001953125,
+          3.203125,
+          3.06787109375
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2437596,
+        "mem_available_kb": 9343568,
+        "cpu_user_ticks": 938135,
+        "cpu_system_ticks": 195630,
+        "cpu_idle_ticks": 7067434
+      },
+      "experiment_id": "exp-20260916-105426-2820c0"
+    }
+  },
+  "status": "unavailable"
+}

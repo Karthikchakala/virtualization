@@ -1,0 +1,106 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-201721-7be525",
+  "run_id": "network_ping-kvm-f8f3eb8e",
+  "environment": "kvm",
+  "benchmark": "network_ping",
+  "timestamp": "2026-09-16T20:19:24.643432+00:00",
+  "command": "ping -c 5 -W 1 192.168.122.1",
+  "workload": {
+    "name": "ping",
+    "path": "ping",
+    "sha256": null,
+    "size_bytes": null,
+    "verified": true
+  },
+  "environment_identity": {
+    "environment": "kvm",
+    "classification": "Kernel-based Hardware Virtualization (Type-1 / Type-1-like)",
+    "virtualization_type": "type1",
+    "kernel_release": null,
+    "os_release": "Ubuntu (KVM Guest)",
+    "hostname": "ubuntu24.04",
+    "vcpus": 2,
+    "memory_mb": 2048,
+    "ip_address": "192.168.122.179",
+    "mac_address": null,
+    "hypervisor_version": "QEMU/KVM (libvirt)",
+    "systemd_detect_virt": "kvm",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "vm_name": "ubuntu24.04",
+      "libvirt_uri": "qemu:///system"
+    }
+  },
+  "parameters": {
+    "count": 5
+  },
+  "execution": {
+    "exit_code": 255,
+    "duration_sec": 0.24808070300059626,
+    "timed_out": false,
+    "status": "failed"
+  },
+  "metrics": {
+    "status": "failed",
+    "target_ip": "192.168.122.1",
+    "packets_transmitted": null,
+    "packets_received": null,
+    "packet_loss_percent": null,
+    "rtt_min_ms": null,
+    "rtt_avg_ms": null,
+    "rtt_max_ms": null,
+    "rtt_mdev_ms": null,
+    "telemetry": {
+      "status": "unavailable",
+      "user_time_sec": null,
+      "system_time_sec": null,
+      "wall_time_sec": null,
+      "cpu_percentage": null,
+      "max_rss_kb": null,
+      "vsz_kb": null,
+      "minor_page_faults": null,
+      "major_page_faults": null,
+      "total_page_faults": null,
+      "voluntary_context_switches": null,
+      "involuntary_context_switches": null,
+      "total_context_switches": null,
+      "exit_code": null
+    },
+    "hypervisor_telemetry": {
+      "timestamp": 1789589964.5513103,
+      "environment": "kvm",
+      "vm_name": "ubuntu24.04",
+      "domstats": {
+        "cpu.time": "19134532000",
+        "cpu.user": "16148391000",
+        "cpu.system": "2986140000",
+        "cpu.cache.monitor.count": "0",
+        "cpu.haltpoll.success.time": "82710794",
+        "cpu.haltpoll.fail.time": "100087902",
+        "balloon.current": "2097152",
+        "balloon.maximum": "2097152",
+        "balloon.swap_in": "0",
+        "balloon.swap_out": "0",
+        "balloon.major_fault": "0",
+        "balloon.minor_fault": "0",
+        "balloon.unused": "1810768",
+        "balloon.available": "1931196",
+        "balloon.usable": "1737084",
+        "balloon.last-update": "1789589897",
+        "balloon.disk_caches": "82824",
+        "balloon.hugetlb_pgalloc": "0",
+        "balloon.hugetlb_pgfail": "0",
+        "balloon.rss": "629120"
+      },
+      "cpu_time_ns": 19134532000,
+      "balloon_current_kb": 2097152,
+      "host_qemu_pid": 70045,
+      "host_qemu_vsz_kb": 3296992,
+      "host_qemu_rss_kb": 629732
+    }
+  },
+  "stdout": "",
+  "stderr": "karthik-chakala@192.168.122.179: Permission denied (publickey,password).\n",
+  "status": "failed"
+}

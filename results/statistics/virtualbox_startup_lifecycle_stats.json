@@ -1,0 +1,30 @@
+{
+  "environment": "virtualbox",
+  "benchmark": "startup_lifecycle",
+  "run_counts": {
+    "total": 2,
+    "success": 2,
+    "unavailable": 0,
+    "failed": 0
+  },
+  "checksum_analysis": {
+    "is_deterministic": null,
+    "unique_checksums": []
+  },
+  "metrics": {
+    "startup_phases.total_startup_duration_sec": {
+      "total_count": 2,
+      "valid_count": 2,
+      "missing_count": 0,
+      "mean": 1.49885,
+      "median": 1.49885,
+      "min": 1.4749,
+      "max": 1.5228,
+      "stdev": 0.03387,
+      "cv_percent": 2.2598,
+      "p50": 1.49885,
+      "p95": 1.520405,
+      "p99": 1.522321
+    }
+  }
+}

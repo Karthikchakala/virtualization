@@ -1,0 +1,62 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-105609-94ad61",
+  "environment": "lxc",
+  "benchmark": "startup_lifecycle",
+  "run_id": "startup_lifecycle-lxc-df3be6cf",
+  "timestamp": "2026-09-16T10:56:24.917209+00:00",
+  "command": "measure_startup lxc lxc-ubuntu",
+  "exit_code": 0,
+  "stdout": "{\"container_name\": \"lxc-ubuntu\", \"ip\": null, \"phases\": {\"lxc_start\": {\"timestamp\": \"2026-09-16T10:56:22Z\", \"duration_sec\": 0.0042}, \"container_ready\": {\"timestamp\": \"2026-09-16T10:56:24Z\", \"duration_sec\": null, \"achieved\": false}, \"network_ready\": {\"timestamp\": \"2026-09-16T10:56:24Z\", \"duration_sec\": null, \"achieved\": false}, \"application_ready\": {\"timestamp\": \"2026-09-16T10:56:24Z\", \"duration_sec\": 0.0, \"achieved\": false}}, \"total_startup_duration_sec\": 2.0673, \"status\": \"failed\"}",
+  "stderr": "",
+  "metrics": {
+    "telemetry": {},
+    "startup_phases": {
+      "container_name": "lxc-ubuntu",
+      "ip": null,
+      "phases": {
+        "lxc_start": {
+          "timestamp": "2026-09-16T10:56:22Z",
+          "duration_sec": 0.0042
+        },
+        "container_ready": {
+          "timestamp": "2026-09-16T10:56:24Z",
+          "duration_sec": null,
+          "achieved": false
+        },
+        "network_ready": {
+          "timestamp": "2026-09-16T10:56:24Z",
+          "duration_sec": null,
+          "achieved": false
+        },
+        "application_ready": {
+          "timestamp": "2026-09-16T10:56:24Z",
+          "duration_sec": 0.0,
+          "achieved": false
+        }
+      },
+      "total_startup_duration_sec": 2.0673,
+      "status": "failed"
+    },
+    "metadata": {
+      "environment": "lxc",
+      "target_name": "lxc-ubuntu",
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T10:56:11.124272+00:00",
+        "loadavg": [
+          3.81982421875,
+          3.54150390625,
+          3.20849609375
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2419428,
+        "mem_available_kb": 9337268,
+        "cpu_user_ticks": 962830,
+        "cpu_system_ticks": 198281,
+        "cpu_idle_ticks": 7161032
+      },
+      "experiment_id": "exp-20260916-105609-94ad61"
+    }
+  },
+  "status": "failed"
+}

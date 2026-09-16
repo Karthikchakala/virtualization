@@ -1,0 +1,1305 @@
+{
+  "schema_version": "2.0.0",
+  "manifest_type": "CC2 Experiment Execution Manifest",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "start_time": "2026-09-16T19:18:26.081159+00:00",
+  "end_time": "2026-09-16T19:24:35.542427+00:00",
+  "duration_sec": 369.46,
+  "mode": "full",
+  "run_count_config": {
+    "warmup_runs": 1,
+    "measured_runs": 5
+  },
+  "environments": [
+    "host",
+    "kvm",
+    "virtualbox",
+    "lxc"
+  ],
+  "benchmarks": [
+    "cpu_deterministic",
+    "memory_deterministic",
+    "disk_fio",
+    "network_ping",
+    "app_latency",
+    "startup_lifecycle",
+    "syscall_deterministic",
+    "scheduling_deterministic",
+    "isolation_audit"
+  ],
+  "workload_versions_sha256": {
+    "cpu_deterministic": "212853035b582f238058b8d436fecf1f25bd5ff249965c7467336903a563fd9f",
+    "memory_deterministic": "1bbf56eae471571293a033c266978f5f63df9ef8dfb0badbae30802b8c28d544",
+    "syscall_deterministic": "9e9f18e0e7f5e7cd5d6e772a89b816ff8b3f408bde2c5295186a44ade3d186b1",
+    "scheduling_deterministic": "2c69d4493ed25e1ba413c2710191861ee98e88fc597a7bfc6cccc1020fb472b7",
+    "http_health_app": "017cb76e9bba79df36c3aba7969fca08db09f019cbce2fd23356dfdb2241227a"
+  },
+  "total_runs_executed": 180,
+  "status_distribution": {
+    "success": 55,
+    "failed": 95,
+    "unavailable": 30
+  },
+  "runs_summary": [
+    {
+      "run_id": "cpu_deterministic-host-e2cd9840",
+      "environment": "host",
+      "benchmark": "cpu_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "cpu_deterministic-host-effc8930",
+      "environment": "host",
+      "benchmark": "cpu_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "cpu_deterministic-host-59e7fdce",
+      "environment": "host",
+      "benchmark": "cpu_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "cpu_deterministic-host-88f9a42c",
+      "environment": "host",
+      "benchmark": "cpu_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "cpu_deterministic-host-2bbb00e1",
+      "environment": "host",
+      "benchmark": "cpu_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "memory_deterministic-host-fff69bdb",
+      "environment": "host",
+      "benchmark": "memory_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "memory_deterministic-host-a8c364db",
+      "environment": "host",
+      "benchmark": "memory_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "memory_deterministic-host-25817261",
+      "environment": "host",
+      "benchmark": "memory_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "memory_deterministic-host-fffbab19",
+      "environment": "host",
+      "benchmark": "memory_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "memory_deterministic-host-c800a16a",
+      "environment": "host",
+      "benchmark": "memory_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-host-bfa3da03",
+      "environment": "host",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-host-8019cc39",
+      "environment": "host",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-host-246563f1",
+      "environment": "host",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-host-b1c83cb0",
+      "environment": "host",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-host-b4f973a7",
+      "environment": "host",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "network_ping-host-a9b479b2",
+      "environment": "host",
+      "benchmark": "network_ping",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "network_ping-host-ffdf4864",
+      "environment": "host",
+      "benchmark": "network_ping",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "network_ping-host-3891c3a5",
+      "environment": "host",
+      "benchmark": "network_ping",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "network_ping-host-b28fd957",
+      "environment": "host",
+      "benchmark": "network_ping",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "network_ping-host-a2c471b8",
+      "environment": "host",
+      "benchmark": "network_ping",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-host-d201f599",
+      "environment": "host",
+      "benchmark": "app_latency",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-host-185c469d",
+      "environment": "host",
+      "benchmark": "app_latency",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-host-b5d4b37b",
+      "environment": "host",
+      "benchmark": "app_latency",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-host-e23c7d55",
+      "environment": "host",
+      "benchmark": "app_latency",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-host-8cc125af",
+      "environment": "host",
+      "benchmark": "app_latency",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-host-1a459ef5",
+      "environment": "host",
+      "benchmark": "startup_lifecycle",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-host-4b0fdf6e",
+      "environment": "host",
+      "benchmark": "startup_lifecycle",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-host-9e367139",
+      "environment": "host",
+      "benchmark": "startup_lifecycle",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-host-3351f481",
+      "environment": "host",
+      "benchmark": "startup_lifecycle",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-host-daa5e111",
+      "environment": "host",
+      "benchmark": "startup_lifecycle",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "syscall_deterministic-host-c110f17e",
+      "environment": "host",
+      "benchmark": "syscall_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "syscall_deterministic-host-f10eddce",
+      "environment": "host",
+      "benchmark": "syscall_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "syscall_deterministic-host-2e76c1b9",
+      "environment": "host",
+      "benchmark": "syscall_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "syscall_deterministic-host-2bc653ad",
+      "environment": "host",
+      "benchmark": "syscall_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "syscall_deterministic-host-0df30a57",
+      "environment": "host",
+      "benchmark": "syscall_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "scheduling_deterministic-host-41c8f110",
+      "environment": "host",
+      "benchmark": "scheduling_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "scheduling_deterministic-host-21b44e69",
+      "environment": "host",
+      "benchmark": "scheduling_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "scheduling_deterministic-host-db62b2fe",
+      "environment": "host",
+      "benchmark": "scheduling_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "scheduling_deterministic-host-7c64e6cb",
+      "environment": "host",
+      "benchmark": "scheduling_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "scheduling_deterministic-host-c24f7c8d",
+      "environment": "host",
+      "benchmark": "scheduling_deterministic",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-host-f78ced26",
+      "environment": "host",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-host-539039c8",
+      "environment": "host",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-host-fe0252d4",
+      "environment": "host",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-host-32ee6a1b",
+      "environment": "host",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-host-13bbcbf1",
+      "environment": "host",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "cpu_deterministic-kvm-20260916192051-5f6a0f",
+      "environment": "kvm",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-kvm-20260916192051-f90d37",
+      "environment": "kvm",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-kvm-20260916192051-417b42",
+      "environment": "kvm",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-kvm-20260916192051-92e641",
+      "environment": "kvm",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-kvm-20260916192051-6e0556",
+      "environment": "kvm",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-kvm-20260916192053-762e89",
+      "environment": "kvm",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-kvm-20260916192053-62f0b2",
+      "environment": "kvm",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-kvm-20260916192053-104494",
+      "environment": "kvm",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-kvm-20260916192053-c7075c",
+      "environment": "kvm",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-kvm-20260916192053-893e35",
+      "environment": "kvm",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "disk_fio-kvm-a8919031",
+      "environment": "kvm",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-kvm-d7d7a75a",
+      "environment": "kvm",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-kvm-12ba4c73",
+      "environment": "kvm",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-kvm-f70da199",
+      "environment": "kvm",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-kvm-94ee9c5a",
+      "environment": "kvm",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "network_ping-kvm-4be11ef0",
+      "environment": "kvm",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": 255
+    },
+    {
+      "run_id": "network_ping-kvm-7fc9f7df",
+      "environment": "kvm",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": 255
+    },
+    {
+      "run_id": "network_ping-kvm-1f8857db",
+      "environment": "kvm",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": 255
+    },
+    {
+      "run_id": "network_ping-kvm-4be3c0f6",
+      "environment": "kvm",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": 255
+    },
+    {
+      "run_id": "network_ping-kvm-4c94a935",
+      "environment": "kvm",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": 255
+    },
+    {
+      "run_id": "app_latency-kvm-00009289",
+      "environment": "kvm",
+      "benchmark": "app_latency",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-kvm-62d964eb",
+      "environment": "kvm",
+      "benchmark": "app_latency",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-kvm-d1af3546",
+      "environment": "kvm",
+      "benchmark": "app_latency",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-kvm-db6a1e12",
+      "environment": "kvm",
+      "benchmark": "app_latency",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-kvm-13292782",
+      "environment": "kvm",
+      "benchmark": "app_latency",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-kvm-712ec89b",
+      "environment": "kvm",
+      "benchmark": "startup_lifecycle",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-kvm-57538dba",
+      "environment": "kvm",
+      "benchmark": "startup_lifecycle",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-kvm-a949cea2",
+      "environment": "kvm",
+      "benchmark": "startup_lifecycle",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-kvm-3edb58ac",
+      "environment": "kvm",
+      "benchmark": "startup_lifecycle",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-kvm-597e0457",
+      "environment": "kvm",
+      "benchmark": "startup_lifecycle",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "syscall_deterministic-kvm-20260916192229-202ae9",
+      "environment": "kvm",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-kvm-20260916192229-791429",
+      "environment": "kvm",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-kvm-20260916192229-2ab03b",
+      "environment": "kvm",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-kvm-20260916192229-93d026",
+      "environment": "kvm",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-kvm-20260916192229-d9311b",
+      "environment": "kvm",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-kvm-20260916192231-da1c7f",
+      "environment": "kvm",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-kvm-20260916192231-07426b",
+      "environment": "kvm",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-kvm-20260916192231-8b15f6",
+      "environment": "kvm",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-kvm-20260916192231-513139",
+      "environment": "kvm",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-kvm-20260916192231-dc8d82",
+      "environment": "kvm",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "isolation_audit-kvm-29aeaad6",
+      "environment": "kvm",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-kvm-5ffe9e62",
+      "environment": "kvm",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-kvm-c2e294d2",
+      "environment": "kvm",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-kvm-ccd39bc6",
+      "environment": "kvm",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-kvm-1d17e5b5",
+      "environment": "kvm",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "cpu_deterministic-virtualbox-20260916192347-270ff1",
+      "environment": "virtualbox",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-virtualbox-20260916192347-9db386",
+      "environment": "virtualbox",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-virtualbox-20260916192347-a00cae",
+      "environment": "virtualbox",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-virtualbox-20260916192347-dfd67f",
+      "environment": "virtualbox",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-virtualbox-20260916192347-4a0482",
+      "environment": "virtualbox",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-virtualbox-20260916192349-c9ef79",
+      "environment": "virtualbox",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-virtualbox-20260916192349-a5caaa",
+      "environment": "virtualbox",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-virtualbox-20260916192349-66932d",
+      "environment": "virtualbox",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-virtualbox-20260916192349-17e007",
+      "environment": "virtualbox",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-virtualbox-20260916192349-4a5917",
+      "environment": "virtualbox",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "disk_fio-virtualbox-ea5a5074",
+      "environment": "virtualbox",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-virtualbox-2bd650e0",
+      "environment": "virtualbox",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-virtualbox-6eae335f",
+      "environment": "virtualbox",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-virtualbox-3bdd9a79",
+      "environment": "virtualbox",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "disk_fio-virtualbox-7947375c",
+      "environment": "virtualbox",
+      "benchmark": "disk_fio",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "network_ping-virtualbox-c9142ff8",
+      "environment": "virtualbox",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": 255
+    },
+    {
+      "run_id": "network_ping-virtualbox-95cbc0a1",
+      "environment": "virtualbox",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": 255
+    },
+    {
+      "run_id": "network_ping-virtualbox-1dbfcb32",
+      "environment": "virtualbox",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": 255
+    },
+    {
+      "run_id": "network_ping-virtualbox-444bc6b1",
+      "environment": "virtualbox",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": 255
+    },
+    {
+      "run_id": "network_ping-virtualbox-64f6f212",
+      "environment": "virtualbox",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": 255
+    },
+    {
+      "run_id": "app_latency-virtualbox-e83c7ad2",
+      "environment": "virtualbox",
+      "benchmark": "app_latency",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-virtualbox-c40f1b1b",
+      "environment": "virtualbox",
+      "benchmark": "app_latency",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-virtualbox-91e80408",
+      "environment": "virtualbox",
+      "benchmark": "app_latency",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-virtualbox-72305a17",
+      "environment": "virtualbox",
+      "benchmark": "app_latency",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "app_latency-virtualbox-d8b28239",
+      "environment": "virtualbox",
+      "benchmark": "app_latency",
+      "status": "unavailable",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-virtualbox-194f1a9f",
+      "environment": "virtualbox",
+      "benchmark": "startup_lifecycle",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-virtualbox-01486dac",
+      "environment": "virtualbox",
+      "benchmark": "startup_lifecycle",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-virtualbox-46f2ab3c",
+      "environment": "virtualbox",
+      "benchmark": "startup_lifecycle",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-virtualbox-97a172df",
+      "environment": "virtualbox",
+      "benchmark": "startup_lifecycle",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "startup_lifecycle-virtualbox-57b960d3",
+      "environment": "virtualbox",
+      "benchmark": "startup_lifecycle",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "syscall_deterministic-virtualbox-20260916192416-bd5bbc",
+      "environment": "virtualbox",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-virtualbox-20260916192416-d00fd9",
+      "environment": "virtualbox",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-virtualbox-20260916192416-50be24",
+      "environment": "virtualbox",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-virtualbox-20260916192416-0f1d17",
+      "environment": "virtualbox",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-virtualbox-20260916192416-2f05ea",
+      "environment": "virtualbox",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-virtualbox-20260916192418-86557d",
+      "environment": "virtualbox",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-virtualbox-20260916192418-d70fe6",
+      "environment": "virtualbox",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-virtualbox-20260916192418-b94516",
+      "environment": "virtualbox",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-virtualbox-20260916192418-787dc4",
+      "environment": "virtualbox",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-virtualbox-20260916192418-1316dd",
+      "environment": "virtualbox",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "isolation_audit-virtualbox-28ba578c",
+      "environment": "virtualbox",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-virtualbox-ceb5fbb6",
+      "environment": "virtualbox",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-virtualbox-5c7d48f9",
+      "environment": "virtualbox",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-virtualbox-7cc8d542",
+      "environment": "virtualbox",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "isolation_audit-virtualbox-ef235b11",
+      "environment": "virtualbox",
+      "benchmark": "isolation_audit",
+      "status": "success",
+      "exit_code": 0
+    },
+    {
+      "run_id": "cpu_deterministic-lxc-20260916192433-f103f7",
+      "environment": "lxc",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-lxc-20260916192433-aebeac",
+      "environment": "lxc",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-lxc-20260916192433-2359a2",
+      "environment": "lxc",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-lxc-20260916192433-a42190",
+      "environment": "lxc",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "cpu_deterministic-lxc-20260916192433-0043c3",
+      "environment": "lxc",
+      "benchmark": "cpu_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-lxc-20260916192433-b9619e",
+      "environment": "lxc",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-lxc-20260916192433-6a5bad",
+      "environment": "lxc",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-lxc-20260916192433-444a7e",
+      "environment": "lxc",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-lxc-20260916192433-f388e1",
+      "environment": "lxc",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "memory_deterministic-lxc-20260916192433-6416c6",
+      "environment": "lxc",
+      "benchmark": "memory_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "disk_fio-lxc-20260916192433-0b108e",
+      "environment": "lxc",
+      "benchmark": "disk_fio",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "disk_fio-lxc-20260916192433-d304e0",
+      "environment": "lxc",
+      "benchmark": "disk_fio",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "disk_fio-lxc-20260916192433-0aba51",
+      "environment": "lxc",
+      "benchmark": "disk_fio",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "disk_fio-lxc-20260916192433-01caa9",
+      "environment": "lxc",
+      "benchmark": "disk_fio",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "disk_fio-lxc-20260916192433-12abbf",
+      "environment": "lxc",
+      "benchmark": "disk_fio",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "network_ping-lxc-20260916192433-6c83de",
+      "environment": "lxc",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "network_ping-lxc-20260916192433-02374c",
+      "environment": "lxc",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "network_ping-lxc-20260916192433-a0946a",
+      "environment": "lxc",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "network_ping-lxc-20260916192433-6e1c9f",
+      "environment": "lxc",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "network_ping-lxc-20260916192433-ffbd93",
+      "environment": "lxc",
+      "benchmark": "network_ping",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "app_latency-lxc-20260916192433-033e23",
+      "environment": "lxc",
+      "benchmark": "app_latency",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "app_latency-lxc-20260916192433-719776",
+      "environment": "lxc",
+      "benchmark": "app_latency",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "app_latency-lxc-20260916192433-65bc72",
+      "environment": "lxc",
+      "benchmark": "app_latency",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "app_latency-lxc-20260916192433-b39c98",
+      "environment": "lxc",
+      "benchmark": "app_latency",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "app_latency-lxc-20260916192433-2523d7",
+      "environment": "lxc",
+      "benchmark": "app_latency",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "startup_lifecycle-lxc-20260916192433-273a54",
+      "environment": "lxc",
+      "benchmark": "startup_lifecycle",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "startup_lifecycle-lxc-20260916192433-cb4d83",
+      "environment": "lxc",
+      "benchmark": "startup_lifecycle",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "startup_lifecycle-lxc-20260916192433-3f2e95",
+      "environment": "lxc",
+      "benchmark": "startup_lifecycle",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "startup_lifecycle-lxc-20260916192433-8bba63",
+      "environment": "lxc",
+      "benchmark": "startup_lifecycle",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "startup_lifecycle-lxc-20260916192433-056f5e",
+      "environment": "lxc",
+      "benchmark": "startup_lifecycle",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-lxc-20260916192433-45c0f5",
+      "environment": "lxc",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-lxc-20260916192433-67eb1b",
+      "environment": "lxc",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-lxc-20260916192433-a61cc4",
+      "environment": "lxc",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-lxc-20260916192433-c50650",
+      "environment": "lxc",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "syscall_deterministic-lxc-20260916192433-9f1163",
+      "environment": "lxc",
+      "benchmark": "syscall_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-lxc-20260916192433-7cd69a",
+      "environment": "lxc",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-lxc-20260916192433-73a43a",
+      "environment": "lxc",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-lxc-20260916192433-696895",
+      "environment": "lxc",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-lxc-20260916192433-67a533",
+      "environment": "lxc",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "scheduling_deterministic-lxc-20260916192433-61bef8",
+      "environment": "lxc",
+      "benchmark": "scheduling_deterministic",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "isolation_audit-lxc-20260916192433-0149e7",
+      "environment": "lxc",
+      "benchmark": "isolation_audit",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "isolation_audit-lxc-20260916192433-9a3dfc",
+      "environment": "lxc",
+      "benchmark": "isolation_audit",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "isolation_audit-lxc-20260916192433-dd7c97",
+      "environment": "lxc",
+      "benchmark": "isolation_audit",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "isolation_audit-lxc-20260916192433-86b11f",
+      "environment": "lxc",
+      "benchmark": "isolation_audit",
+      "status": "failed",
+      "exit_code": -1
+    },
+    {
+      "run_id": "isolation_audit-lxc-20260916192433-2a4cd4",
+      "environment": "lxc",
+      "benchmark": "isolation_audit",
+      "status": "failed",
+      "exit_code": -1
+    }
+  ]
+}

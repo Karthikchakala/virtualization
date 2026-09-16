@@ -1,0 +1,100 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191221-b4fe93",
+  "run_id": "network_ping-host-c3db0457",
+  "environment": "host",
+  "benchmark": "network_ping",
+  "timestamp": "2026-09-16T19:12:47.770790+00:00",
+  "command": "ping -c 5 -W 1 127.0.0.1",
+  "workload": {
+    "name": "ping",
+    "path": "ping",
+    "sha256": null,
+    "size_bytes": null,
+    "verified": true
+  },
+  "environment_identity": {
+    "environment": "host",
+    "classification": "Bare-Metal Reference (Zero Virtualization Overhead)",
+    "virtualization_type": "none",
+    "kernel_release": "7.0.0-31-generic",
+    "os_release": "Ubuntu 24.04.5 LTS",
+    "hostname": "karthik-chakala-Vivobook-ASUSLaptop-K3605ZU-K3605ZU",
+    "vcpus": 12,
+    "memory_mb": 15613,
+    "ip_address": "127.0.0.1",
+    "mac_address": null,
+    "hypervisor_version": null,
+    "systemd_detect_virt": "none (bare-metal)",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "cpu_model": "12th Gen Intel(R) Core(TM) i5-12450H",
+      "logical_cpus": 12
+    }
+  },
+  "parameters": {
+    "count": 5
+  },
+  "execution": {
+    "exit_code": 0,
+    "duration_sec": 4.11631696999757,
+    "timed_out": false,
+    "status": "success"
+  },
+  "metrics": {
+    "status": "success",
+    "target_ip": "127.0.0.1",
+    "packets_transmitted": 5,
+    "packets_received": 5,
+    "packet_loss_percent": 0.0,
+    "rtt_min_ms": 0.045,
+    "rtt_avg_ms": 0.077,
+    "rtt_max_ms": 0.124,
+    "rtt_mdev_ms": 0.027,
+    "telemetry": {
+      "status": "success",
+      "user_time_sec": 0.0,
+      "system_time_sec": 0.0,
+      "wall_time_sec": 4.11,
+      "cpu_percentage": 0.0,
+      "max_rss_kb": 2692,
+      "vsz_kb": 0,
+      "minor_page_faults": 122,
+      "major_page_faults": 0,
+      "total_page_faults": 122,
+      "voluntary_context_switches": 5,
+      "involuntary_context_switches": 0,
+      "total_context_switches": 5,
+      "exit_code": 0
+    },
+    "hypervisor_telemetry": {
+      "timestamp": 1789585967.7662358,
+      "loadavg": [
+        1.4873046875,
+        0.9892578125,
+        0.982421875
+      ],
+      "logical_cpus": 12,
+      "host_mem_total_kb": 15987832,
+      "host_mem_available_kb": 8886548,
+      "thermals_celsius": {
+        "SEN2": 52.05,
+        "acpitz": 56.0,
+        "iwlwifi_1": 46.0,
+        "TCPU_PCI": 55.0,
+        "SEN5": 22.05,
+        "SEN3": 0.05,
+        "INT3400 Thermal": 20.0,
+        "x86_pkg_temp": 55.0,
+        "TCPU": 55.0,
+        "SEN4": 48.05
+      }
+    },
+    "wall_time_sec": 4.11,
+    "cpu_percentage": 0.0,
+    "max_rss_kb": 2692
+  },
+  "stdout": "PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.\n64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.059 ms\n64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.090 ms\n64 bytes from 127.0.0.1: icmp_seq=3 ttl=64 time=0.124 ms\n64 bytes from 127.0.0.1: icmp_seq=4 ttl=64 time=0.045 ms\n64 bytes from 127.0.0.1: icmp_seq=5 ttl=64 time=0.071 ms\n\n--- 127.0.0.1 ping statistics ---\n5 packets transmitted, 5 received, 0% packet loss, time 4111ms\nrtt min/avg/max/mdev = 0.045/0.077/0.124/0.027 ms\n",
+  "stderr": "\tCommand being timed: \"ping -c 5 -W 1 127.0.0.1\"\n\tUser time (seconds): 0.00\n\tSystem time (seconds): 0.00\n\tPercent of CPU this job got: 0%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 0:04.11\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 2692\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 0\n\tMinor (reclaiming a frame) page faults: 122\n\tVoluntary context switches: 5\n\tInvoluntary context switches: 0\n\tSwaps: 0\n\tFile system inputs: 0\n\tFile system outputs: 0\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 0\n",
+  "status": "success"
+}

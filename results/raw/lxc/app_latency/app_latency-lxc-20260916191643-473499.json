@@ -1,0 +1,34 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191221-b4fe93",
+  "run_id": "app_latency-lxc-20260916191643-473499",
+  "environment": "lxc",
+  "benchmark": "app_latency",
+  "timestamp": "2026-09-16T19:16:43.245513+00:00",
+  "command": "app_latency",
+  "workload": {
+    "name": "http_health_app.py",
+    "verified": false
+  },
+  "environment_identity": {
+    "environment": "lxc",
+    "status": "failed"
+  },
+  "parameters": {
+    "requests": 100,
+    "endpoint": "/health"
+  },
+  "execution": {
+    "exit_code": -1,
+    "duration_sec": 0.0,
+    "timed_out": false,
+    "status": "failed"
+  },
+  "metrics": {
+    "status": "failed",
+    "reason": "lxc-start failed: lxc-start: lxc-ubuntu: ../src/lxc/tools/lxc_start.c: main: 266 No container config specified"
+  },
+  "stdout": "",
+  "stderr": "lxc-start failed: lxc-start: lxc-ubuntu: ../src/lxc/tools/lxc_start.c: main: 266 No container config specified",
+  "status": "failed"
+}

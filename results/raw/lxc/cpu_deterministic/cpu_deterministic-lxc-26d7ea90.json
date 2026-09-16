@@ -1,0 +1,111 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-test-lxc",
+  "environment": "lxc",
+  "benchmark": "cpu_deterministic",
+  "run_id": "cpu_deterministic-lxc-26d7ea90",
+  "timestamp": "2026-09-16T16:12:59.059688+00:00",
+  "command": "/home/karthik-chakala/Downloads/CC2/workloads/dist/cpu_workload --size 100 --iterations 2 --warmup 0 --threads 1",
+  "exit_code": 0,
+  "stdout": "{\n  \"workload\": \"cpu_deterministic\",\n  \"version\": \"1.0.0\",\n  \"parameters\": {\n    \"matrix_size\": 100,\n    \"iterations\": 2,\n    \"warmup\": 0,\n    \"threads\": 1\n  },\n  \"results\": {\n    \"total_flops\": 4000000,\n    \"warmup_elapsed_sec\": 0.000000,\n    \"elapsed_sec\": 0.001611,\n    \"gflops\": 2.4826,\n    \"checksum\": \"0x45e2faefbfda0725\",\n    \"status\": \"success\"\n  }\n}\n",
+  "stderr": "",
+  "metrics": {
+    "total_flops": 4000000,
+    "warmup_elapsed_sec": 0.0,
+    "elapsed_sec": 0.001611,
+    "gflops": 2.4826,
+    "checksum": "0x45e2faefbfda0725",
+    "status": "success",
+    "parameters": {
+      "matrix_size": 100,
+      "iterations": 2,
+      "warmup": 0,
+      "threads": 1
+    },
+    "telemetry": {
+      "time_v": {
+        "status": "success",
+        "user_time_sec": 0.0,
+        "system_time_sec": 0.0,
+        "wall_time_sec": 0.0,
+        "cpu_percentage": 50.0,
+        "max_rss_kb": 1044,
+        "vsz_kb": 0,
+        "minor_page_faults": 105,
+        "major_page_faults": 0,
+        "total_page_faults": 105,
+        "voluntary_context_switches": 1,
+        "involuntary_context_switches": 0,
+        "total_context_switches": 1,
+        "exit_code": 0,
+        "raw_time_v": "\tCommand being timed: \"/home/karthik-chakala/Downloads/CC2/workloads/dist/cpu_workload --size 100 --iterations 2 --warmup 0 --threads 1\"\n\tUser time (seconds): 0.00\n\tSystem time (seconds): 0.00\n\tPercent of CPU this job got: 50%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 0:00.00\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 1044\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 0\n\tMinor (reclaiming a frame) page faults: 105\n\tVoluntary context switches: 1\n\tInvoluntary context switches: 0\n\tSwaps: 0\n\tFile system inputs: 0\n\tFile system outputs: 0\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 0\n"
+      },
+      "perf": {
+        "status": "unavailable",
+        "reason": "Hardware counters restricted: /proc/sys/kernel/perf_event_paranoid is 4 (requires CAP_PERFMON or CAP_SYS_ADMIN)",
+        "cycles": null,
+        "instructions": null,
+        "ipc": null,
+        "context_switches": null,
+        "cpu_migrations": null,
+        "page_faults": null
+      },
+      "wall_time_sec": 0.0,
+      "user_time_sec": 0.0,
+      "system_time_sec": 0.0,
+      "cpu_percentage": 50.0,
+      "max_rss_kb": 1044,
+      "vsz_kb": 0,
+      "page_faults": {
+        "minor": 105,
+        "major": 0,
+        "total": 105
+      },
+      "context_switches": {
+        "voluntary": 1,
+        "involuntary": 0,
+        "total": 1
+      }
+    },
+    "wall_time_sec": 0.0,
+    "user_time_sec": 0.0,
+    "system_time_sec": 0.0,
+    "cpu_percentage": 50.0,
+    "max_rss_kb": 1044,
+    "container_name": "lxc-ubuntu",
+    "container_state": "STOPPED",
+    "cgroup_telemetry": {
+      "status": "success",
+      "cgroup_path": "/sys/fs/cgroup/lxc.payload.lxc-ubuntu",
+      "cpu": {
+        "usage_usec": 1324429,
+        "user_usec": 948647,
+        "system_usec": 375782,
+        "nice_usec": 0,
+        "core_sched.force_idle_usec": 0,
+        "nr_periods": 0,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0
+      },
+      "memory": {
+        "current_bytes": 19533824,
+        "peak_bytes": 38027264,
+        "max_limit": "max",
+        "swap_current_bytes": 0
+      },
+      "io": {
+        "raw_lines": [
+          "259:0 rbytes=8192 wbytes=9158656 rios=2 wios=91 dbytes=0 dios=0"
+        ]
+      }
+    },
+    "kernel_sharing": {
+      "shared": true,
+      "host_kernel": "7.0.0-31-generic",
+      "container_kernel": "7.0.0-31-generic"
+    }
+  },
+  "status": "success"
+}

@@ -1,0 +1,201 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-111744-b6ca9b",
+  "environment": "virtualbox",
+  "benchmark": "scheduling_deterministic",
+  "run_id": "scheduling_deterministic-virtualbox-fa83d491",
+  "timestamp": "2026-09-16T11:17:50.410398+00:00",
+  "command": "/home/karthik-chakala/Downloads/CC2/workloads/dist/scheduling_workload --iterations 20000 --warmup 1000",
+  "exit_code": 0,
+  "stdout": "{\n  \"workload\": \"scheduling_deterministic\",\n  \"version\": \"1.0.0\",\n  \"parameters\": {\n    \"iterations\": 20000,\n    \"warmup\": 1000,\n    \"mechanism\": \"pipe_ping_pong\"\n  },\n  \"results\": {\n    \"total_context_switches\": 40000,\n    \"elapsed_sec\": 0.095795,\n    \"switches_per_sec\": 417559.88,\n    \"latency_us\": 2.395,\n    \"checksum\": \"0x909e926a36d3fca6\",\n    \"status\": \"success\"\n  }\n}\n",
+  "stderr": "",
+  "metrics": {
+    "total_context_switches": 40000,
+    "elapsed_sec": 0.095795,
+    "switches_per_sec": 417559.88,
+    "latency_us": 2.395,
+    "checksum": "0x909e926a36d3fca6",
+    "status": "success",
+    "parameters": {
+      "iterations": 20000,
+      "warmup": 1000,
+      "mechanism": "pipe_ping_pong"
+    },
+    "telemetry": {
+      "time_v": {
+        "status": "success",
+        "user_time_sec": 0.01,
+        "system_time_sec": 0.07,
+        "wall_time_sec": 0.11,
+        "cpu_percentage": 80.0,
+        "max_rss_kb": 592,
+        "vsz_kb": 0,
+        "minor_page_faults": 62,
+        "major_page_faults": 0,
+        "total_page_faults": 62,
+        "voluntary_context_switches": 41612,
+        "involuntary_context_switches": 382,
+        "total_context_switches": 41994,
+        "exit_code": 0,
+        "raw_time_v": "\tCommand being timed: \"/home/karthik-chakala/Downloads/CC2/workloads/dist/scheduling_workload --iterations 20000 --warmup 1000\"\n\tUser time (seconds): 0.01\n\tSystem time (seconds): 0.07\n\tPercent of CPU this job got: 80%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 0:00.11\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 592\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 0\n\tMinor (reclaiming a frame) page faults: 62\n\tVoluntary context switches: 41612\n\tInvoluntary context switches: 382\n\tSwaps: 0\n\tFile system inputs: 0\n\tFile system outputs: 0\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 0\n"
+      },
+      "perf": {
+        "status": "unavailable",
+        "reason": "Hardware counters restricted: /proc/sys/kernel/perf_event_paranoid is 4 (requires CAP_PERFMON or CAP_SYS_ADMIN)",
+        "cycles": null,
+        "instructions": null,
+        "ipc": null,
+        "context_switches": null,
+        "cpu_migrations": null,
+        "page_faults": null
+      },
+      "wall_time_sec": 0.11,
+      "user_time_sec": 0.01,
+      "system_time_sec": 0.07,
+      "cpu_percentage": 80.0,
+      "max_rss_kb": 592,
+      "vsz_kb": 0,
+      "page_faults": {
+        "minor": 62,
+        "major": 0,
+        "total": 62
+      },
+      "context_switches": {
+        "voluntary": 41612,
+        "involuntary": 382,
+        "total": 41994
+      }
+    },
+    "wall_time_sec": 0.11,
+    "user_time_sec": 0.01,
+    "system_time_sec": 0.07,
+    "cpu_percentage": 80.0,
+    "max_rss_kb": 592,
+    "metadata": {
+      "environment": "virtualbox",
+      "target_name": "Ubuntu-Server-VBox",
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T11:17:46.376877+00:00",
+        "loadavg": [
+          5.55126953125,
+          3.74755859375,
+          3.19384765625
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 1976232,
+        "mem_available_kb": 8929076,
+        "cpu_user_ticks": 1262270,
+        "cpu_system_ticks": 225671,
+        "cpu_idle_ticks": 8365953,
+        "system_state": {
+          "cpu_frequency": {
+            "status": "success",
+            "per_core_khz": {
+              "cpu0": 3589862,
+              "cpu1": 935972,
+              "cpu10": 3304238,
+              "cpu11": 3300060,
+              "cpu2": 2385037,
+              "cpu3": 3124182,
+              "cpu4": 3286957,
+              "cpu5": 4326265,
+              "cpu6": 4360258,
+              "cpu7": 3229151,
+              "cpu8": 3300088,
+              "cpu9": 3299063
+            },
+            "min_khz": 935972,
+            "max_khz": 4360258,
+            "avg_khz": 3203427.75
+          },
+          "cpu_governor": {
+            "status": "success",
+            "per_core": {
+              "cpu0": "powersave",
+              "cpu1": "powersave",
+              "cpu10": "powersave",
+              "cpu11": "powersave",
+              "cpu2": "powersave",
+              "cpu3": "powersave",
+              "cpu4": "powersave",
+              "cpu5": "powersave",
+              "cpu6": "powersave",
+              "cpu7": "powersave",
+              "cpu8": "powersave",
+              "cpu9": "powersave"
+            },
+            "governors": [
+              "powersave"
+            ],
+            "dominant_governor": "powersave"
+          },
+          "load_average": {
+            "load_1m": 5.551,
+            "load_5m": 3.748,
+            "load_15m": 3.194
+          },
+          "thermal": {
+            "status": "success",
+            "zones": [
+              {
+                "zone": "thermal_zone0",
+                "type": "acpitz",
+                "temperature_c": 78.0
+              },
+              {
+                "zone": "thermal_zone1",
+                "type": "INT3400 Thermal",
+                "temperature_c": 20.0
+              },
+              {
+                "zone": "thermal_zone2",
+                "type": "SEN2",
+                "temperature_c": 58.05
+              },
+              {
+                "zone": "thermal_zone3",
+                "type": "SEN3",
+                "temperature_c": 0.05
+              },
+              {
+                "zone": "thermal_zone4",
+                "type": "SEN4",
+                "temperature_c": 55.05
+              },
+              {
+                "zone": "thermal_zone5",
+                "type": "SEN5",
+                "temperature_c": 22.05
+              },
+              {
+                "zone": "thermal_zone6",
+                "type": "TCPU",
+                "temperature_c": 73.0
+              },
+              {
+                "zone": "thermal_zone7",
+                "type": "TCPU_PCI",
+                "temperature_c": 73.0
+              },
+              {
+                "zone": "thermal_zone8",
+                "type": "iwlwifi_1",
+                "temperature_c": 51.0
+              },
+              {
+                "zone": "thermal_zone9",
+                "type": "x86_pkg_temp",
+                "temperature_c": 72.0
+              }
+            ],
+            "max_temp_c": 78.0,
+            "package_temp_c": 73.0
+          }
+        }
+      },
+      "experiment_id": "exp-20260916-111744-b6ca9b"
+    },
+    "iteration": 4
+  },
+  "status": "success"
+}

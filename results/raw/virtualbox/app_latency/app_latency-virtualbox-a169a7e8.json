@@ -1,0 +1,57 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-201721-7be525",
+  "run_id": "app_latency-virtualbox-a169a7e8",
+  "environment": "virtualbox",
+  "benchmark": "app_latency",
+  "timestamp": "2026-09-16T20:21:36.444342+00:00",
+  "command": "python3 /tmp/cc2_workloads/http_health_app.py --port 8080",
+  "workload": {
+    "name": "http_health_app",
+    "path": "/tmp/cc2_workloads/http_health_app.py",
+    "sha256": null,
+    "size_bytes": 2055,
+    "verified": false
+  },
+  "environment_identity": {
+    "environment": "virtualbox",
+    "classification": "Hosted Hypervisor (Type-2)",
+    "virtualization_type": "type2",
+    "kernel_release": null,
+    "os_release": "Ubuntu (VirtualBox Guest)",
+    "hostname": "Ubuntu-Server-VBox",
+    "vcpus": 2,
+    "memory_mb": 2048,
+    "ip_address": "127.0.0.1",
+    "mac_address": "08002740B6E5",
+    "hypervisor_version": "VirtualBox 7.2.16r174877",
+    "systemd_detect_virt": "oracle",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "vm_name": "Ubuntu-Server-VBox",
+      "uuid": "8a699556-1ddf-41cf-b252-c7c8b10255ac",
+      "ssh_forwarded_port": 2222
+    }
+  },
+  "parameters": {
+    "requests": 100,
+    "endpoint": "/health"
+  },
+  "execution": {
+    "exit_code": 0,
+    "duration_sec": 0.0,
+    "timed_out": false,
+    "status": "unavailable"
+  },
+  "metrics": {
+    "status": "unavailable",
+    "reason": "python3 not found in virtualbox. Cannot run http_health_app.py",
+    "requests_attempted": 100,
+    "requests_completed": null,
+    "http_200_count": null,
+    "telemetry": {}
+  },
+  "stdout": "{\"status\": \"unavailable\", \"reason\": \"python3 not found in virtualbox. Cannot run http_health_app.py\"}",
+  "stderr": "python3 not found in virtualbox. Cannot run http_health_app.py",
+  "status": "unavailable"
+}

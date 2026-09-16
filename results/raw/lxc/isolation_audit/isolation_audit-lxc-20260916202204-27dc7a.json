@@ -1,0 +1,31 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-201721-7be525",
+  "run_id": "isolation_audit-lxc-20260916202204-27dc7a",
+  "environment": "lxc",
+  "benchmark": "isolation_audit",
+  "timestamp": "2026-09-16T20:22:04.466427+00:00",
+  "command": "isolation_audit",
+  "workload": {
+    "name": "isolation_audit",
+    "verified": false
+  },
+  "environment_identity": {
+    "environment": "lxc",
+    "status": "failed"
+  },
+  "parameters": {},
+  "execution": {
+    "exit_code": -1,
+    "duration_sec": 0.0,
+    "timed_out": false,
+    "status": "failed"
+  },
+  "metrics": {
+    "status": "failed",
+    "reason": "lxc-start failed: lxc-start: lxc-ubuntu: ../src/lxc/tools/lxc_start.c: main: 266 No container config specified"
+  },
+  "stdout": "",
+  "stderr": "lxc-start failed: lxc-start: lxc-ubuntu: ../src/lxc/tools/lxc_start.c: main: 266 No container config specified",
+  "status": "failed"
+}

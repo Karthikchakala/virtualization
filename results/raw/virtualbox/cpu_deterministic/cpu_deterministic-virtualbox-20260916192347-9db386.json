@@ -1,0 +1,53 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191826-6e7de2",
+  "run_id": "cpu_deterministic-virtualbox-20260916192347-9db386",
+  "environment": "virtualbox",
+  "benchmark": "cpu_deterministic",
+  "timestamp": "2026-09-16T19:23:47.464766+00:00",
+  "command": "cpu_workload",
+  "workload": {
+    "name": "cpu_workload",
+    "sha256": "212853035b582f238058b8d436fecf1f25bd5ff249965c7467336903a563fd9f",
+    "verified": false
+  },
+  "environment_identity": {
+    "environment": "virtualbox",
+    "classification": "Hosted Hypervisor (Type-2)",
+    "virtualization_type": "type2",
+    "kernel_release": null,
+    "os_release": "Ubuntu (VirtualBox Guest)",
+    "hostname": "Ubuntu-Server-VBox",
+    "vcpus": 2,
+    "memory_mb": 2048,
+    "ip_address": "127.0.0.1",
+    "mac_address": "08002740B6E5",
+    "hypervisor_version": "VirtualBox 7.2.16r174877",
+    "systemd_detect_virt": "oracle",
+    "is_shared_kernel": false,
+    "raw_details": {
+      "vm_name": "Ubuntu-Server-VBox",
+      "uuid": "8a699556-1ddf-41cf-b252-c7c8b10255ac",
+      "ssh_forwarded_port": 2222
+    }
+  },
+  "parameters": {
+    "size": 400,
+    "iterations": 5,
+    "warmup": 1,
+    "threads": 1
+  },
+  "execution": {
+    "exit_code": -1,
+    "duration_sec": 0.0,
+    "timed_out": false,
+    "status": "failed"
+  },
+  "metrics": {
+    "status": "failed",
+    "reason": "Workload deployment integrity verification failed: Failed to transfer binary via SSHTransport"
+  },
+  "stdout": "",
+  "stderr": "Workload deployment integrity verification failed: Failed to transfer binary via SSHTransport",
+  "status": "failed"
+}

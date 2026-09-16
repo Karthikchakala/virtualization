@@ -1,0 +1,10 @@
+run_id,experiment_id,environment,benchmark,timestamp,exit_code,status,gflops,throughput_mb_s,ops_per_sec,latency_ns,latency_us,elapsed_sec,wall_time_sec,cpu_percentage,max_rss_kb,checksum
+startup_lifecycle-virtualbox-bd396acd,exp-20260916-105528-ba33df,virtualbox,startup_lifecycle,2026-09-16T10:55:42.711774+00:00,0,success,,,,,,,,,,
+startup_lifecycle-virtualbox-46d231e7,exp-20260916-111744-b6ca9b,virtualbox,startup_lifecycle,2026-09-16T11:18:00.921746+00:00,0,success,,,,,,,,,,
+startup_lifecycle-kvm-592be326,exp-20260916-105447-453a14,kvm,startup_lifecycle,2026-09-16T10:55:03.561860+00:00,0,failed,,,,,,,,,,
+startup_lifecycle-kvm-aef8fc14,exp-20260916-111705-86eddd,kvm,startup_lifecycle,2026-09-16T11:17:22.840280+00:00,0,failed,,,,,,,,,,
+startup_lifecycle-host-820f1610,exp-20260916-105426-2820c0,host,startup_lifecycle,2026-09-16T10:54:39.539521+00:00,0,unavailable,,,,,,,,,,
+startup_lifecycle-host-cb0728fd,exp-20260916-110655-920b1e,host,startup_lifecycle,2026-09-16T11:07:08.664838+00:00,0,unavailable,,,,,,,,,,
+startup_lifecycle-host-93049122,exp-20260916-111643-e9d268,host,startup_lifecycle,2026-09-16T11:16:56.623711+00:00,0,unavailable,,,,,,,,,,
+startup_lifecycle-lxc-df3be6cf,exp-20260916-105609-94ad61,lxc,startup_lifecycle,2026-09-16T10:56:24.917209+00:00,0,failed,,,,,,,,,,
+startup_lifecycle-lxc-d851f60a,exp-20260916-111824-1722b1,lxc,startup_lifecycle,2026-09-16T11:18:41.467763+00:00,0,failed,,,,,,,,,,

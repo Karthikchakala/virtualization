@@ -1,0 +1,35 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-191221-b4fe93",
+  "run_id": "memory_deterministic-lxc-20260916191643-12d82a",
+  "environment": "lxc",
+  "benchmark": "memory_deterministic",
+  "timestamp": "2026-09-16T19:16:43.232394+00:00",
+  "command": "memory_deterministic",
+  "workload": {
+    "name": "memory_workload",
+    "verified": false
+  },
+  "environment_identity": {
+    "environment": "lxc",
+    "status": "failed"
+  },
+  "parameters": {
+    "buffer_mb": 128,
+    "passes": 4,
+    "stride": 64
+  },
+  "execution": {
+    "exit_code": -1,
+    "duration_sec": 0.0,
+    "timed_out": false,
+    "status": "failed"
+  },
+  "metrics": {
+    "status": "failed",
+    "reason": "lxc-start failed: lxc-start: lxc-ubuntu: ../src/lxc/tools/lxc_start.c: main: 266 No container config specified"
+  },
+  "stdout": "",
+  "stderr": "lxc-start failed: lxc-start: lxc-ubuntu: ../src/lxc/tools/lxc_start.c: main: 266 No container config specified",
+  "status": "failed"
+}

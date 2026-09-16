@@ -1,0 +1,37 @@
+{
+  "schema_version": "2.0.0",
+  "experiment_id": "exp-20260916-105528-ba33df",
+  "environment": "virtualbox",
+  "benchmark": "network_iperf3",
+  "run_id": "network_iperf3-virtualbox-d917640b",
+  "timestamp": "2026-09-16T10:55:40.639747+00:00",
+  "command": "iperf3 -c 127.0.0.1",
+  "exit_code": -1,
+  "stdout": "{\"status\": \"unavailable\", \"reason\": \"iperf3 binary not found on host. Zero values will not be fabricated.\"}",
+  "stderr": "iperf3 binary not found on host. Zero values will not be fabricated.",
+  "metrics": {
+    "telemetry": {},
+    "status": "unavailable",
+    "reason": "iperf3 binary not found on host. Zero values will not be fabricated.",
+    "metadata": {
+      "environment": "virtualbox",
+      "target_name": "Ubuntu-Server-VBox",
+      "pre_telemetry": {
+        "timestamp": "2026-09-16T10:55:29.499142+00:00",
+        "loadavg": [
+          4.48876953125,
+          3.59521484375,
+          3.2099609375
+        ],
+        "mem_total_kb": 15987828,
+        "mem_free_kb": 2362596,
+        "mem_available_kb": 9278100,
+        "cpu_user_ticks": 953033,
+        "cpu_system_ticks": 197301,
+        "cpu_idle_ticks": 7123535
+      },
+      "experiment_id": "exp-20260916-105528-ba33df"
+    }
+  },
+  "status": "unavailable"
+}
