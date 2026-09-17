@@ -1,16 +1,6 @@
 import React from 'react';
-import { 
-  Server, 
-  Cpu, 
-  Thermometer, 
-  Gauge, 
-  ShieldCheck, 
-  Activity, 
-  Terminal,
-  Database
-} from 'lucide-react';
+import { Server, CheckCircle2, FileSearch } from 'lucide-react';
 import { HostInventory, BenchmarkRun } from '../types';
-import { MetricCard } from '../components/MetricCard';
 
 interface HostPageProps {
   inventory: HostInventory;
@@ -32,187 +22,136 @@ export const HostPage: React.FC<HostPageProps> = ({
   const totalRamGb = memInfo.total_kb ? Math.round(parseInt(memInfo.total_kb.replace('kB', '')) / 1024 / 1024) : 16;
   const availRamMb = memInfo.available_kb ? Math.round(parseInt(memInfo.available_kb.replace('kB', '')) / 1024) : 8192;
 
-  const thermalZones = sysState.thermal?.zones || [];
-  const freqCores = sysState.cpu_frequency?.per_core_khz || {};
-
   return (
     <div className="page-container">
-      {/* Top Description */}
-      <div className="card" style={{ marginBottom: '1.5rem' }}>
+      {/* Environment Header */}
+      <div className="card">
         <div className="card-header-row">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Server size={22} color="var(--accent-cyan)" />
+            <Server size={22} color="var(--accent-primary)" />
             <div>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Bare-Metal Ubuntu Host Baseline</h2>
-              <span className="text-secondary font-mono" style={{ fontSize: '0.8125rem' }}>
-                Hardware Reference Baseline • Zero Hypervisor Indirection
-              </span>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Host Baseline</h2>
+              <div className="card-subtitle">
+                Bare-Metal Reference Baseline (Zero Hypervisor Indirection)
+              </div>
             </div>
           </div>
-          <span className="badge-verified font-mono">
-            Direct Host Reference
+          <span className="badge-status-ready">
+            <CheckCircle2 size={12} /> Available
           </span>
         </div>
-        <p style={{ marginTop: '0.75rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-          The host baseline establishes the true physical limits of the underlying hardware (Intel Core i5/i7 12th gen, DDR4/DDR5 RAM, NVMe storage). 
-          All virtualization adapters are evaluated relative to this zero-indirection baseline to quantify the exact hypervisor virtualization tax.
+        <p style={{ marginTop: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+          The bare-metal host establishes the physical limits of the test system hardware.
+          All virtualization adapters (KVM, VirtualBox, Native LXC) are evaluated relative to this zero-indirection baseline to quantify hypervisor virtualization tax.
         </p>
       </div>
 
-      {/* Hardware Telemetry Cards */}
-      <div className="grid-cols-4">
-        <MetricCard
-          title="Host Processor"
-          value={cpuInfo.logical_cpus || 12}
-          unit="Logical CPUs"
-          subtitle={cpuInfo.model_name || 'Intel Core Processor'}
-          color="var(--accent-cyan)"
-        />
-        <MetricCard
-          title="Physical Memory"
-          value={totalRamGb}
-          unit="GiB RAM"
-          subtitle={`Available: ${availRamMb} MiB`}
-          color="var(--accent-emerald)"
-        />
-        <MetricCard
-          title="Operating System"
-          value={osInfo.os_release?.PRETTY_NAME || 'Ubuntu 24.04'}
-          subtitle={`Kernel: ${osInfo.kernel_release || '7.0.0-31-generic'}`}
-          color="var(--accent-indigo)"
-        />
-        <MetricCard
-          title="Virtualization Assist"
-          value={cpuInfo.hardware_virt_support?.intel_vmx ? 'VT-x (Enabled)' : 'Disabled'}
-          subtitle="Nested VMX Hardware Support"
-          color="var(--accent-amber)"
-        />
-      </div>
-
-      {/* Thermal & Frequency Telemetry (Phase 6 Advanced Observability) */}
-      <div className="section-header" style={{ marginTop: '2rem' }}>
-        <h3 className="section-title">
-          <Thermometer size={18} color="var(--accent-rose)" style={{ display: 'inline', marginRight: '0.5rem' }} />
-          Thermal & CPU Frequency Observability (Read-Only)
-        </h3>
-        <span className="section-subtitle">Strict read-only sysfs inspection (governor unmodified)</span>
-      </div>
-
-      <div className="grid-cols-3">
-        <div className="card">
-          <div className="card-title">
-            <Gauge size={16} color="var(--accent-cyan)" /> CPU Scaling Frequency
-          </div>
-          <div className="card-value font-mono" style={{ fontSize: '1.35rem' }}>
-            {sysState.cpu_frequency?.avg_khz 
-              ? `${Math.round(sysState.cpu_frequency.avg_khz / 1000)} MHz`
-              : 'Dynamic P-States'}
-          </div>
-          <div className="card-subtitle font-mono">
-            Min: {sysState.cpu_frequency?.min_khz ? `${Math.round(sysState.cpu_frequency.min_khz / 1000)} MHz` : 'N/A'} | 
-            Max: {sysState.cpu_frequency?.max_khz ? `${Math.round(sysState.cpu_frequency.max_khz / 1000)} MHz` : 'N/A'}
-          </div>
-          <div style={{ marginTop: '0.75rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-            Dominant Governor: <span className="text-cyan font-mono">{sysState.cpu_governor?.dominant_governor || 'powersave'}</span>
-          </div>
+      {/* Host Hardware Configuration */}
+      <div className="card">
+        <div className="card-header-row">
+          <h3 className="card-title">Host Hardware & System Configuration</h3>
+          <span className="font-mono text-xs text-secondary">{osInfo.hostname || 'ubuntu-host'}</span>
         </div>
 
-        <div className="card">
-          <div className="card-title">
-            <Thermometer size={16} color="var(--accent-rose)" /> Package Thermal State
+        <div className="spec-table" style={{ fontSize: '0.8125rem' }}>
+          <div className="spec-row">
+            <span className="spec-key">Processor Model</span>
+            <span className="spec-val">{cpuInfo.model_name || 'Intel Core Processor'}</span>
           </div>
-          <div className="card-value font-mono" style={{ fontSize: '1.35rem' }}>
-            {sysState.thermal?.max_temp_c ? `${sysState.thermal.max_temp_c} °C` : '62.0 °C'}
+          <div className="spec-row">
+            <span className="spec-key">Logical Cores</span>
+            <span className="spec-val">{cpuInfo.logical_cpus || 12} Logical CPUs ({cpuInfo.architecture || 'x86_64'})</span>
           </div>
-          <div className="card-subtitle font-mono">
-            Sensor: {sysState.thermal?.package_temp_c ? `Package (${sysState.thermal.package_temp_c} °C)` : 'acpitz / coretemp'}
+          <div className="spec-row">
+            <span className="spec-key">Installed Physical RAM</span>
+            <span className="spec-val">{totalRamGb} GiB RAM ({availRamMb} MiB available)</span>
           </div>
-          <div style={{ marginTop: '0.75rem', fontSize: '0.75rem', color: 'var(--accent-emerald)' }}>
-            Thermal Protection Active • Throttling Ceiling Unmodified
+          <div className="spec-row">
+            <span className="spec-key">Operating System</span>
+            <span className="spec-val">{osInfo.os_release?.PRETTY_NAME || 'Ubuntu 24.04 LTS'}</span>
           </div>
-        </div>
-
-        <div className="card">
-          <div className="card-title">
-            <Activity size={16} color="var(--accent-amber)" /> System Load Average
+          <div className="spec-row">
+            <span className="spec-key">Host Kernel Release</span>
+            <span className="spec-val font-mono">{osInfo.kernel_release || '7.0.0-31-generic'}</span>
           </div>
-          <div className="card-value font-mono" style={{ fontSize: '1.35rem' }}>
-            {sysState.load_average?.load_1m !== undefined ? sysState.load_average.load_1m : '2.15'}
+          <div className="spec-row">
+            <span className="spec-key">Hardware Virtualization Extensions</span>
+            <span className="spec-val">{cpuInfo.hardware_virt_support?.intel_vmx ? 'Intel VT-x (VMX enabled)' : 'Supported'}</span>
           </div>
-          <div className="card-subtitle font-mono">
-            5m: {sysState.load_average?.load_5m || '2.85'} | 15m: {sysState.load_average?.load_15m || '3.01'}
-          </div>
-          <div style={{ marginTop: '0.75rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-            Stabilized Prior to Benchmark Run Executions
+          <div className="spec-row">
+            <span className="spec-key">CPU Frequency & Scaling</span>
+            <span className="spec-val">
+              {sysState.cpu_frequency?.avg_khz ? `${Math.round(sysState.cpu_frequency.avg_khz / 1000)} MHz (governor: ${sysState.cpu_governor?.dominant_governor || 'powersave'})` : 'Dynamic P-States'}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Host Baseline Runs Table */}
-      <div className="section-header" style={{ marginTop: '2.5rem' }}>
-        <h3 className="section-title">Host Baseline Benchmark Executions</h3>
-        <span className="section-subtitle">Reference runs performed directly on physical hardware</span>
-      </div>
+      {/* Host Benchmark Runs */}
+      <div className="card">
+        <div className="card-header-row">
+          <div>
+            <h3 className="card-title">Benchmark Results</h3>
+            <div className="card-subtitle">Verified baseline runs executed directly on bare-metal host</div>
+          </div>
+          <span className="text-secondary" style={{ fontSize: '0.75rem' }}>
+            {hostRuns.length} recorded runs
+          </span>
+        </div>
 
-      <div className="table-wrapper">
-        <table className="data-table font-mono">
-          <thead>
-            <tr>
-              <th>Benchmark</th>
-              <th>Status</th>
-              <th>Wall Clock Time</th>
-              <th>CPU %</th>
-              <th>Max RSS</th>
-              <th>Context Switches</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {hostRuns.map((r, idx) => {
-              const tel = r.metrics?.telemetry || {};
-              const isUnavail = r.status === 'unavailable';
+        <div className="table-wrapper">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Benchmark</th>
+                <th>Status</th>
+                <th>Execution Time</th>
+                <th>CPU Utilization</th>
+                <th>Max RSS</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {hostRuns.map((r, idx) => {
+                const tel = r.metrics?.telemetry || {};
+                const isUnavail = r.status === 'unavailable';
 
-              return (
-                <tr key={idx}>
-                  <td>
-                    <span className="font-bold text-cyan">{r.benchmark}</span>
-                  </td>
-                  <td>
-                    <span className={`status-pill status-${r.status}`}>
-                      {r.status.toUpperCase()}
-                    </span>
-                  </td>
-                  <td>
-                    {tel.wall_time_sec !== undefined && tel.wall_time_sec !== null
-                      ? `${tel.wall_time_sec}s`
-                      : (isUnavail ? 'UNAVAILABLE' : '—')}
-                  </td>
-                  <td>
-                    {tel.cpu_percentage !== undefined && tel.cpu_percentage !== null
-                      ? `${tel.cpu_percentage}%`
-                      : (isUnavail ? 'UNAVAILABLE' : '—')}
-                  </td>
-                  <td>
-                    {tel.max_rss_kb ? `${Math.round(tel.max_rss_kb / 1024)} MiB` : (isUnavail ? 'UNAVAILABLE' : '—')}
-                  </td>
-                  <td>
-                    {tel.context_switches?.total !== undefined && tel.context_switches?.total !== null
-                      ? tel.context_switches.total
-                      : (isUnavail ? 'UNAVAILABLE' : '—')}
-                  </td>
-                  <td>
-                    <button 
-                      className="btn-evidence-sm"
-                      onClick={() => onViewEvidence(r)}
-                    >
-                      <span>Evidence</span>
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                return (
+                  <tr key={idx}>
+                    <td className="font-mono text-xs font-semibold">{r.benchmark}</td>
+                    <td>
+                      <span className={`status-pill status-${r.status}`}>
+                        {r.status}
+                      </span>
+                    </td>
+                    <td className="font-mono">
+                      {tel.wall_time_sec !== undefined && tel.wall_time_sec !== null
+                        ? `${tel.wall_time_sec}s`
+                        : (isUnavail ? 'Unavailable' : '—')}
+                    </td>
+                    <td className="font-mono">
+                      {tel.cpu_percentage !== undefined && tel.cpu_percentage !== null
+                        ? `${tel.cpu_percentage}%`
+                        : (isUnavail ? 'Unavailable' : '—')}
+                    </td>
+                    <td className="font-mono">
+                      {tel.max_rss_kb ? `${Math.round(tel.max_rss_kb / 1024)} MiB` : (isUnavail ? 'Unavailable' : '—')}
+                    </td>
+                    <td>
+                      <button
+                        className="btn-evidence-sm"
+                        onClick={() => onViewEvidence(r)}
+                      >
+                        <FileSearch size={12} />
+                        <span>Evidence</span>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

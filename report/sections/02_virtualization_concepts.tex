@@ -1,0 +1,202 @@
+\section{Virtualization Concepts and Architectural Analysis}
+\label{sec:virtualization_concepts}
+
+Understanding the empirical behavior of virtualized systems requires an architectural analysis of the abstraction layers through which CPU instructions, memory references, and I/O requests travel. This section analyzes hardware-assisted virtualization, the kernel-integrated model of KVM/QEMU, the hosted model of Oracle VirtualBox, and the operating system-level containerization model of Native LXC.
+
+\subsection{Hardware-Assisted CPU and Memory Virtualization}
+\label{subsec:hardware_assisted_virt}
+
+Early x86 processor architectures were notoriously difficult to virtualize due to seventeen sensitive, unprivileged instructions identified by Popek and Goldberg~\cite{adams2006comparison} (e.g., \texttt{POPF}, \texttt{PUSHF}, \texttt{SGDT}, \texttt{SIDT}, \texttt{SMSW}). When executed in Ring 1 or Ring 3 by a guest operating system, these instructions either failed silently or examined host hardware state without triggering a general protection fault (\#GP), preventing classical trap-and-emulate virtualization. Hypervisors historically resolved this through complex binary translation (as pioneered by VMware) or paravirtualization (as implemented in Xen~\cite{barham2003xen}).
+
+\subsubsection{Intel VT-x and VMX Operation}
+In 2005, Intel introduced hardware-assisted virtualization extensions (Intel VT-x) to eliminate the need for software binary translation. VT-x introduces two fundamental processor operating modes:
+\begin{enumerate}
+    \item \textbf{VMX Root Operation}: The execution mode reserved for the hypervisor. In this mode, all CPU privilege rings (Ring 0 through Ring 3) operate with full hardware authority, identical to standard physical execution.
+    \item \textbf{VMX Non-Root Operation}: The execution mode designated for guest operating systems and their user applications. While the guest OS executes within Ring 0 of non-root mode, sensitive operations (such as modifying control registers \texttt{CR0}, \texttt{CR3}, \texttt{CR4}, executing \texttt{CPUID}, or servicing external physical hardware interrupts) trigger a mandatory hardware transition back to VMX root mode, known as a \textbf{VM-Exit}.
+\end{enumerate}
+
+State transitions between root and non-root modes are governed by a physical memory-backed structure known as the \textbf{Virtual Machine Control Structure (VMCS)}. The VMCS contains:
+\begin{itemize}
+    \item \textbf{Guest-State Area}: CPU registers (RIP, RSP, CR0/3/4, segment selectors) restored upon \textbf{VM-Entry} (\texttt{VMLAUNCH} or \texttt{VMRESUME}).
+    \item \textbf{Host-State Area}: Hypervisor registers loaded automatically upon a VM-Exit.
+    \item \textbf{VM-Execution Control Fields}: Bitmasks defining events that compel a VM-Exit (e.g., CR3 writes, I/O instructions, MSR accesses, interrupts).
+    \item \textbf{VM-Exit Information Fields}: Read-only diagnostic data documenting the exact reason for the transition (\texttt{EXIT\_REASON}) and qualification flags.
+\end{itemize}
+
+Every VM-Exit imposes an architectural latency penalty of several hundred CPU cycles required to serialize pipeline state, flush execution buffers, save guest registers to the VMCS, load host registers, and transfer execution to the hypervisor's exit handler.
+
+\subsubsection{Two-Dimensional Paging (Extended Page Tables)}
+CPU execution within a guest requires translating Guest Virtual Addresses (GVA) to physical memory. In a virtualized environment, physical memory is an abstraction: the guest translates GVA to a \textbf{Guest Physical Address (GPA)}, which the hypervisor must subsequently map to a physical \textbf{Host Physical Address (HPA)}.
+
+To bypass costly software-based shadow page tables, modern x86 processors implement Second Level Address Translation (SLAT), termed \textbf{Extended Page Tables (EPT)} by Intel. Under EPT, the hardware Memory Management Unit (MMU) performs a two-dimensional page walk. For each of the four levels of guest page tables (PML4 $\to$ PDPT $\to$ PD $\to$ PT), the hardware MMU must perform a complete four-level EPT page walk to resolve the guest physical address of the page table pointer itself. Consequently, in the worst case where Translation Lookaside Buffer (TLB) entries miss at every stage, resolving a single memory reference requires:
+\begin{equation}
+    N_{\text{accesses}} = 4 \times 4 + 4 = 24 \text{ memory references}
+    \label{eq:ept_overhead}
+\end{equation}
+Although hardware TLBs, EPT TLB tagging (Virtual Processor IDs or VPIDs), and huge pages (2 MB and 1 GB) mitigate this penalty in steady-state execution, workloads characterized by high TLB churn, pointer chasing, or dynamic working sets experience measurable memory throughput degradation under EPT.
+
+\subsection{KVM/QEMU Architectural Model}
+\label{subsec:kvm_arch}
+
+The Kernel-based Virtual Machine (KVM)~\cite{kivity2007kvm} represents an in-tree Linux kernel virtualization module that effectively transforms the Linux host kernel into a Type-1-like hypervisor. Rather than running as an external microkernel beneath Linux, KVM is implemented as loadable kernel modules:
+\begin{itemize}
+    \item \texttt{kvm.ko}: Core hardware-independent virtualization infrastructure, vCPU management, memory slot tracking, and event routing.
+    \item \texttt{kvm\_intel.ko}: Architecture-specific driver managing Intel VMX hardware instructions, VMCS initialization, and VM-exit decoding.
+\end{itemize}
+
+The hypervisor interfaces with user space through the character device node \texttt{/dev/kvm}. A management process, QEMU~\cite{bellard2005qemu}, issues \texttt{ioctl()} system calls to configure virtual machines: \texttt{KVM\_CREATE\_VM} instantiates the VM address space, \texttt{KVM\_SET\_USER\_MEMORY\_REGION} sets up EPT slots, \texttt{KVM\_CREATE\_VCPU} spawns a POSIX thread representing a vCPU, and \texttt{KVM\_RUN} enters VMX non-root mode.
+
+When the guest vCPU executes compute instructions, memory arithmetic, or internal guest system calls, it executes directly on physical CPU cores with zero hypervisor intervention. Peripheral I/O is accelerated via \textbf{VirtIO} paravirtualized lockless ring buffers (\texttt{vrings}).
+
+\subsection{Oracle VirtualBox Architectural Model}
+\label{subsec:virtualbox_arch}
+
+Oracle VM VirtualBox~\cite{oracle2023vbox} is structured as a hosted (Type-2) hypervisor designed for multi-platform portability across Linux, Windows, macOS, and Solaris hosts. Unlike KVM, VirtualBox operates as a distinct user-space application supported by out-of-tree loadable kernel modules:
+\begin{itemize}
+    \item \texttt{vboxdrv.ko}: Core privileged support driver providing ring-0 memory management, VT-x initialization, interrupt routing, and physical world-switching.
+    \item \texttt{vboxnetflt.ko} and \allowbreak\texttt{vboxnetadp.ko}: Network filter and host-only drivers creating virtual interfaces (\texttt{vboxnet0}).
+\end{itemize}
+
+In VirtualBox, the virtual machine monitor (VMM) resides primarily within the \texttt{VBoxHeadless} process. When a guest vCPU executes compute instructions, VirtualBox relies on \texttt{vboxdrv} to execute a world switch into VMX non-root mode. Because VirtualBox defaults to full hardware emulation (Intel ICH9 AHCI SATA and Intel PRO/1000 MT network adapters) and coordinates scheduling via user-space threads, context switching and exit trapping incur higher overhead than kernel-integrated solutions.
+
+\begin{figure}[t]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.46, transform shape, node distance=1.0cm, auto, >=latex', 
+    box/.style={draw, rectangle, rounded corners=2pt, minimum width=2.8cm, minimum height=0.7cm, align=center, font=\small},
+    groupbox/.style={draw, dashed, inner sep=0.3cm, rounded corners=4pt}]
+    % Physical Hardware
+    \node[box, fill=gray!20, minimum width=11.5cm] (hw) at (5.5, 0) {Physical Hardware (Intel Core i5-12450H, 16 GB DDR, NVMe SSD, Intel VT-x/EPT)};
+    % Host Kernel (KVM)
+    \node[box, fill=blue!15, minimum width=11.5cm] (hostkern) at (5.5, 1.3) {Linux Host Kernel (v7.0.0-31-generic) + \texttt{kvm.ko} / \texttt{kvm\_intel.ko}};
+    % Userspace helper and vCPUs
+    \node[box, fill=blue!5, minimum width=5cm] (qemu) at (2.75, 2.7) {QEMU Helper Process\\(VirtIO Device Backend)};
+    \node[box, fill=green!15, minimum width=5cm] (vcpu) at (8.25, 2.7) {Guest vCPU Threads\\(VMX Non-Root Ring 0/3)};
+    % Guest OS
+    \node[box, fill=green!5, minimum width=10.5cm] (guestos) at (5.5, 4.2) {Guest OS (Ubuntu 24.04 noble) / Linux Kernel 6.8.0};
+    \node[box, fill=yellow!20, minimum width=10.5cm] (guestapp) at (5.5, 5.4) {Guest Applications / Workload Benchmarks};
+    % Arrows
+    \draw[<->, thick] (hw) -- (hostkern);
+    \draw[<->, thick] (hostkern.north -| qemu) -- node[left, font=\scriptsize] {\texttt{/dev/kvm} ioctl} (qemu);
+    \draw[<->, thick] (hostkern.north -| vcpu) -- node[right, font=\scriptsize] {VMCS World Switch} (vcpu);
+    \draw[<->, thick] (qemu) -- (guestos.south -| qemu);
+    \draw[<->, thick] (vcpu) -- (guestos.south -| vcpu);
+    \draw[<->, thick] (guestos) -- (guestapp);
+    \begin{scope}[on background layer]
+        \node[groupbox, fill=blue!2, fit=(qemu) (vcpu) (guestos) (guestapp), label=above:\textbf{KVM Virtual Machine Domain}] {};
+    \end{scope}
+\end{tikzpicture}
+\caption{KVM/QEMU Architecture.}
+\label{fig:kvm_arch}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.46, transform shape, node distance=1.0cm, auto, >=latex', 
+    box/.style={draw, rectangle, rounded corners=2pt, minimum width=2.8cm, minimum height=0.7cm, align=center, font=\small},
+    groupbox/.style={draw, dashed, inner sep=0.3cm, rounded corners=4pt}]
+    % Physical Hardware
+    \node[box, fill=gray!20, minimum width=12cm] (hw) at (6, 0) {Physical Hardware (Intel Core i5-12450H, 16 GB DDR, NVMe SSD)};
+    % Host OS Kernel
+    \node[box, fill=purple!15, minimum width=7cm] (hostkern) at (3.5, 1.3) {Host Linux Kernel (v7.0.0-31-generic)};
+    \node[box, fill=purple!25, minimum width=4.5cm] (vboxdrv) at (9.5, 1.3) {VirtualBox Kernel Driver (\texttt{vboxdrv.ko})};
+    % Userspace
+    \node[box, fill=blue!10, minimum width=11.5cm] (vboxuser) at (6, 2.7) {VirtualBox Process (\texttt{VBoxHeadless} / VMM Runtime)};
+    % Emulated Devices & Execution
+    \node[box, fill=orange!15, minimum width=4cm] (vboxdev) at (2.75, 4.0) {Emulated Hardware\\(Intel PRO/1000 MT, AHCI)};
+    \node[box, fill=green!15, minimum width=4cm] (vboxexec) at (7.5, 4.0) {Execution Engine\\(VT-x Non-Root vCPUs)};
+    % Guest OS
+    \node[box, fill=green!5, minimum width=9cm] (guestos) at (5.5, 5.3) {Guest OS (Ubuntu 24.04 noble) / Standard Drivers};
+    \node[box, fill=yellow!20, minimum width=9cm] (guestapp) at (5.5, 6.4) {Guest Applications / Workload Benchmarks};
+    % Arrows
+    \draw[<->, thick] (hw) -- (hostkern);
+    \draw[<->, thick] (hostkern) -- (vboxdrv);
+    \draw[<->, thick] (hostkern) -- (vboxuser);
+    \draw[<->, thick] (vboxdrv) -- (vboxuser);
+    \draw[<->, thick] (vboxuser) -- (vboxdev);
+    \draw[<->, thick] (vboxuser) -- (vboxexec);
+    \draw[<->, thick] (vboxdev) -- (guestos);
+    \draw[<->, thick] (vboxexec) -- (guestos);
+    \draw[<->, thick] (guestos) -- (guestapp);
+    \begin{scope}[on background layer]
+        \node[groupbox, fill=purple!2, fit=(vboxdev) (vboxexec) (guestos) (guestapp), label=above:\textbf{VirtualBox VM Instance Domain}] {};
+    \end{scope}
+\end{tikzpicture}
+\caption{VirtualBox Hosted Architecture.}
+\label{fig:vbox_arch}
+\end{minipage}
+\end{figure}
+
+\subsection{Native LXC (Containerization) Architectural Model}
+\label{subsec:lxc_arch}
+
+Native Linux Containers (LXC)~\cite{lxc2024project} embody an entirely different architectural paradigm: operating system-level virtualization. Rather than creating synthetic hardware platforms and booting distinct guest operating system kernels, LXC leverages kernel primitives built directly into the host Linux kernel to enforce isolation between execution environments.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[scale=0.62, transform shape, node distance=1.0cm, auto, >=latex', 
+    box/.style={draw, rectangle, rounded corners=2pt, minimum width=2.8cm, minimum height=0.7cm, align=center, font=\small},
+    groupbox/.style={draw, dashed, inner sep=0.3cm, rounded corners=4pt}]
+    % Physical Hardware
+    \node[box, fill=gray!20, minimum width=12cm] (hw) at (6, 0) {Physical Hardware (Intel Core i5-12450H, 16 GB DDR, NVMe SSD)};
+    % Shared Linux Kernel
+    \node[box, fill=green!20, minimum width=12cm] (hostkern) at (6, 1.3) {Shared Linux Host Kernel (v7.0.0-31-generic) --- Completely Native Privilege Level (Ring 0)};
+    % Kernel Subsystems
+    \node[box, fill=green!10, minimum width=3.5cm] (cgroups) at (2, 2.6) {cgroups v2 Hierarchy\\(\texttt{cpu.max}, \texttt{memory.max})};
+    \node[box, fill=green!10, minimum width=3.5cm] (namespaces) at (6, 2.6) {Linux Namespaces\\(pid, net, mnt, ipc, uts, user)};
+    \node[box, fill=green!10, minimum width=3.5cm] (vfs) at (10, 2.6) {Host VFS, Scheduler (CFS),\\and Network Stack (\texttt{lxcbr0})};
+    % Environments
+    \node[box, fill=blue!10, minimum width=5cm] (hostapps) at (3, 4.2) {Host Applications / Daemons\\(Root Namespace)};
+    \node[box, fill=yellow!15, minimum width=5cm] (lxcapps) at (9, 4.2) {LXC Container (\texttt{lxc-ubuntu})\\Isolated User-Space RootFS (noble)};
+    % Container workload
+    \node[box, fill=yellow!25, minimum width=4.5cm] (lxcwork) at (9, 5.4) {Container Applications / Workloads};
+    % Arrows
+    \draw[<->, thick] (hw) -- (hostkern);
+    \draw[<->, thick] (hostkern) -- (cgroups);
+    \draw[<->, thick] (hostkern) -- (namespaces);
+    \draw[<->, thick] (hostkern) -- (vfs);
+    \draw[<->, thick] (cgroups) -- (hostapps);
+    \draw[<->, thick] (namespaces) -- (lxcapps);
+    \draw[<->, thick] (vfs) -- (lxcapps);
+    \draw[<->, thick] (lxcapps) -- (lxcwork);
+    \begin{scope}[on background layer]
+        \node[groupbox, fill=yellow!5, fit=(lxcapps) (lxcwork), label=above:\textbf{Native LXC Container Domain}] {};
+    \end{scope}
+\end{tikzpicture}
+\caption{Native LXC Architecture: Zero hardware emulation; isolation enforced via host kernel namespaces and cgroups v2.}
+\label{fig:lxc_arch}
+\end{figure}
+
+LXC isolation rests upon two fundamental pillars of the modern Linux kernel:
+\begin{enumerate}
+    \item \textbf{Kernel Namespaces}: Namespaces partition global kernel resources into discrete virtual instances (\texttt{pid}, \texttt{net}, \texttt{mnt}, \texttt{ipc}, \texttt{uts}, \texttt{user}, \texttt{cgroup})~\cite{kerrisk2010linux}.
+    \item \textbf{Control Groups Version 2 (cgroups v2)}: Control groups provide resource distribution, accounting, and enforcement~\cite{cgroupsv2kernel}, specifying CFS bandwidth quotas (\texttt{cpu.max}) and memory consumption ceilings (\texttt{memory.max}).
+\end{enumerate}
+
+Because LXC containers execute directly on the host kernel, instructions execute in standard user mode (Ring 3), and system calls transition directly into host kernel mode (Ring 0). There are no VMCS data structures, no VM-Exits, no second-level EPT page walks, and no virtual device emulation layers.
+
+\subsection{Architectural Synthesis and Taxonomy}
+\label{subsec:architectural_taxonomy}
+
+Table~\ref{tab:virt_taxonomy} synthesizes the architectural characteristics across the four evaluated platforms, highlighting the progressive trade-off between isolation depth and execution friction.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Architectural Comparison of Evaluated Execution Environments}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Architectural Dimension} & \textbf{Host Baseline} & \textbf{KVM / QEMU} & \textbf{Oracle VirtualBox} & \textbf{Native LXC} \\
+\midrule
+\textbf{Virtualization Paradigm} & Bare-Metal Physical & Kernel-based (Type-1-like) & Hosted (Type-2) & OS-Level Containerization \\
+\textbf{Privilege Execution} & Ring 0 (OS), Ring 3 (App) & VMX Root / Non-Root & VMX Root / Non-Root via Driver & Ring 0 (Host), Ring 3 (App) \\
+\textbf{Hypervisor Engine} & None & In-tree \texttt{kvm.ko} + QEMU & \texttt{vboxdrv.ko} + VBox VMM & None (Direct Host Kernel) \\
+\textbf{CPU Scheduling} & Linux CFS Scheduler & Host CFS schedules vCPUs & Host CFS schedules VBox threads & Host CFS with cgroups v2 \\
+\textbf{Memory Addressing} & Single Page Walk (CR3) & Two-Dimensional EPT & Two-Dimensional EPT & Single Page Walk (Host CR3) \\
+\textbf{I/O Virtualization} & Direct NVMe / PCIe DMA & Paravirtualized VirtIO Rings & Emulated AHCI / Intel e1000 & Direct Host VFS / \texttt{veth} Bridge \\
+\textbf{Kernel Boundary} & Host Linux 7.0 & Independent Guest Linux 6.8 & Independent Guest Linux 6.8 & Shared Host Linux 7.0 \\
+\textbf{Security Isolation} & Hardware / Process & Hardware MMU + VMCS & Hardware MMU + VMCS & Kernel Namespaces + cgroups \\
+\textbf{Startup Mechanism} & Physical EFI / GRUB & \texttt{virsh} / QEMU Boot & \texttt{VBoxManage} Boot & \texttt{lxc-start} Clone / Exec \\
+\bottomrule
+\end{tabularx}
+\end{table}

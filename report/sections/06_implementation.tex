@@ -1,0 +1,79 @@
+\section{Platform Implementation and Engineering Details}
+\label{sec:implementation}
+
+The practical execution of reproducible, non-destructive virtualization benchmarks across heterogeneous hypervisors demands a robust software engineering foundation. This section details the codebase structure, the execution logic of the unified runner, the environment adapter implementations, defensive security sandboxing, and automated verification suites.
+
+\subsection{Codebase Structure and Modularity}
+\label{subsec:codebase_structure}
+
+The CC2 platform is implemented as a clean, decoupled repository structured into dedicated sub-packages:
+\begin{itemize}
+    \item \texttt{benchmark/}: Core benchmarking orchestration engine.
+    \begin{itemize}
+        \item \texttt{runner.py}: Unified CLI execution driver and job scheduler.
+        \item \texttt{runner.sh}: Shell wrapper providing automated environment preparation and batch execution.
+        \item \texttt{adapters/}: Modular Python abstractions for \texttt{host.py}, \texttt{kvm.py}, \texttt{virtualbox.py}, and \texttt{lxc.py}.
+    \end{itemize}
+    \item \texttt{workloads/}: Deterministic C99 microbenchmark source files (\texttt{cpu\_}\allowbreak\texttt{workload.c}, \texttt{memory\_}\allowbreak\texttt{workload.c}, \texttt{syscall\_}\allowbreak\texttt{workload.c}, \texttt{scheduling\_}\allowbreak\texttt{workload.c}), compilation scripts (\texttt{build\_}\allowbreak\texttt{workloads.sh}), and cryptographic manifest (\texttt{MANIFEST.json}).
+    \item \texttt{backend/}: Lightweight Python REST service (\texttt{server.py}) orchestrating execution requests, tracking asynchronous job states, and streaming logs.
+    \item \texttt{dashboard/}: Responsive React 18 / TypeScript frontend application built with Vite, Tailwind CSS, Lucide icons, and Recharts.
+    \item \texttt{analysis/}: Automated validation and statistical aggregation tools (\texttt{dataset\_validator.py}, \texttt{analyze.py}).
+    \item \texttt{results/}: Hierarchical repository of raw execution payloads (\texttt{results/raw/}) and consolidated datasets (\texttt{results/processed/runs.json}).
+    \item \texttt{tests/}: Comprehensive automated test suites validating runner logic, adapter communication, schema adherence, and security invariants.
+\end{itemize}
+
+\subsection{Unified Experiment Runner Engine}
+\label{subsec:runner_engine}
+
+The central driver of the benchmarking suite is \texttt{benchmark/runner.py}. The runner implements a resilient state machine responsible for managing the complete lifecycle of each benchmark execution:
+
+\subsubsection{Concurrency Control and Run Isolation}
+Because overlapping benchmark runs would introduce severe scheduling interference and memory bus contention, \texttt{runner.py} enforces mutual exclusion using a kernel-level file lock (\texttt{fcntl.flock()}) on \texttt{/tmp/cc2\_runner.lock}. If another execution is in progress, subsequent dispatches block or fail gracefully.
+
+Prior to dispatching any workload iteration, the runner invokes \texttt{scavenge\_lingering\_processes()}, which scans the process table on both the host and target virtual domains for defunct or orphaned benchmark binaries. Any residual processes from previous runs are cleanly terminated via \texttt{SIGTERM}, followed by \texttt{SIGKILL} if unresponsive.
+
+\subsubsection{Pre-Flight Verification and Telemetry Capture}
+Before initiating workload execution, the runner captures pre-flight host telemetry:
+\begin{itemize}
+    \item CPU load averages over 1, 5, and 15-minute intervals via \texttt{os.getloadavg()}.
+    \item Available and free physical memory extracted from \texttt{/proc/meminfo}.
+    \item Thermal state and governor frequency policies.
+\end{itemize}
+Following workload completion, matching post-flight telemetry is captured. The dual telemetry snapshots allow the analysis engine to detect background CPU spikes or thermal anomalies that might have distorted the measurement.
+
+\subsection{Environment Adapter Implementations}
+\label{subsec:adapters}
+
+To decouple benchmark logic from the operational idiosyncrasies of specific virtualization platforms, all domain interactions are routed through abstract adapter classes inheriting from \texttt{BaseAdapter}:
+
+\subsubsection{Host Adapter (\texttt{adapters/host.py})}
+The host adapter handles direct execution on bare metal. Workloads are dispatched via Python's \texttt{subprocess.Popen} with strict timeout controls. High-resolution execution timing is gathered using POSIX \texttt{clock\_gettime}(\texttt{CLOCK\_}\allowbreak\texttt{MONOTONIC\_RAW}). Memory footprint and context-switch counts are harvested via the \texttt{getrusage}(\texttt{RUSAGE\_CHILDREN}) system call.
+
+\subsubsection{KVM/QEMU Adapter (\texttt{adapters/kvm.py})}
+The KVM adapter communicates with the \texttt{libvirtd} management daemon~\cite{libvirt2024} via the \texttt{virsh} CLI and key-authenticated OpenSSH. The adapter verifies domain status using \texttt{virsh domstate} \texttt{ubuntu24.04}. If the VM is shut down, the adapter triggers \texttt{virsh start} and monitors network socket readiness via periodic TCP probes to port 22. Benchmark commands are executed over an isolated virtual bridge network (\texttt{virbr0}), and output streams are captured asynchronously.
+
+\subsubsection{VirtualBox Adapter (\texttt{adapters/virtualbox.py})}
+The VirtualBox adapter interfaces with Oracle's \texttt{VBoxManage} management binary. Domain states are checked via \texttt{VBoxManage showvminfo} \texttt{Ubuntu-Server-VBox} \texttt{--machinereadable}. Headless execution is launched via \texttt{VBoxManage startvm} \texttt{Ubuntu-Server-VBox} \texttt{--type headless}. The adapter communicates with the guest over the dedicated host-only network adapter (\texttt{vboxnet0}, \texttt{192.168.56.101}).
+
+\subsubsection{LXC Adapter (\texttt{adapters/lxc.py})}
+The LXC adapter controls Linux containers using the native \texttt{lxc-*} CLI utilities. Container status is queried via \texttt{lxc-info -n lxc-ubuntu}. Workload execution is initiated directly via \texttt{lxc-attach -n lxc-ubuntu} \allowbreak\texttt{--clear-env --} \allowbreak\texttt{/path/to/workload}, bypassing SSH daemon overhead entirely and executing within the container's private PID, mount, and network namespaces.
+
+\subsection{Defensive Security Sandboxing and Error Handling}
+\label{subsec:security_sandboxing}
+
+Because the benchmarking suite is accessible via an interactive web dashboard, defensive engineering practices are implemented across all tiers:
+\begin{enumerate}
+    \item \textbf{Strict Input Whitelisting}: The backend API server enforces strict enumeration matching. Only pre-approved target identifiers (\texttt{host}, \texttt{kvm}, \texttt{virtualbox}, \texttt{lxc}) and registered benchmark names (\texttt{cpu\_deterministic}, \texttt{memory\_deterministic}, etc.) are accepted. Any request containing unrecognized parameters or shell metacharacters (\verb|;|, \verb|&|, \verb!|!, \verb|`|) is rejected with HTTP 400.
+    \item \textbf{Non-Destructive Storage Protection}: Block-level storage testing explicitly prohibits raw device paths (\texttt{/dev/sda}, \allowbreak\texttt{/dev/nvme0n1}). All file-based I/O operations are strictly confined to volatile scratch files created under \texttt{/tmp}, preventing accidental filesystem corruption.
+    \item \textbf{Automated Credential Redaction}: Telemetry logs and raw terminal outputs pass through regex sanitization filters that redact IP credentials, private SSH keys, and system authentication tokens before persisting to disk or streaming to the web UI.
+    \item \textbf{Honest Handling of Unavailable Utilities}: When optional performance profiling utilities are absent on the target domain (e.g., \texttt{iperf3} or \texttt{fio}), the platform does not fabricate placeholder values or fail silently. Instead, the engine transparently logs an \texttt{UNAVAILABLE} status record containing the exact operational reason.
+\end{enumerate}
+
+\subsection{Automated Quality Assurance}
+\label{subsec:quality_assurance}
+
+The platform's reliability is validated by an extensive automated test framework comprising:
+\begin{itemize}
+    \item \textbf{23 Backend Test Suites}: Executed via \texttt{tests/run\_all\_tests.sh}, validating workload compilation, SHA-256 manifest verification, adapter state transitions, timeout handling, JSON schema compliance, and statistical aggregator mathematics.
+    \item \textbf{13 Frontend Test Suites}: Executed via \texttt{npm test} in the dashboard, ensuring reactive UI state handling, API client error recovery, Recharts graph rendering, and accessible navigation.
+\end{itemize}

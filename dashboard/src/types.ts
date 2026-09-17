@@ -48,6 +48,7 @@ export interface HostInventory {
     swap_total_kb?: string;
   };
   os?: {
+    hostname?: string;
     kernel_release?: string;
     kernel_version?: string;
     virtualization_detected?: string;
@@ -122,8 +123,10 @@ export type PageId =
   | 'network'
   | 'startup'
   | 'syscalls'
+  | 'scheduling'
   | 'isolation'
   | 'comparison'
   | 'evidence'
   | 'methodology'
   | 'raw_data';
+

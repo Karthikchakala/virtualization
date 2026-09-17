@@ -1,0 +1,79 @@
+\section{Experimental Testbed and Configuration}
+\label{sec:experimental_environment}
+
+To guarantee that observed performance differentials reflect the intrinsic architectural properties of each virtualization paradigm rather than variations in underlying hardware or software configurations, all experiments were executed on a dedicated physical workstation. This section details the physical host hardware, hypervisor setups, virtual machine parameters, and the workload suite specifications.
+
+\subsection{Physical Host and Virtual Domain Testbed Topology}
+\label{subsec:physical_host}
+
+The benchmarking testbed was hosted on an ASUS Vivobook workstation (Model K3605ZU) equipped with hybrid Alder Lake architecture. Table~\ref{tab:testbed_topology} provides a side-by-side specification of the physical host hardware (Panel A) and the four evaluated virtualized execution environments (Panel B).
+
+\begin{table}[t]
+\centering
+\small
+\caption{Experimental Hardware and Virtualized Testbed Topology}
+\label{tab:testbed_topology}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\multicolumn{5}{l}{\textbf{Panel A: Physical Host Hardware and Operating System Specifications}} \\
+\midrule
+\textbf{Workstation Model} & \multicolumn{4}{l}{ASUS Vivobook 16X (Model K3605ZU, Alder Lake Intel 7 process)} \\
+\textbf{Processor Core Topology} & \multicolumn{4}{l}{12th Gen Intel Core i5-12450H (8 Cores: 4 P-cores HT + 4 E-cores, 12 Threads)} \\
+\textbf{Frequencies \& Virt Assist} & \multicolumn{4}{l}{400.00 MHz base -- 4400.00 MHz max turbo; Intel VT-x / VMX enabled in BIOS} \\
+\textbf{Memory \& Primary Storage} & \multicolumn{4}{l}{15,987,828 kB DDR RAM ($\sim$15.25 GiB), 4.0 GiB swap; NVMe PCIe Gen 4 SSD} \\
+\textbf{Host OS \& Linux Kernel} & \multicolumn{4}{l}{Ubuntu 24.04.5 LTS (Noble Numbat, x86\_64), Linux \texttt{7.0.0-31-generic}} \\
+\textbf{Virtualization Runtimes} & \multicolumn{4}{l}{\texttt{libvirtd} 10.0.0 / QEMU 8.2.2, VirtualBox 7.2.16, Native LXC 5.0.3} \\
+\midrule
+\multicolumn{5}{l}{\textbf{Panel B: Virtual Domain and Container Configurations}} \\
+\midrule
+\textbf{Configuration Parameter} & \textbf{Host Baseline} & \textbf{KVM / QEMU} & \textbf{Oracle VirtualBox} & \textbf{Native LXC} \\
+\midrule
+\textbf{Domain Identifier} & \texttt{host} & \texttt{ubuntu24.04} & \texttt{Ubuntu-Server-VBox} & \texttt{lxc-ubuntu} \\
+\textbf{Virtualization Paradigm} & Bare-Metal Physical & Kernel Hypervisor & Hosted (Type-2) VMM & cgroups v2 / Namespaces \\
+\textbf{Allocated Compute} & 12 Cores (Total) & 2 vCPUs (Pinned) & 2 vCPUs & 2 Cores (\texttt{cpu.max}) \\
+\textbf{Allocated Memory} & 16 GB Physical & 2048 MB Static & 2048 MB Static & 2048 MB (\texttt{memory.max}) \\
+\textbf{Disk Controller} & NVMe PCIe Gen 4 & VirtIO SCSI / Block & Intel AHCI SATA & Host VFS Direct Mount \\
+\textbf{Disk Image Format} & Raw Ext4 on NVMe & \texttt{qcow2} (Copy-on-Write) & \texttt{vdi} (Virtual Disk) & Directory Tree Rootfs \\
+\textbf{Network Interface} & Physical / Loopback & VirtIO Net (\texttt{virbr0}) & Intel PRO/1000 MT & \texttt{veth} Bridge (\texttt{lxcbr0}) \\
+\textbf{Assigned IPv4 Address} & 127.0.0.1 / Local & 192.168.122.179 & 192.168.56.101 & 10.0.3.150 \\
+\textbf{Guest Operating System} & Ubuntu 24.04.5 LTS & Ubuntu 24.04.1 LTS & Ubuntu 24.04.1 LTS & Ubuntu 24.04 LTS (noble) \\
+\textbf{Guest Kernel Version} & 7.0.0-31-generic & 6.8.0-40-generic & 6.8.0-40-generic & 7.0.0-31-generic (Shared) \\
+\textbf{Hypervisor Footprint} & 0 MB & $\sim$120 MB (QEMU RSS) & $\sim$180 MB (VMM RSS) & $\sim$4 MB (LXC Monitor) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The configuration establishes identical resource allocations across all virtual domains:
+\begin{itemize}
+    \item \textbf{KVM / QEMU}: Managed via \texttt{libvirt} under \texttt{qemu:///system}. The domain utilizes a modern Q35 machine type with OVMF UEFI firmware, VirtIO paravirtualized disk and network drivers, and hardware VT-x acceleration enabled via \texttt{/dev/kvm}.
+    \item \textbf{Oracle VirtualBox}: Managed via \texttt{VBoxManage}. Hardware virtualization (VT-x) and nested paging (EPT) are enabled. Storage is attached via an emulated AHCI controller, and networking is serviced by an emulated Intel 82540EM Gigabit Ethernet adapter.
+    \item \textbf{Native LXC}: Defined under \texttt{/var/lib/lxc/lxc-ubuntu/config}. Resource constraints are enforced by the host Linux kernel via cgroups v2 controllers: \texttt{cpu.max = "200000 100000"} limits CPU bandwidth to 2.0 full cores, and \texttt{memory.max = 2147483648} sets the memory ceiling to 2048 MB.
+\end{itemize}
+
+\subsection{Workload Suite Characterization}
+\label{subsec:workload_characterization}
+
+The experimental workload suite comprises ten distinct benchmarks profiling CPU, memory, system call transitions, thread scheduling, storage I/O, network latency, application response times, cold-start lifecycle, and security boundaries. Table~\ref{tab:workload_parameters} details each benchmark workload, binary provenance, execution flags, and validation criteria.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Evaluated Benchmarks and Workload Invariants}
+\label{tab:workload_parameters}
+\begin{tabularx}{\textwidth}{ll>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Benchmark Name} & \textbf{Workload Binary} & \textbf{Parameters and Workload Invariants} & \textbf{Validation Criteria} \\
+\midrule
+\texttt{cpu\_deterministic} & \texttt{cpu\_workload} & $N_{\text{mat}}=400$, 5 runs, 1 warmup, 640M FLOPs & FNV-1a Checksum \texttt{0x7e83d4c61ad5adb8} \\
+\texttt{memory\_deterministic} & \texttt{memory\_workload} & 128 MB buffer, 4 passes, 64-byte stride & Multi-pass FNV-1a Checksum \\
+\texttt{syscall\_deterministic} & \texttt{syscall\_workload} & 200,000 $\times$ \texttt{getpid()} system calls, 5k warmup & Monotonic counter $= 200,000$ \\
+\texttt{scheduling\_deterministic} & \texttt{scheduling\_workload} & 20,000 pipe ping-pong thread context switches & Context switch count $= 40,000$ \\
+\texttt{disk\_fio} & \texttt{fio} & 16 MB test file, 4K block size, direct I/O & IOPS and bandwidth extraction \\
+\texttt{network\_ping} & \texttt{ping} & 5 ICMP packets, 1.0s interval, local bridge & 0\% packet loss verification \\
+\texttt{network\_iperf3} & \texttt{iperf3} & 10s single-stream TCP bandwidth & Automated tool presence audit \\
+\texttt{app\_latency} & Python HTTP & 100 HTTP requests to \texttt{/health} endpoint & 100\% HTTP 200 response codes \\
+\texttt{startup\_lifecycle} & Lifecycle Engine & VMM start, OS ready, network ready, app ready & Monotonic phase timestamp ordering \\
+\texttt{isolation\_audit} & Isolation Inspector & \texttt{/proc/1/ns}, cgroups mount, \texttt{systemd-detect-virt} & Verification of namespace inodes \\
+\bottomrule
+\end{tabularx}
+\end{table}

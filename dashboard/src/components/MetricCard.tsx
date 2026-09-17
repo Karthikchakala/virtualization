@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileSearch, AlertCircle, HelpCircle } from 'lucide-react';
+import { FileSearch, AlertCircle } from 'lucide-react';
 import { BenchmarkRun } from '../types';
 
 interface MetricCardProps {
@@ -29,22 +29,19 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   unavailableReason,
   stats,
   evidenceRun,
-  onViewEvidence,
-  color = 'var(--accent-cyan)'
+  onViewEvidence
 }) => {
   const isUnavailable = status === 'unavailable' || value === null || value === undefined;
 
   return (
     <div className="metric-card">
       <div className="metric-header">
-        <span className="metric-title" style={{ borderLeft: `3px solid ${color}` }}>
-          {title}
-        </span>
+        <span className="metric-title">{title}</span>
         {evidenceRun && onViewEvidence && (
           <button
             className="btn-evidence-sm"
             onClick={() => onViewEvidence(evidenceRun)}
-            title="Inspect raw execution command, stdout, and stderr"
+            title="Inspect raw command and output"
           >
             <FileSearch size={12} />
             <span>Evidence</span>
@@ -57,7 +54,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
           <div className="metric-unavailable-box">
             <div className="unavailable-pill">
               <AlertCircle size={12} />
-              <span>UNAVAILABLE</span>
+              <span>Unavailable</span>
             </div>
             <p className="unavailable-text">
               {unavailableReason || 'Measurement not supported or restricted in this environment.'}
@@ -66,7 +63,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
         ) : (
           <div className="metric-val-row">
             <span className="metric-value font-mono">{value}</span>
-            {unit && <span className="metric-unit font-mono">{unit}</span>}
+            {unit && <span className="metric-unit">{unit}</span>}
           </div>
         )}
 
@@ -76,19 +73,19 @@ export const MetricCard: React.FC<MetricCardProps> = ({
           <div className="metric-stats-grid font-mono">
             {stats.mean !== undefined && stats.mean !== null && (
               <div className="stat-item">
-                <span className="stat-label">mean</span>
+                <span className="stat-label">Mean</span>
                 <span className="stat-val">{stats.mean}</span>
               </div>
             )}
             {stats.median !== undefined && stats.median !== null && (
               <div className="stat-item">
-                <span className="stat-label">median</span>
+                <span className="stat-label">Median</span>
                 <span className="stat-val">{stats.median}</span>
               </div>
             )}
             {stats.stddev !== undefined && stats.stddev !== null && (
               <div className="stat-item">
-                <span className="stat-label">stddev</span>
+                <span className="stat-label">Std Dev</span>
                 <span className="stat-val">{stats.stddev}</span>
               </div>
             )}

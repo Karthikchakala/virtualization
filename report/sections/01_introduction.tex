@@ -1,0 +1,54 @@
+\section{Introduction and Background}
+\label{sec:introduction}
+
+Virtualization constitutes one of the foundational architectural abstractions in modern computer engineering and cloud computing infrastructure. By decoupling operating system instances and computational workloads from physical hardware, virtualization technologies enable high-density server consolidation, multi-tenant isolation, elastic resource allocation, rapid provisioning, and disaster recovery. Over the past three decades, virtualization has evolved from legacy mainframe hardware partitioning into a diverse spectrum of heterogeneous technologies ranging from kernel-integrated hypervisors and hosted desktop hypervisors to lightweight operating system-level containers.
+
+Despite the pervasive adoption of virtualized infrastructure, the abstraction layers introduced by virtualization inevitably impose performance trade-offs, commonly termed the \textit{virtualization tax}. These penalties stem from guest-to-host privilege transitions (VM-exits), two-dimensional address translation (Extended Page Tables / Nested Page Tables), virtual device register trapping, interrupt injection latencies, and hypervisor scheduling contention. Understanding the precise empirical magnitude and architectural origins of these overheads is essential for systems architects, cloud engineers, and software developers when selecting an appropriate execution platform.
+
+\subsection{Evolution and Taxonomy of Virtualization}
+\label{subsec:virtualization_taxonomy}
+
+The historical taxonomy established by Popek and Goldberg~\cite{adams2006comparison} categorized virtualization architectures primarily based on the presence or absence of an intermediate host operating system:
+\begin{enumerate}
+    \item \textbf{Type-1 (Bare-Metal) Hypervisors}: Hypervisors that execute directly on bare physical hardware in the most privileged execution mode, bypassing any general-purpose host operating system. Examples include VMware ESXi, Xen~\cite{barham2003xen}, and modern kernel-integrated architectures such as the Linux Kernel-based Virtual Machine (KVM)~\cite{kivity2007kvm}.
+    \item \textbf{Type-2 (Hosted) Hypervisors}: Virtual machine monitors (VMMs) that execute as standard user-space applications on top of a conventional host operating system. The host OS retains direct control over the physical CPU, memory, and devices. Prominent examples include Oracle VM VirtualBox~\cite{oracle2023vbox} and VMware Workstation.
+    \item \textbf{Operating System-Level Virtualization (Containers)}: Container runtimes that instantiate isolated user-space environments using host kernel primitives—specifically kernel namespaces and control groups (cgroups)~\cite{cgroupsv2kernel,kerrisk2010linux}—without hardware emulation or redundant guest kernels. Prominent implementations include Native Linux Containers (LXC)~\cite{lxc2024project} and Docker.
+\end{enumerate}
+
+With the advent of hardware-assisted virtualization extensions on x86\_64 processors (Intel VT-x and AMD-V), the boundaries between traditional Type-1 and Type-2 classifications have become nuanced. In modern Linux systems, KVM turns the host kernel itself into a hypervisor via loadable kernel modules, allowing virtual machines to execute directly on physical processor cores in VMX non-root mode, while delegating peripheral device emulation to a user-space helper process (QEMU)~\cite{bellard2005qemu}. Conversely, Oracle VirtualBox utilizes an out-of-tree kernel driver (\texttt{vboxdrv}) to coordinate ring-0 context switching, but operates under a hosted process model. Meanwhile, native containers completely bypass CPU privilege trapping by sharing the underlying host kernel.
+
+\subsection{Research Objectives and Scope}
+\label{subsec:research_objectives}
+
+The central objective of this research is to design, construct, and evaluate a comprehensive, reproducible, and non-destructive benchmarking laboratory platform—designated the \textbf{CC2 Virtualization Benchmarking Suite}—to conduct a rigorous empirical comparison between three leading virtualization platforms and an unencumbered bare-metal host baseline on identical physical hardware:
+\begin{enumerate}
+    \item \textbf{Bare-Metal Host Baseline}: Physical Ubuntu 24.04.5 LTS host environment acting as the control reference.
+    \item \textbf{KVM/QEMU}: Hardware-accelerated kernel hypervisor utilizing QEMU 8.2.2 and \texttt{libvirt} 10.0.0.
+    \item \textbf{Oracle VirtualBox}: Hosted Type-2 hypervisor running version 7.2.16 with kernel drivers.
+    \item \textbf{Native LXC}: Native Linux Containers running version 5.0.3 utilizing Linux cgroups v2 and namespace isolation.
+\end{enumerate}
+
+To systematically investigate the performance envelope across these environments, this investigation evaluates six primary research questions:
+\begin{itemize}
+    \item \textbf{RQ1 (Compute Efficiency)}: To what degree do hardware-assisted virtualization extensions eliminate CPU compute overhead during sustained floating-point arithmetic compared to bare-metal execution and containerization?
+    \item \textbf{RQ2 (Memory Subsystem)}: What is the measurable impact of two-dimensional paging (Extended Page Tables) on memory bandwidth, cache locality, and allocation overhead compared to native page tables?
+    \item \textbf{RQ3 (Kernel Boundary and System Calls)}: How do system call invocation and thread context-switch latencies differ when executed within a virtualized guest kernel versus a container sharing the host kernel?
+    \item \textbf{RQ4 (Networking and Bridging)}: What latency penalties are introduced by virtual software bridges (\texttt{virbr0}, \texttt{vboxnet0}, \texttt{lxcbr0}) and virtual network interface emulation (VirtIO versus virtual hardware controllers)?
+    \item \textbf{RQ5 (Provisioning and Cold-Start)}: What are the lifecycle costs associated with domain initialization, guest kernel bootstrapping, network socket readiness, and application availability?
+    \item \textbf{RQ6 (Isolation Security Boundaries)}: How do hypervisor hardware boundaries compare with kernel namespace and cgroup boundaries in terms of process isolation, device visibility, and cross-domain contention?
+\end{itemize}
+
+\subsection{Academic and Scientific Integrity Policy}
+\label{subsec:integrity_policy}
+
+In accordance with strict scientific and academic standards, this report enforces three foundational methodological invariants:
+\begin{enumerate}
+    \item \textbf{Zero Synthetic Data Fabrication}: All numerical metrics, execution timings, latency percentiles, and throughput figures presented in this report represent real measurements captured on the physical testbed. If an optional utility or hardware counter interface was unavailable (e.g., restricted access to hardware PMU registers under \texttt{perf\_}\allowbreak\texttt{event\_}\allowbreak\texttt{paranoid=4}, or absent packages such as \texttt{iperf3} and \texttt{fio}), the platform explicitly records the measurement as \texttt{UNAVAILABLE} or \texttt{FAILED} rather than fabricating zero or mock values.
+    \item \textbf{Deterministic Cryptographic Verification}: All custom microbenchmarks are compiled into self-contained static C99 binaries whose binary integrity is validated against immutable SHA-256 digests. Workload mathematical outputs are continuously verified using FNV-1a checksums to guarantee computational equivalence across all target environments.
+    \item \textbf{Strictly Descriptive Reporting}: In lieu of subjective scoring algorithms or declaring an arbitrary ``winner'', this study characterizes the multidimensional trade-offs inherent to each architecture across performance, security, operational overhead, and flexibility.
+\end{enumerate}
+
+\subsection{Report Organization}
+\label{subsec:organization}
+
+The remainder of this report is structured as follows. Section~\ref{sec:virtualization_concepts} delivers an architectural analysis of hardware-assisted virtualization, KVM/QEMU, VirtualBox, and LXC. Section~\ref{sec:system_architecture} details the system architecture of the CC2 benchmarking platform, execution lifecycle, and mathematical analysis framework. Section~\ref{sec:experimental_environment} specifies the physical host testbed, virtualized guest topologies, and benchmark parameters. Section~\ref{sec:benchmark_methodology} details the implementation of the ten microbenchmark suites. Section~\ref{sec:results_analysis} presents the empirical measurements, comparative tables, and in-depth performance analysis. Section~\ref{sec:dashboard} details the telemetry web dashboard. Section~\ref{sec:discussion} discusses architectural trade-offs, and Section~\ref{sec:conclusion} concludes the report with directions for future work.

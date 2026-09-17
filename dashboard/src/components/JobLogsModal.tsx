@@ -45,43 +45,51 @@ export const JobLogsModal: React.FC<JobLogsModalProps> = ({ jobId, onClose }) =>
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-container log-modal-width" onClick={e => e.stopPropagation()}>
+      <div className="modal-container" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
-          <div className="modal-title-group">
-            <Terminal size={18} color="var(--accent-cyan)" />
-            <div>
-              <div className="modal-title">Sanitized Execution Logs</div>
-              <div className="modal-subtitle font-mono">Job ID: {jobId} | Status: {logs?.status || 'loading'}</div>
-            </div>
+          <div>
+            <div className="modal-title">Execution Logs</div>
+            <div className="modal-meta font-mono">Job ID: {jobId} • Status: {logs?.status || 'loading'}</div>
           </div>
           <div className="modal-actions">
             <button className="btn-icon" onClick={fetchLogs} title="Refresh Logs">
-              <RefreshCw size={15} className={loading ? 'animate-spin' : ''} />
+              <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
             </button>
             <button className="btn-icon" onClick={handleCopy} title="Copy to Clipboard">
-              {copied ? <Check size={15} color="var(--accent-emerald)" /> : <Copy size={15} />}
+              {copied ? <Check size={14} color="var(--status-success-text)" /> : <Copy size={14} />}
             </button>
             <button className="btn-icon" onClick={onClose} title="Close">
-              <X size={18} />
+              <X size={16} />
             </button>
           </div>
         </div>
 
         <div className="modal-body">
-          {error && <div className="notice-error">{error}</div>}
+          {error && (
+            <div className="control-alert control-alert-error" style={{ marginBottom: '1rem' }}>
+              {error}
+            </div>
+          )}
 
           {logs && (
-            <div className="terminal-log-viewer font-mono">
-              {logs.stdout ? (
-                <pre className="terminal-stdout">{logs.stdout}</pre>
-              ) : (
-                <div className="terminal-empty">No standard output recorded yet.</div>
-              )}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <div className="command-label">
+                  <Terminal size={12} /> Standard Output
+                </div>
+                {logs.stdout ? (
+                  <pre className="terminal-view font-mono">{logs.stdout}</pre>
+                ) : (
+                  <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>No standard output recorded.</div>
+                )}
+              </div>
 
               {logs.stderr && (
-                <div className="terminal-stderr-container">
-                  <div className="stderr-header">=== STANDARD ERROR ===</div>
-                  <pre className="terminal-stderr">{logs.stderr}</pre>
+                <div>
+                  <div className="command-label" style={{ color: 'var(--status-danger-text)' }}>
+                    Standard Error
+                  </div>
+                  <pre className="terminal-view font-mono terminal-stderr">{logs.stderr}</pre>
                 </div>
               )}
             </div>

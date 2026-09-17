@@ -1,0 +1,151 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[top=0.75in, bottom=0.75in, left=0.75in, right=0.75in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,multirow}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,arrows,positioning,fit,calc,backgrounds}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks,pdfusetitle]{hyperref}
+\usepackage{titlesec}
+
+% Header and Footer styling
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Virtualization Lab: Performance and Isolation Analysis}}
+\fancyhead[R]{\small\thepage}
+\fancyfoot[C]{\small\textit{Department of Computer Science and Engineering, IIITDM Kurnool}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Section spacing adjustments
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\small\bfseries}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{1.0ex plus 0.2ex minus 0.1ex}{0.4ex plus 0.1ex}
+\titlespacing*{\subsection}{0pt}{0.8ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+\titlespacing*{\subsubsection}{0pt}{0.6ex plus 0.1ex minus 0.1ex}{0.2ex plus 0.1ex}
+
+\setlength{\parskip}{0.15ex plus 0.05ex minus 0.05ex}
+\setlength{\parindent}{1.2em}
+\setlength{\floatsep}{5pt plus 2pt minus 1pt}
+\setlength{\textfloatsep}{7pt plus 2pt minus 2pt}
+\setlength{\intextsep}{5pt plus 2pt minus 1pt}
+
+% Float placement optimization
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.88}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.85}
+\renewcommand{\arraystretch}{0.95}
+
+% Compact Table of Contents
+\setcounter{tocdepth}{1}
+
+\begin{document}
+
+% =========================================================================
+% PAGE 1: FORMAL COVER / TITLE PAGE (STRICTLY PAGE 1 ONLY)
+% =========================================================================
+\begin{titlepage}
+\thispagestyle{empty}
+\centering
+
+\vspace*{-0.5cm}
+\includegraphics[width=0.85\textwidth]{figures/iiitdm_logo.png}
+
+\vspace{0.8cm}
+{\Large\textbf{DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING}}\\[0.2cm]
+{\large\textbf{INDIAN INSTITUTE OF INFORMATION TECHNOLOGY,}}\\[0.1cm]
+{\large\textbf{DESIGN AND MANUFACTURING, KURNOOL}}\\[0.1cm]
+{\normalsize Jagannathagattu, Dinnedevarapadu, Kurnool, Andhra Pradesh -- 518008}
+
+\vspace{1.1cm}
+\rule{\linewidth}{1.2pt}\\[0.4cm]
+{\LARGE\bfseries Virtualization Lab: Performance and Isolation Analysis of KVM/QEMU, VirtualBox, and Native LXC}\\[0.2cm]
+\rule{\linewidth}{1.2pt}
+
+\vspace{0.8cm}
+{\large\textit{A Project Report Submitted in Partial Fulfillment of the Requirements\\for the Course of Operating Systems / Advanced Virtualization Lab}}
+
+\vspace{1.4cm}
+\begin{minipage}{0.48\textwidth}
+\begin{flushleft} \large
+\emph{Submitted By:}\\
+\textbf{Chakala Karthik} (123CS0038)\\
+\textbf{Shaik Venkat} (123CS0037)\\[0.2cm]
+\normalsize B.Tech, Computer Science and Engineering
+\end{flushleft}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\begin{flushright} \large
+\emph{Under the Guidance of:}\\
+\textbf{Dr. Anil Kumar}\\[0.2cm]
+\normalsize Assistant Professor\\
+Department of Computer Science and Engineering\\
+IIITDM Kurnool
+\end{flushright}
+\end{minipage}
+
+\vfill
+{\large\textbf{Academic Year 2025--2026}}\\[0.1cm]
+{\normalsize September 2026}
+
+\end{titlepage}
+
+% =========================================================================
+% PAGE 2: TABLE OF CONTENTS (FOLLOWED IMMEDIATELY BY TEXT, NO BLANK PAGES)
+% =========================================================================
+\clearpage
+\setcounter{page}{2}
+
+\tableofcontents
+\vspace{0.6cm}
+\hrule
+\vspace{0.8cm}
+
+% Section 1: Introduction and Background
+\input{sections/01_introduction.tex}
+
+% Section 2: Virtualization Concepts and Architectural Analysis
+\input{sections/02_virtualization_concepts.tex}
+
+% Section 3: System Architecture and Benchmarking Methodology
+\input{sections/03_system_architecture.tex}
+
+% Section 4: Experimental Testbed and Configuration
+\input{sections/04_experimental_environment.tex}
+
+% Section 5: Benchmark Methodology and Workload Implementation
+\input{sections/05_benchmark_methodology.tex}
+
+% Section 6: Platform Implementation and Engineering Details
+\input{sections/06_implementation.tex}
+
+% Section 7: Empirical Results and Comparative Analysis
+\input{sections/07_results_analysis.tex}
+
+% Section 8: Management and Telemetry Web Dashboard
+\input{sections/08_dashboard.tex}
+
+% Section 9: Discussion and Architectural Trade-off Space
+\input{sections/09_discussion.tex}
+
+% Section 10: Conclusion and Future Work
+\input{sections/10_conclusion.tex}
+
+% =========================================================================
+% REFERENCES (BIBTEX BIBLIOGRAPHY)
+% =========================================================================
+\clearpage
+\small
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

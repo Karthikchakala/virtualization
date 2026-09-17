@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import { 
-  FileSearch, 
-  Terminal, 
-  CheckCircle2, 
-  AlertTriangle, 
-  AlertCircle, 
-  Search, 
-  Filter,
-  ArrowUpDown 
-} from 'lucide-react';
+import { FileSearch, Search, ExternalLink } from 'lucide-react';
 import { BenchmarkRun } from '../types';
 
 interface EvidencePageProps {
@@ -28,9 +19,9 @@ export const EvidencePage: React.FC<EvidencePageProps> = ({
     const matchesEnv = filterEnv === 'all' || r.environment === filterEnv;
     const matchesStatus = filterStatus === 'all' || r.status === filterStatus;
     const q = search.toLowerCase();
-    const matchesSearch = !q || 
-      r.run_id.toLowerCase().includes(q) || 
-      r.benchmark.toLowerCase().includes(q) || 
+    const matchesSearch = !q ||
+      r.run_id.toLowerCase().includes(q) ||
+      r.benchmark.toLowerCase().includes(q) ||
       r.command.toLowerCase().includes(q) ||
       (r.stdout && r.stdout.toLowerCase().includes(q));
 
@@ -39,126 +30,120 @@ export const EvidencePage: React.FC<EvidencePageProps> = ({
 
   return (
     <div className="page-container">
-      {/* Evidence Header */}
-      <div className="card" style={{ marginBottom: '1.5rem', borderLeft: '4px solid var(--accent-cyan)' }}>
+      {/* Page Header */}
+      <div className="card">
         <div className="card-header-row">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <FileSearch size={24} color="var(--accent-cyan)" />
+            <FileSearch size={22} color="var(--accent-primary)" />
             <div>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Forensic Evidence & Run Traceability Engine</h2>
-              <span className="text-secondary font-mono" style={{ fontSize: '0.8125rem' }}>
-                Auditable Terminal Output • Command Verification • Non-Fabricated Results
-              </span>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Forensic Evidence & Run Traceability</h2>
+              <div className="card-subtitle">
+                Auditable Record of Benchmark Invocations, Terminal Outputs, and Exit Codes
+              </div>
             </div>
           </div>
-          <span className="badge-verified font-mono">
-            100% Traceable
-          </span>
         </div>
-        <p style={{ marginTop: '0.75rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-          Every single metric in this benchmark suite links directly to a persistent, cryptographically verifiable raw execution artifact. 
-          Inspect the exact shell command, terminal standard output, standard error, exit code, and parsed JSON payload for any test.
+        <p style={{ marginTop: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+          Every metric in this benchmark suite links directly to a persistent, verifiable execution artifact.
+          Inspect the exact command line invocation, standard output, standard error, and exit codes for any run.
         </p>
       </div>
 
-      {/* Filter Toolbar */}
-      <div className="evidence-toolbar">
-        <div className="search-box" style={{ flex: 1 }}>
-          <Search size={14} className="search-icon" />
-          <input
-            type="text"
-            placeholder="Search runs by ID, benchmark name, command, or output..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="search-input font-mono"
-          />
-        </div>
+      {/* Filter and Search Bar */}
+      <div className="card" style={{ padding: '0.75rem 1rem' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <div className="search-box" style={{ width: '260px' }}>
+              <Search size={14} className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search run ID, command, output..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="search-input"
+                style={{ width: '100%' }}
+              />
+            </div>
 
-        <div className="control-pill-group">
-          <span className="control-label">ENV:</span>
-          {['all', 'host', 'kvm', 'virtualbox', 'lxc'].map(e => (
-            <button
-              key={e}
-              className={`pill-btn ${filterEnv === e ? 'pill-btn-active' : ''}`}
-              onClick={() => setFilterEnv(e)}
+            <select
+              value={filterEnv}
+              onChange={e => setFilterEnv(e.target.value)}
+              className="filter-select"
             >
-              {e.toUpperCase()}
-            </button>
-          ))}
-        </div>
+              <option value="all">All Environments</option>
+              <option value="host">Host</option>
+              <option value="kvm">KVM</option>
+              <option value="virtualbox">VirtualBox</option>
+              <option value="lxc">LXC</option>
+            </select>
 
-        <div className="control-pill-group">
-          <span className="control-label">STATUS:</span>
-          {['all', 'success', 'unavailable', 'failed'].map(s => (
-            <button
-              key={s}
-              className={`pill-btn ${filterStatus === s ? 'pill-btn-active' : ''}`}
-              onClick={() => setFilterStatus(s)}
+            <select
+              value={filterStatus}
+              onChange={e => setFilterStatus(e.target.value)}
+              className="filter-select"
             >
-              {s.toUpperCase()}
-            </button>
-          ))}
+              <option value="all">All Statuses</option>
+              <option value="success">Success</option>
+              <option value="unavailable">Unavailable</option>
+              <option value="failed">Failed</option>
+            </select>
+          </div>
+
+          <span className="text-secondary" style={{ fontSize: '0.75rem' }}>
+            Showing {filtered.length} of {runs.length} runs
+          </span>
         </div>
       </div>
 
-      {/* Evidence Table */}
-      <div className="table-wrapper" style={{ marginTop: '1.5rem' }}>
-        <table className="data-table font-mono">
-          <thead>
-            <tr>
-              <th>Status</th>
-              <th>Environment</th>
-              <th>Benchmark Domain</th>
-              <th>Run ID</th>
-              <th>Timestamp</th>
-              <th>Exit Code</th>
-              <th>Command Snippet</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.length === 0 ? (
+      {/* Runs Table */}
+      <div className="card">
+        <div className="table-wrapper">
+          <table className="data-table">
+            <thead>
               <tr>
-                <td colSpan={8} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
-                  No benchmark runs matched your filter criteria.
-                </td>
+                <th>Environment</th>
+                <th>Benchmark</th>
+                <th>Run ID</th>
+                <th>Status</th>
+                <th>Exit Code</th>
+                <th>Command</th>
+                <th>Action</th>
               </tr>
-            ) : (
-              filtered.map((r, idx) => (
+            </thead>
+            <tbody>
+              {filtered.slice(0, 100).map((r, idx) => (
                 <tr key={idx}>
+                  <td className="font-semibold uppercase">{r.environment}</td>
+                  <td className="font-mono text-xs">{r.benchmark}</td>
+                  <td className="font-mono text-xs text-secondary">{r.run_id}</td>
                   <td>
                     <span className={`status-pill status-${r.status}`}>
-                      {r.status.toUpperCase()}
+                      {r.status}
                     </span>
                   </td>
-                  <td>
-                    <span className={`badge-env env-${r.environment}`}>
-                      {r.environment.toUpperCase()}
-                    </span>
-                  </td>
-                  <td className="text-cyan font-bold">{r.benchmark}</td>
-                  <td className="text-muted">{r.run_id.slice(0, 18)}...</td>
-                  <td style={{ fontSize: '0.75rem' }}>{r.timestamp.replace('T', ' ').slice(0, 19)}</td>
-                  <td className={r.exit_code === 0 ? 'text-emerald' : 'text-rose'}>
-                    {r.exit_code}
-                  </td>
-                  <td className="text-muted" style={{ maxWidth: '240px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <td className="font-mono">{r.exit_code}</td>
+                  <td className="font-mono text-xs text-secondary" style={{ maxWidth: '320px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {r.command}
                   </td>
                   <td>
-                    <button 
+                    <button
                       className="btn-evidence-sm"
                       onClick={() => onViewEvidence(r)}
                     >
-                      <FileSearch size={12} />
+                      <ExternalLink size={12} />
                       <span>Inspect</span>
                     </button>
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {filtered.length > 100 && (
+          <div style={{ marginTop: '0.75rem', textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+            Showing first 100 matching runs. Use search filters above to narrow results.
+          </div>
+        )}
       </div>
     </div>
   );

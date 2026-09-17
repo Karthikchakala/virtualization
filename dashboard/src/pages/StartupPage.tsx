@@ -1,26 +1,9 @@
 import React from 'react';
-import { 
-  Clock, 
-  Zap, 
-  Server, 
-  Layers, 
-  Container, 
-  FileSearch, 
-  CheckCircle2,
-  Activity
-} from 'lucide-react';
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  Tooltip, 
-  ResponsiveContainer, 
-  CartesianGrid, 
-  Legend 
+import { Clock, FileSearch } from 'lucide-react';
+import {
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend
 } from 'recharts';
 import { BenchmarkRun } from '../types';
-import { MetricCard } from '../components/MetricCard';
 
 interface StartupPageProps {
   runs: BenchmarkRun[];
@@ -34,163 +17,136 @@ export const StartupPage: React.FC<StartupPageProps> = ({
   const startupRuns = runs.filter(r => r.benchmark === 'startup_lifecycle');
 
   const startupComparison = [
-    {
-      environment: 'HOST',
-      envStartSec: 0.0,
-      networkReadySec: 0.0,
-      appReadySec: 0.002,
-      totalStartupSec: 0.002
-    },
-    {
-      environment: 'KVM',
-      envStartSec: 0.85,
-      networkReadySec: 4.20,
-      appReadySec: 0.80,
-      totalStartupSec: 5.85
-    },
-    {
-      environment: 'VIRTUALBOX',
-      envStartSec: 1.40,
-      networkReadySec: 7.80,
-      appReadySec: 1.10,
-      totalStartupSec: 10.30
-    },
-    {
-      environment: 'LXC',
-      envStartSec: 0.12,
-      networkReadySec: 0.65,
-      appReadySec: 0.15,
-      totalStartupSec: 0.92
-    }
+    { environment: 'Host', envStartSec: 0.0, networkReadySec: 0.0, appReadySec: 0.002, totalStartupSec: 0.002 },
+    { environment: 'KVM', envStartSec: 0.85, networkReadySec: 4.20, appReadySec: 0.80, totalStartupSec: 5.85 },
+    { environment: 'VirtualBox', envStartSec: 1.40, networkReadySec: 7.80, appReadySec: 1.10, totalStartupSec: 10.30 },
+    { environment: 'LXC', envStartSec: 0.12, networkReadySec: 0.65, appReadySec: 0.15, totalStartupSec: 0.92 }
   ];
 
   return (
     <div className="page-container">
-      {/* Startup Header */}
-      <div className="card" style={{ marginBottom: '1.5rem', borderLeft: '4px solid var(--accent-rose)' }}>
+      {/* Page Header */}
+      <div className="card">
         <div className="card-header-row">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Clock size={24} color="var(--accent-rose)" />
+            <Clock size={22} color="var(--accent-primary)" />
             <div>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Virtualization Startup Lifecycle Analysis</h2>
-              <span className="text-secondary font-mono" style={{ fontSize: '0.8125rem' }}>
-                Phased Breakdown: Hypervisor Boot • Network DHCP Handshake • HTTP Application Readiness
-              </span>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Startup Lifecycle Analysis</h2>
+              <div className="card-subtitle">
+                Phased Breakdown: Hypervisor Initialization, Guest Network, and Application Readiness
+              </div>
             </div>
           </div>
-          <span className="badge-verified font-mono">
-            Phased Telemetry
-          </span>
         </div>
-        <p style={{ marginTop: '0.75rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-          Measures the end-to-end initialization duration from cold state invocation to guest application readiness. 
-          Breakdown includes: <strong>Environment Start</strong> (hypervisor VMM/cgroup launch), <strong>Network Ready</strong> (kernel interface configuration & IP assignment), 
-          and <strong>Application Ready</strong> (HTTP health check endpoint 200 response).
+        <p style={{ marginTop: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+          Measures the elapsed time required to cold-boot each virtualization environment and reach full HTTP application readiness.
+          Evaluates kernel bootstrap overhead, hardware device probing, and service initialization.
         </p>
       </div>
 
-      {/* Stacked Phased Startup Chart */}
-      <div className="card" style={{ marginBottom: '2rem' }}>
-        <div className="card-title text-rose">
-          Startup Phase Durations (Seconds - Lower is Faster)
+      {/* Startup Comparison Table */}
+      <div className="card">
+        <div className="card-header-row">
+          <h3 className="card-title">Startup Phase Duration Breakdown</h3>
+          <span className="text-secondary" style={{ fontSize: '0.75rem' }}>Seconds elapsed per initialization phase</span>
         </div>
-        <div style={{ height: '280px', marginTop: '1rem' }}>
+
+        <div className="table-wrapper">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Environment</th>
+                <th>VMM / Container Start</th>
+                <th>Network Ready</th>
+                <th>App Ready</th>
+                <th>Total Startup Duration</th>
+              </tr>
+            </thead>
+            <tbody>
+              {startupComparison.map(row => (
+                <tr key={row.environment}>
+                  <td className="font-semibold">{row.environment}</td>
+                  <td className="font-mono">{row.envStartSec}s</td>
+                  <td className="font-mono">{row.networkReadySec}s</td>
+                  <td className="font-mono">{row.appReadySec}s</td>
+                  <td className="font-mono font-bold">{row.totalStartupSec}s</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Phased Stacked Bar Chart */}
+      <div className="chart-box">
+        <div className="chart-title-bar">
+          <span className="chart-title">Startup Phase Breakdown</span>
+          <span className="chart-badge">Seconds</span>
+        </div>
+        <div style={{ height: 260 }}>
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={startupComparison} margin={{ top: 10, right: 30, left: 0, bottom: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-              <XAxis dataKey="environment" stroke="#94a3b8" />
-              <YAxis stroke="#94a3b8" unit="s" />
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }} 
+            <BarChart data={startupComparison} margin={{ top: 15, right: 20, left: 0, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+              <XAxis dataKey="environment" stroke="#6b7280" fontSize={12} tickLine={false} />
+              <YAxis stroke="#6b7280" fontSize={12} tickLine={false} unit="s" />
+              <Tooltip
+                contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e5e7eb', borderRadius: '6px', fontSize: '12px' }}
+                formatter={(val: any, name: any) => [`${val}s`, name]}
               />
               <Legend />
-              <Bar dataKey="envStartSec" name="1. VMM / Container Launch (s)" stackId="a" fill="#06b6d4" />
-              <Bar dataKey="networkReadySec" name="2. Network IP Ready (s)" stackId="a" fill="#6366f1" />
-              <Bar dataKey="appReadySec" name="3. HTTP App Ready (s)" stackId="a" fill="#10b981" />
+              <Bar isAnimationActive={false} dataKey="envStartSec" name="VMM Initialization" stackId="a" fill="#9ca3af" />
+              <Bar isAnimationActive={false} dataKey="networkReadySec" name="Network Ready" stackId="a" fill="#0284c7" />
+              <Bar isAnimationActive={false} dataKey="appReadySec" name="App Ready" stackId="a" fill="#16a34a" radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className="chart-footer font-mono">
-          Native LXC containers start in sub-second timeframes (~0.92s) compared to full VM BIOS/bootloader cycles.
+      </div>
+
+      {/* Individual Measured Runs */}
+      <div className="card">
+        <div className="card-header-row">
+          <div>
+            <h3 className="card-title">Individual Startup Benchmark Runs</h3>
+            <div className="card-subtitle">Detailed cold boot timing records</div>
+          </div>
+          <span className="text-secondary" style={{ fontSize: '0.75rem' }}>{startupRuns.length} runs</span>
         </div>
-      </div>
 
-      {/* Phase Cards */}
-      <div className="grid-cols-4">
-        <MetricCard
-          title="Host Baseline"
-          value="0.002"
-          unit="s"
-          subtitle="Direct local daemon execution"
-          color="var(--accent-cyan)"
-        />
-        <MetricCard
-          title="KVM / QEMU"
-          value="5.85"
-          unit="s"
-          subtitle="virtio-net DHCP boot cycle"
-          color="var(--accent-cyan)"
-        />
-        <MetricCard
-          title="VirtualBox"
-          value="10.30"
-          unit="s"
-          subtitle="BIOS + ACPI + Guest Additions"
-          color="var(--accent-indigo)"
-        />
-        <MetricCard
-          title="Native LXC"
-          value="0.92"
-          unit="s"
-          subtitle="cgroups v2 + veth instant ready"
-          color="var(--accent-emerald)"
-        />
-      </div>
+        <div className="table-wrapper">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Environment</th>
+                <th>Run ID</th>
+                <th>Total Startup</th>
+                <th>VMM Init</th>
+                <th>Network Ready</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {startupRuns.map((r, idx) => {
+                const met = r.metrics || {};
 
-      {/* Individual Startup Runs Table */}
-      <div className="section-header" style={{ marginTop: '2.5rem' }}>
-        <h3 className="section-title">Startup Lifecycle Benchmark Runs</h3>
-        <span className="section-subtitle">Verified lifecycle executions logged in results</span>
-      </div>
-
-      <div className="table-wrapper">
-        <table className="data-table font-mono">
-          <thead>
-            <tr>
-              <th>Environment</th>
-              <th>Run ID</th>
-              <th>Status</th>
-              <th>Execution Command</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {startupRuns.map((r, idx) => {
-              return (
-                <tr key={idx}>
-                  <td>
-                    <span className={`badge-env env-${r.environment}`}>
-                      {r.environment.toUpperCase()}
-                    </span>
-                  </td>
-                  <td className="text-muted">{r.run_id.slice(0, 16)}...</td>
-                  <td>
-                    <span className={`status-pill status-${r.status}`}>
-                      {r.status.toUpperCase()}
-                    </span>
-                  </td>
-                  <td className="text-cyan">{r.command}</td>
-                  <td>
-                    <button className="btn-evidence-sm" onClick={() => onViewEvidence(r)}>
-                      <FileSearch size={12} />
-                      <span>Evidence</span>
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                return (
+                  <tr key={idx}>
+                    <td className="font-semibold uppercase">{r.environment}</td>
+                    <td className="font-mono text-xs text-secondary">{r.run_id}</td>
+                    <td className="font-mono">{met.total_startup_sec !== undefined ? `${met.total_startup_sec}s` : '—'}</td>
+                    <td className="font-mono">{met.env_start_sec !== undefined ? `${met.env_start_sec}s` : '—'}</td>
+                    <td className="font-mono">{met.network_ready_sec !== undefined ? `${met.network_ready_sec}s` : '—'}</td>
+                    <td>
+                      <button className="btn-evidence-sm" onClick={() => onViewEvidence(r)}>
+                        <FileSearch size={12} />
+                        <span>Evidence</span>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

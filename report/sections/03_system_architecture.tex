@@ -1,0 +1,161 @@
+\section{System Architecture and Benchmarking Methodology}
+\label{sec:system_architecture}
+
+To ensure that empirical measurements across heterogeneous virtualization paradigms are reproducible, unbiased, and statistically sound, the CC2 project implements a unified, decoupled benchmarking pipeline. This section details the multi-tier system architecture, the deterministic execution harness, workload cryptographic provenance, and the mathematical statistical framework.
+
+\subsection{End-to-End System Architecture}
+\label{subsec:e2e_architecture}
+
+The CC2 benchmarking platform is organized as a six-tier decoupled architecture separating presentation, orchestration, execution, environment adaptation, and telemetry persistence, as depicted in Figure~\ref{fig:overall_system_arch}.
+
+\begin{figure}[t]
+\centering
+\begin{minipage}{0.54\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.46, transform shape, node distance=0.7cm, auto, >=latex',
+    layer/.style={draw, rectangle, rounded corners=3pt, minimum width=13.5cm, minimum height=0.8cm, align=center, font=\small},
+    subbox/.style={draw, rectangle, rounded corners=2pt, minimum width=2.8cm, minimum height=0.65cm, align=center, font=\footnotesize}]
+    % Layer 1: Presentation
+    \node[layer, fill=blue!10] (l1) at (0, 7.5) {\textbf{Presentation Layer}: React 18, TypeScript, Tailwind CSS, Recharts};
+    % Layer 2: API & Orchestration
+    \node[layer, fill=purple!10] (l2) at (0, 6.0) {\textbf{API \& Orchestration}: Python \texttt{ThreadingHTTPServer}, Security Validator};
+    % Layer 3: Benchmark Engine
+    \node[layer, fill=teal!10] (l3) at (0, 4.5) {\textbf{Unified Benchmark Engine}: \texttt{benchmark/runner.py} (Lock Manager)};
+    % Layer 4: Environment Adapters
+    \node[subbox, fill=gray!15] (ad_host) at (-5.0, 3.0) {\textbf{Host Adapter}\\Direct Exec};
+    \node[subbox, fill=blue!15] (ad_kvm) at (-1.65, 3.0) {\textbf{KVM Adapter}\\\texttt{virsh} / SSH};
+    \node[subbox, fill=purple!15] (ad_vbox) at (1.65, 3.0) {\textbf{VBox Adapter}\\\texttt{VBoxManage}};
+    \node[subbox, fill=yellow!25] (ad_lxc) at (5.0, 3.0) {\textbf{LXC Adapter}\\\texttt{lxc-attach}};
+    % Layer 5: Target Environments
+    \node[subbox, fill=gray!25] (tgt_host) at (-5.0, 1.5) {\textbf{Physical Host}\\Ubuntu 24.04};
+    \node[subbox, fill=blue!25] (tgt_kvm) at (-1.65, 1.5) {\textbf{KVM Domain}\\\texttt{ubuntu24.04}};
+    \node[subbox, fill=purple!25] (tgt_vbox) at (1.65, 1.5) {\textbf{VirtualBox}\\\texttt{Ubuntu-VBox}};
+    \node[subbox, fill=yellow!35] (tgt_lxc) at (5.0, 1.5) {\textbf{LXC Container}\\\texttt{lxc-ubuntu}};
+    % Layer 6: Telemetry & Ingestion
+    \node[layer, fill=green!15] (l6) at (0, 0.0) {\textbf{Persistence \& Analysis}: Schema Validator, \texttt{runs.json}, \texttt{inventory.json}};
+    % Connecting Arrows
+    \draw[<->, thick] (l1) -- (l2);
+    \draw[->, thick] (l2) -- (l3);
+    \draw[->, thick] (l3.south -| ad_host) -- (ad_host);
+    \draw[->, thick] (l3.south -| ad_kvm) -- (ad_kvm);
+    \draw[->, thick] (l3.south -| ad_vbox) -- (ad_vbox);
+    \draw[->, thick] (l3.south -| ad_lxc) -- (ad_lxc);
+    \draw[->, thick] (ad_host) -- (tgt_host);
+    \draw[->, thick] (ad_kvm) -- (tgt_kvm);
+    \draw[->, thick] (ad_vbox) -- (tgt_vbox);
+    \draw[->, thick] (ad_lxc) -- (tgt_lxc);
+    \draw[->, thick] (tgt_host) -- (l6.north -| tgt_host);
+    \draw[->, thick] (tgt_kvm) -- (l6.north -| tgt_kvm);
+    \draw[->, thick] (tgt_vbox) -- (l6.north -| tgt_vbox);
+    \draw[->, thick] (tgt_lxc) -- (l6.north -| tgt_lxc);
+    \draw[->, dashed, thick] (l6.east) -- ++(0.4, 0) |- (l1.east);
+\end{tikzpicture}
+\caption{Decoupled System Architecture.}
+\label{fig:overall_system_arch}
+\end{minipage}\hfill
+\begin{minipage}{0.44\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.48, transform shape, node distance=1.0cm, auto, >=latex',
+    stepnode/.style={draw, rectangle, rounded corners=3pt, minimum width=3.8cm, minimum height=0.75cm, align=center, font=\footnotesize},
+    decision/.style={draw, diamond, aspect=2, minimum width=3.0cm, minimum height=0.8cm, align=center, font=\footnotesize, fill=yellow!20},
+    term/.style={draw, rectangle, rounded corners=8pt, minimum width=2.5cm, minimum height=0.7cm, align=center, font=\footnotesize, fill=gray!20}]
+    % Nodes
+    \node[term] (start) at (0, 8.5) {Start Workload Dispatch};
+    \node[stepnode, fill=blue!10] (compile) at (0, 7.3) {Compile Static C99 Binary\\(\texttt{-O2 -Wall -static})};
+    \node[stepnode, fill=blue!15] (hash_host) at (0, 6.1) {Compute Host SHA-256 Digest\\(\texttt{hashlib.sha256})};
+    \node[stepnode, fill=purple!10] (deploy) at (0, 4.9) {Deploy Binary to Target Domain\\(SCP / \texttt{lxc-attach} / Local)};
+    \node[stepnode, fill=purple!15] (hash_guest) at (0, 3.7) {Compute Target SHA-256 Digest\\Inside Virtual Domain};
+    \node[decision] (dec_hash) at (0, 2.2) {Hashes Match Canonical?};
+    \node[term, fill=red!20] (abort) at (4.5, 2.2) {Abort Execution\\(Log Mismatch)};
+    \node[stepnode, fill=green!15] (exec) at (0, 0.7) {Execute Workload\\(1 Warmup + $N$ Iterations)};
+    \node[stepnode, fill=green!25] (verify_cksum) at (0, -0.6) {Verify FNV-1a Checksum\\and Invariants};
+    \node[term, fill=green!20] (complete) at (0, -1.8) {Persist Results to \texttt{runs.json}};
+    % Arrows
+    \draw[->, thick] (start) -- (compile);
+    \draw[->, thick] (compile) -- (hash_host);
+    \draw[->, thick] (hash_host) -- (deploy);
+    \draw[->, thick] (deploy) -- (hash_guest);
+    \draw[->, thick] (hash_guest) -- (dec_hash);
+    \draw[->, thick] (dec_hash) -- node[above, font=\scriptsize] {No} (abort);
+    \draw[->, thick] (dec_hash) -- node[right, font=\scriptsize] {Yes} (exec);
+    \draw[->, thick] (exec) -- (verify_cksum);
+    \draw[->, thick] (verify_cksum) -- (complete);
+\end{tikzpicture}
+\caption{Workload Verification Flowchart.}
+\label{fig:workload_lifecycle_flow}
+\end{minipage}
+\end{figure}
+
+The platform's architectural layers operate as follows:
+\begin{enumerate}
+    \item \textbf{Presentation Layer}: A reactive dashboard developed in React 18, Vite, and Tailwind CSS. The web interface visualizes live domain statuses, historical metrics, Recharts analytical graphs, and raw standard output/error execution logs.
+    \item \textbf{API and Orchestration Layer}: A lightweight Python \texttt{ThreadingHTTPServer} (\texttt{backend/server.py}) exposing REST endpoints. The backend implements rigorous defensive validation: parameters are strictly matched against whitelisted environments and benchmarks, non-destructive safety checks prohibit targeting physical raw disk blocks, and all system logs are parsed through automated regex redaction routines to purge passwords and authentication tokens.
+    \item \textbf{Unified Benchmark Engine}: The central execution driver (\texttt{benchmark/runner.py}) coordinating benchmark orchestration, repetition loops, timeouts, and process synchronization. A global file-level concurrency lock (\texttt{runner.lock}) enforces that only one benchmark executes on the physical system at any instant, eliminating inter-test cross-talk.
+    \item \textbf{Environment Adapters}: Dedicated modular Python adapters abstracting the mechanics of target domain interaction:
+    \begin{itemize}
+        \item \textit{Host Adapter}: Direct execution of native binary workloads via Python \texttt{subprocess}.
+        \item \textit{KVM Adapter}: Manages domain lifecycle via \texttt{virsh} and executes workloads via key-authenticated SSH or \texttt{virt-sysprep} injected scripts.
+        \item \textit{VirtualBox Adapter}: Controls VM states via \texttt{VBoxManage} (\texttt{startvm --type headless}, \texttt{controlvm acpipowerbutton}) and communicates over a host-only virtual adapter (\texttt{192.168.56.101}).
+        \item \textit{LXC Adapter}: Orchestrates containers via \texttt{lxc-start}, \texttt{lxc-stop}, and executes workloads directly via \texttt{lxc-attach} with environment variables preserved.
+    \end{itemize}
+    \item \textbf{Data Persistence and Analysis}: Outputs are ingested into a normalized JSON schema (\texttt{schema\_}\allowbreak\texttt{version: "2.0.0"}). The analysis engine (\texttt{analysis/}\allowbreak\texttt{analyze.py}) parses raw outputs, computes descriptive statistical parameters, verifies data integrity invariants, and compiles comprehensive summary reports.
+\end{enumerate}
+
+\subsection{Deterministic Measurement Harness}
+\label{subsec:deterministic_harness}
+
+Empirical evaluations on modern out-of-order x86 processors are prone to measurement noise arising from CPU dynamic frequency scaling (DVFS), thermal throttling, background kernel daemons, cache line pollution, and thread migration across asymmetric cores. To eliminate these confounding variables, the CC2 harness enforces a deterministic measurement protocol:
+
+\begin{enumerate}
+    \item \textbf{Thermal and State Stabilization Pauses}: Prior to executing every benchmark iteration, the runner executes a mandatory 2.0-second quiescent sleep. A matching 2.0-second pause is enforced immediately post-execution before data collection. This cadence ensures CPU governor frequencies stabilize and allows dirty filesystem buffers to flush.
+    \item \textbf{Cache and TLB Warm-Up Protocol}: For all compute, memory, syscall, and scheduling workloads, the engine performs exactly one unmeasured warm-up iteration. The warm-up run primes the L1 instruction cache (L1i), L1 data cache (L1d), unified L2/L3 caches, and populates the hardware TLB and EPT translation structures.
+    \item \textbf{Processor Affinity and Pinning}: Workloads are pinned to dedicated physical CPU cores using \texttt{taskset -c 2}, preventing operating system scheduler thread bouncing across heterogeneous Performance (P) and Efficient (E) cores.
+    \item \textbf{Sequential Execution Discipline}: All benchmarks are dispatched strictly sequentially. Batch runs iterate through host baseline, KVM, VirtualBox, and LXC in lockstep, guaranteeing identical background thermal and memory pressure conditions.
+\end{enumerate}
+
+\subsection{Workload Integrity Verification and Cryptographic Provenance}
+\label{subsec:cryptographic_provenance}
+
+To guarantee that differences in observed execution times reflect virtualization layer overhead rather than discrepancies in compiler optimizations or dynamic library linking, all custom microbenchmarks are compiled statically with \texttt{-O2 -Wall -pthread -std=c99 -static}. Static linking eliminates runtime dependencies on guest C library (\texttt{glibc}) versions, dynamic linker resolution overheads, and symbol lookup traps.
+
+As illustrated in Figure~\ref{fig:workload_lifecycle_flow}, before any workload binary is executed within a target domain, the runner enforces a cryptographic integrity handshake:
+\begin{enumerate}
+    \item The runner computes the SHA-256 cryptographic digest of the local binary on the host platform.
+    \item The binary is transferred into the target virtual environment.
+    \item The target domain computes the SHA-256 digest of the deployed binary.
+    \item The runner asserts that the target digest matches the canonical repository digest:
+    \begin{equation}
+        \mathcal{H}_{\text{canonical}}(\texttt{cpu\_workload}) = \texttt{212853035b582f238058b8d436fecf1f25bd5ff249965c7467336903a563fd9f}
+    \end{equation}
+    \item Following execution, the workload parses and validates an internal algorithmic checksum (e.g., the 64-bit FNV-1a checksum of the computed matrix product). If the checksum differs from the expected value (\texttt{0x7e83d4c61ad5adb8}), the run is marked as corrupted and failed.
+\end{enumerate}
+
+\subsection{Mathematical and Statistical Formulation}
+\label{subsec:statistical_formulation}
+
+All benchmark results are processed using descriptive statistical estimators to quantify central tendency, dispersion, and tail latency across $N$ measured iterations.
+
+For any performance metric $x = [x_1, x_2, \dots, x_N]$, the sample mean $\bar{x}$ is defined as:
+\begin{equation}
+    \bar{x} = \frac{1}{N}\sum_{i=1}^N x_i
+\end{equation}
+Unbiased sample dispersion is quantified via the sample standard deviation $s$:
+\begin{equation}
+    s = \sqrt{\frac{1}{N-1}\sum_{i=1}^N (x_i - \bar{x})^2}
+\end{equation}
+Relative measurement stability and dispersion are expressed via the Coefficient of Variation ($CV\%$):
+\begin{equation}
+    CV\% = \left(\frac{s}{\bar{x}}\right) \times 100\%
+\end{equation}
+Tail percentiles ($p_{50}$ median, $p_{95}$, and $p_{99}$) are calculated using linear rank interpolation: $R_p = 1 + \frac{p}{100}(N - 1)$ where $p \in \{50, 95, 99\}$.
+
+For floating-point arithmetic workloads, compute throughput is evaluated based on standard algebraic floating-point operation counts. For square matrix multiplication of dimension $N_{\text{mat}} = 400$, computing each element of the resulting matrix requires $N_{\text{mat}}$ multiplications and $N_{\text{mat}}$ additions ($2 N_{\text{mat}}$ operations). Multiplying two $N_{\text{mat}} \times N_{\text{mat}}$ matrices across $I$ iterations yields:
+\begin{equation}
+    W_{\text{FLOP}} = 2 \times N_{\text{mat}}^3 \times I = 2 \times (400)^3 \times 5 = 640,000,000 \text{ FLOPs}
+    \label{eq:flop_formula}
+\end{equation}
+The sustained arithmetic throughput in GFLOPS is subsequently defined as:
+\begin{equation}
+    \text{GFLOPS} = \frac{W_{\text{FLOP}}}{t_{\text{elapsed}} \times 10^9}
+\end{equation}
+where $t_{\text{elapsed}}$ is high-resolution monotonic wall-clock execution time obtained via \texttt{clock\_gettime(CLOCK\_MONOTONIC)}.

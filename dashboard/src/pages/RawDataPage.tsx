@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import { 
-  FileCode2, 
-  Download, 
-  Database, 
-  FileText, 
-  Check, 
-  Copy, 
-  Terminal,
-  Layers
-} from 'lucide-react';
+import { FileCode2, Download, Copy, Check } from 'lucide-react';
 import { BenchmarkRun } from '../types';
 
 interface RawDataPageProps {
@@ -21,24 +12,23 @@ export const RawDataPage: React.FC<RawDataPageProps> = ({
   isQuickMode = true
 }) => {
   const [copied, setCopied] = useState(false);
-  const [activeFile, setActiveFile] = useState<'runs.json' | 'runs.csv' | 'summary'>('runs.json');
 
   const datasetList = [
-    { name: 'runs.json', size: `${(JSON.stringify(runs).length / 1024).toFixed(1)} KB`, format: 'JSON', desc: 'Complete versioned benchmark runs array' },
-    { name: 'runs.csv', size: '~17.5 KB', format: 'CSV', desc: 'Flattened tabular benchmark runs for R/Python analysis' },
-    { name: 'cpu_deterministic.csv', size: '~5.5 KB', format: 'CSV', desc: 'CPU matrix multiplication timing and FLOPs' },
-    { name: 'memory_deterministic.csv', size: '~4.2 KB', format: 'CSV', desc: 'Memory read/write throughput and RSS' },
-    { name: 'startup_lifecycle.csv', size: '~0.9 KB', format: 'CSV', desc: 'Phased hypervisor boot and readiness times' },
-    { name: 'network_ping.csv', size: '~0.9 KB', format: 'CSV', desc: 'ICMP round-trip latency and packet loss' },
-    { name: 'app_latency.csv', size: '~0.8 KB', format: 'CSV', desc: 'HTTP health endpoint connect, TTFB, and duration' },
-    { name: 'syscall_deterministic.csv', size: '~2.2 KB', format: 'CSV', desc: 'Syscall latency and throughput breakdown' }
+    { name: 'runs.json', size: `${(JSON.stringify(runs).length / 1024).toFixed(1)} KB`, format: 'JSON', desc: 'Complete versioned benchmark runs array with metrics and telemetry' },
+    { name: 'cpu_deterministic.json', size: '~18.5 KB', format: 'JSON', desc: 'CPU matrix multiplication timing, user/sys split, and checksum validation' },
+    { name: 'memory_deterministic.json', size: '~14.2 KB', format: 'JSON', desc: 'Sequential and stride memory access bandwidth and resident memory' },
+    { name: 'startup_lifecycle.json', size: '~6.8 KB', format: 'JSON', desc: 'Phased hypervisor boot, network ready, and HTTP application ready timings' },
+    { name: 'network_ping.json', size: '~5.9 KB', format: 'JSON', desc: 'ICMP round-trip latency, min/max/stddev, and packet loss metrics' },
+    { name: 'syscall_deterministic.json', size: '~12.2 KB', format: 'JSON', desc: 'System call latency and strace kernel profile breakdown' },
+    { name: 'scheduling_deterministic.json', size: '~8.4 KB', format: 'JSON', desc: 'Two-way pipe context switch latency and switches per second' },
+    { name: 'isolation_audit.json', size: '~4.5 KB', format: 'JSON', desc: 'Virtualization detection and namespace boundary verification records' }
   ];
 
   const handleDownload = () => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(runs, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `cc2_benchmark_runs_${isQuickMode ? 'quick' : 'full'}.json`);
+    downloadAnchor.setAttribute("download", `virtualization_lab_runs_${isQuickMode ? 'quick' : 'full'}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
@@ -52,77 +42,86 @@ export const RawDataPage: React.FC<RawDataPageProps> = ({
 
   return (
     <div className="page-container">
-      {/* Raw Data Header */}
-      <div className="card" style={{ marginBottom: '1.5rem', borderLeft: '4px solid var(--accent-amber)' }}>
+      {/* Page Header */}
+      <div className="card">
         <div className="card-header-row">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <FileCode2 size={24} color="var(--accent-amber)" />
+            <FileCode2 size={22} color="var(--accent-primary)" />
             <div>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Raw Datasets & Processed Exports</h2>
-              <span className="text-secondary font-mono" style={{ fontSize: '0.8125rem' }}>
-                Reproducible Open Science Data Pipeline • CSV & JSON Format Exports
-              </span>
+              <div className="card-subtitle">
+                Machine-Readable JSON Datasets for Independent Verification and Analysis
+              </div>
             </div>
           </div>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button className="btn-secondary-sm font-mono" onClick={handleCopy}>
-              {copied ? <Check size={14} color="var(--accent-emerald)" /> : <Copy size={14} />}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <button className="btn-secondary-sm" onClick={handleCopy}>
+              {copied ? <Check size={13} color="var(--status-success-text)" /> : <Copy size={13} />}
               <span>{copied ? 'Copied' : 'Copy JSON'}</span>
             </button>
-            <button className="btn-primary-sm font-mono" onClick={handleDownload}>
-              <Download size={14} />
-              <span>Download Dataset</span>
+            <button className="btn-primary" style={{ padding: '0.3125rem 0.75rem', fontSize: '0.75rem' }} onClick={handleDownload}>
+              <Download size={13} />
+              <span>Download JSON</span>
             </button>
           </div>
         </div>
-        <p style={{ marginTop: '0.75rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-          All benchmark outputs are persistently serialized in machine-readable JSON and CSV formats under <code>results/processed/</code>. 
-          Datasets support standalone exploratory analysis in Jupyter, R, Pandas, and external statistical tools.
+        <p style={{ marginTop: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+          All recorded benchmark runs are published in standardized JSON schemas.
+          These datasets include execution commands, exit codes, terminal output streams, and parsed numeric metrics.
         </p>
       </div>
 
-      {/* Dataset Files Grid */}
-      <div className="section-header">
-        <h3 className="section-title">Available Data Files (results/processed/)</h3>
-        <span className="section-subtitle">Compiled during benchmark runner execution</span>
-      </div>
-
-      <div className="grid-cols-4">
-        {datasetList.map((file, idx) => (
-          <div key={idx} className="dataset-file-card font-mono">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span className="file-name text-cyan font-bold">{file.name}</span>
-              <span className="file-format-badge">{file.format}</span>
-            </div>
-            <div className="file-size text-secondary" style={{ fontSize: '0.75rem', margin: '0.5rem 0' }}>
-              Size: {file.size}
-            </div>
-            <p className="file-desc text-muted" style={{ fontSize: '0.75rem' }}>
-              {file.desc}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      {/* Raw JSON Preview */}
-      <div className="section-header" style={{ marginTop: '2.5rem' }}>
-        <h3 className="section-title">In-Memory Dataset Inspector</h3>
-        <span className="section-subtitle">Showing live parsed records ({runs.length} runs indexed)</span>
-      </div>
-
-      <div className="card font-mono">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-          <span className="text-secondary" style={{ fontSize: '0.8125rem' }}>
-            Live Schema v2.0 Dataset ({isQuickMode ? 'Quick Mode Active' : 'Full Rigor Active'})
-          </span>
-          <span className="text-muted" style={{ fontSize: '0.75rem' }}>
-            Showing top records
-          </span>
+      {/* Available Datasets Table */}
+      <div className="card">
+        <div className="card-header-row">
+          <h3 className="card-title">Available Datasets</h3>
+          <span className="text-secondary" style={{ fontSize: '0.75rem' }}>{runs.length} total records</span>
         </div>
-        <pre className="terminal-view font-mono" style={{ maxHeight: '420px' }}>
-          {runs.length > 0 
-            ? JSON.stringify(runs.slice(0, 3), null, 2)
-            : '[]  // Dataset is empty. Run ./benchmark/runner.sh to populate benchmark runs.'}
+
+        <div className="table-wrapper">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Dataset Name</th>
+                <th>Format</th>
+                <th>Estimated Size</th>
+                <th>Description</th>
+                <th>Export</th>
+              </tr>
+            </thead>
+            <tbody>
+              {datasetList.map(ds => (
+                <tr key={ds.name}>
+                  <td className="font-mono font-semibold">{ds.name}</td>
+                  <td>
+                    <span className="status-pill status-pass">{ds.format}</span>
+                  </td>
+                  <td className="font-mono text-xs">{ds.size}</td>
+                  <td className="text-secondary">{ds.desc}</td>
+                  <td>
+                    <button
+                      className="btn-secondary-sm"
+                      onClick={handleDownload}
+                    >
+                      <Download size={12} />
+                      <span>Export</span>
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* JSON Viewer */}
+      <div className="card">
+        <div className="card-header-row">
+          <h3 className="card-title">JSON Data Preview</h3>
+          <span className="text-secondary font-mono text-xs">First 3 runs shown</span>
+        </div>
+        <pre className="terminal-view font-mono" style={{ maxHeight: '360px' }}>
+          {JSON.stringify(runs.slice(0, 3), null, 2)}
         </pre>
       </div>
     </div>

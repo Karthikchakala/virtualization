@@ -1,0 +1,144 @@
+\section{Benchmark Methodology and Workload Implementation}
+\label{sec:benchmark_methodology}
+
+To conduct a rigorous, cross-paradigm empirical analysis grounded in established systems performance methodology~\cite{gregg2020systems}, the CC2 suite employs custom C99 deterministic microbenchmarks alongside standardized Linux telemetry utilities. This section details the algorithmic design, kernel interaction mechanics, and implementation specifics of each workload.
+
+\subsection{Deterministic Arithmetic Compute Benchmark (\texttt{cpu\_deterministic})}
+\label{subsec:cpu_methodology}
+
+The CPU compute workload evaluates sustained floating-point throughput under intensive mathematical processing. The benchmark is implemented in standard C99 (\texttt{workloads/cpu\_workload.c}) and compiled statically with \texttt{-O2}.
+
+\subsubsection{Algorithmic Formulation}
+The workload performs matrix multiplication on two dynamically allocated square matrices of double-precision 64-bit IEEE 754 floating-point values ($A, B \in \mathbb{R}^{N_{\text{mat}} \times N_{\text{mat}}}$ with $N_{\text{mat}} = 400$). The product matrix $C = A \times B$ is computed via:
+\begin{equation}
+    C_{i,j} = \sum_{k=0}^{N_{\text{mat}}-1} A_{i,k} \cdot B_{k,j} \quad \text{for } 0 \le i, j < N_{\text{mat}}
+\end{equation}
+Matrices $A$ and $B$ are initialized deterministically:
+\begin{equation}
+    A_{i,k} = \sin(i + k), \quad B_{k,j} = \cos(k \cdot j + 1)
+\end{equation}
+The matrix dimensions are intentionally chosen such that the working set:
+\begin{equation}
+    S_{\text{mem}} = 3 \times N_{\text{mat}}^2 \times 8 \text{ bytes} = 3 \times 160,000 \times 8 = 3,840,000 \text{ bytes} \approx 3.66 \text{ MB}
+\end{equation}
+exceeds the physical L2 cache capacity of the processor cores ($\sim$1.25 MB per P-core), ensuring that the workload stresses both the processor execution units and the L3 cache hierarchy without inducing memory bus saturation.
+
+\subsubsection{Cryptographic Output Invariant (FNV-1a)}
+To verify that compiler optimizations or execution shortcuts do not compromise mathematical integrity, the final product matrix $C$ is serialized into a 64-bit Fowler-Noll-Vo (FNV-1a) hash digest:
+\begin{equation}
+    h_0 = \texttt{0xcbf29ce484222325}, \quad h_{m+1} = (h_m \oplus b_m) \times \texttt{0x100000001b3}
+\end{equation}
+where $b_m$ denotes the $m$-th byte of the serialized IEEE 754 floating-point array. For $N_{\text{mat}} = 400$ across 5 iterations, the invariant expected checksum is strictly verified as:
+\begin{equation}
+    \mathcal{C}_{\text{expected}}(\texttt{cpu\_workload}) = \texttt{0x7e83d4c61ad5adb8}
+\end{equation}
+Any run producing a divergent hash is immediately flagged as mathematically corrupted.
+
+\subsection{Deterministic Memory Subsystem Benchmark (\texttt{memory\_deterministic})}
+\label{subsec:memory_methodology}
+
+The memory workload evaluates memory bus throughput, hardware cache prefetching efficiency, and the translation cost imposed by Extended Page Tables.
+
+Implemented in \texttt{workloads/}\allowbreak\texttt{memory\_}\allowbreak\texttt{workload.c}, the benchmark allocates a contiguous 128 MB buffer ($134,217,728$ bytes) using page-aligned memory (\texttt{posix\_memalign()}). The workload executes three distinct memory access patterns across 4 sequential passes:
+\begin{enumerate}
+    \item \textbf{Sequential Streaming Store (Write)}: Streams 64-bit integers contiguously through the buffer, compelling the kernel to service minor page faults and write-allocate cache lines from physical RAM.
+    \item \textbf{Sequential Accumulation (Read)}: Reads and accumulates values contiguously, measuring maximum sustainable sequential memory bandwidth when hardware stream prefetchers operate at peak efficiency.
+    \item \textbf{Strided Traversal (Stride = 64 bytes)}: Traverses the buffer in 64-byte strides (matching the x86\_64 L1 cache line width), accessing the initial byte of each cache line. This pattern maximizes TLB misses and EPT page walks per byte transferred, amplifying two-dimensional paging overhead.
+\end{enumerate}
+Throughput is calculated as total bytes transferred divided by elapsed monotonic wall-clock time:
+\begin{equation}
+    \text{Bandwidth}_{\text{MB/s}} = \frac{B_{\text{transferred}}}{t_{\text{elapsed}} \times 1024^2}
+\end{equation}
+
+\subsection{System Call Invocation Benchmark (\texttt{syscall\_deterministic})}
+\label{subsec:syscall_methodology}
+
+System call transitions represent the primary boundary between user-space applications and operating system kernels. The syscall microbenchmark (\texttt{workloads/syscall\_workload.c}) measures the pure CPU cost of transitioning from user space (Ring 3) to kernel space (Ring 0) and back.
+
+\subsubsection{Kernel Mode Transition Mechanics}
+The benchmark executes a tight loop of $N_{\text{sys}} = 200,000$ invocations of the \texttt{getpid()} system call, preceded by a 5,000-iteration unmeasured warmup. On modern x86\_64 Linux systems, the transition follows a deterministic execution path:
+\begin{enumerate}
+    \item The user-space thread loads the system call number (\texttt{\_\_NR\_getpid} = 39) into register \texttt{\%rax} and executes the \texttt{syscall} assembly instruction.
+    \item The CPU hardware saves the current Instruction Pointer (\texttt{\%rip}) into \texttt{\%rcx}, saves the Flags register (\texttt{\%rflags}) into \texttt{\%r11}, masks interrupts according to MSR \texttt{IA32\_FMASK}, and switches execution to the address stored in MSR \texttt{IA32\_LSTAR} (\texttt{entry\_SYSCALL\_64}).
+    \item The kernel switches from the user stack to the per-CPU kernel interrupt/task stack, pushes register state, and invokes \texttt{sys\_getpid()}.
+    \item The kernel handler reads \texttt{current->tgid} from the in-memory \texttt{task\_struct}.
+    \item The kernel executes \texttt{sysretq}, restoring user-space register state and returning control to Ring 3.
+\end{enumerate}
+
+\subsubsection{Cross-Paradigm Execution Paths}
+This benchmark exposes a fundamental distinction between hypervisors and containers:
+\begin{itemize}
+    \item \textbf{KVM and VirtualBox}: The \texttt{syscall} instruction executes inside the guest virtual machine in VMX non-root mode. Because \texttt{syscall} is not intercepted by the VMCS execution controls, the transition into the guest kernel occurs entirely within non-root mode \textit{without triggering a VM-Exit to the host}.
+    \item \textbf{Native LXC}: The containerized process transitions directly into the host Linux kernel via the host's native \texttt{LSTAR} handler, incurring zero hypervisor encapsulation.
+\end{itemize}
+Per-call latency is computed in nanoseconds:
+\begin{equation}
+    L_{\text{syscall}} = \frac{t_{\text{elapsed}} \times 10^9}{N_{\text{sys}}} \quad [\text{ns/syscall}]
+\end{equation}
+
+\subsection{Thread Scheduling and Context Switch Benchmark (\texttt{scheduling\_deterministic})}
+\label{subsec:scheduling_methodology}
+
+Operating system scheduling latency directly dictates the responsiveness of concurrent applications. The scheduling microbenchmark (\texttt{workloads/scheduling\_workload.c}) measures the latency of thread synchronization and CPU context switching.
+
+The benchmark instantiates two POSIX threads ($T_1, T_2$) connected via a pair of unidirectional UNIX pipes (\texttt{pipe1}, \texttt{pipe2}):
+\begin{enumerate}
+    \item $T_1$ writes a 1-byte synchronization token to \texttt{pipe1} and immediately enters a blocking read on \texttt{pipe2}.
+    \item The write operation awakens $T_2$, which was blocked waiting on \texttt{pipe1}. The Linux Completely Fair Scheduler (CFS) places $T_2$ on the runqueue, pre-empts or schedules $T_2$, and transitions execution state.
+    \item $T_2$ reads the byte from \texttt{pipe1}, writes a token to \texttt{pipe2}, and blocks waiting on \texttt{pipe1}.
+    \item $T_1$ unblocks, reads the token from \texttt{pipe2}, completing one full round-trip exchange.
+\end{enumerate}
+Over $N_{\text{iter}} = 20,000$ iterations, the thread pair executes exactly $40,000$ voluntary context switches. Each context switch exercises the kernel scheduler's \texttt{schedule()} and \texttt{switch\_to()} routines, involving Saving/restoring processor general-purpose registers, switching the kernel stack pointer (\texttt{RSP}), and updating the Translation Lookaside Buffer (TLB) state. The mean latency per context switch is evaluated as:
+\begin{equation}
+    L_{\text{switch}} = \frac{t_{\text{elapsed}} \times 10^6}{2 \times N_{\text{iter}}} \quad [\mu\text{s/switch}]
+\end{equation}
+
+\subsection{Storage and Network Telemetry (\texttt{disk\_fio}, \texttt{network\_ping})}
+\label{subsec:network_methodology}
+
+Complementing in-memory workloads, block storage throughput and direct I/O overheads were characterized using the Flexible I/O Tester (\texttt{fio})~\cite{fio2024axboe} over synthetic block transfers. Virtualized network transport was evaluated via ICMP round-trip latency alongside automated link audit utilities including \texttt{iperf3}~\cite{iperf3esnet}. In each environment, traffic traverses the platform's virtual software bridge:
+\begin{itemize}
+    \item \textbf{Host Baseline}: Local loopback interface (\texttt{lo}, 127.0.0.1).
+    \item \textbf{KVM / QEMU}: VirtIO network adapter traversing the Linux bridge \texttt{virbr0} (192.168.122.1).
+    \item \textbf{Oracle VirtualBox}: Emulated Intel PRO/1000 MT adapter over host-only interface \texttt{vboxnet0} (127.0.0.1 proxy).
+    \item \textbf{Native LXC}: Virtual ethernet pair (\texttt{veth}) bridged into \texttt{lxcbr0} (10.0.3.1).
+\end{itemize}
+The harness captures minimum, mean, maximum, and mean deviation ($mdev$) round-trip times (RTT) in milliseconds.
+
+\subsection{Application Response Latency (\texttt{app\_latency})}
+\label{subsec:app_latency_methodology}
+
+To capture end-to-end user-perceived performance, the platform implements an application-level HTTP benchmarking harness. A lightweight HTTP microservice is instantiated within the target environment, exposing a \texttt{/health} endpoint returning JSON metadata.
+
+The benchmark client dispatches 100 sequential HTTP/1.1 requests and profiles three critical socket intervals using high-resolution monotonic timestamps:
+\begin{enumerate}
+    \item \textbf{Connect Time (\texttt{connect\_ms})}: Elapsed duration from TCP SYN transmission to receipt of TCP SYN-ACK and completion of the three-way handshake.
+    \item \textbf{Time to First Byte (\texttt{ttfb\_ms})}: Duration from HTTP GET request transmission until receipt of the first byte of HTTP response headers.
+    \item \textbf{Total Request Time (\texttt{total\_time\_ms})}: Complete duration encompassing connection, request transmission, application-level JSON serialization, and response body receipt.
+\end{enumerate}
+
+\subsection{Cold-Start Lifecycle and Provisioning Latency (\texttt{startup\_lifecycle})}
+\label{subsec:startup_methodology}
+
+Rapid elasticity in cloud computing depends critically on domain provisioning latency. The startup lifecycle benchmark measures cold-start durations across discrete operational milestones:
+\begin{equation}
+    T_{\text{startup}} = t_{\text{app\_ready}} - t_{\text{trigger}}
+\end{equation}
+The lifecycle engine measures three successive sub-phases:
+\begin{itemize}
+    \item $\Delta t_{\text{vmm}}$: Time required for the hypervisor or container daemon to initialize process structures (\texttt{virsh start}, \texttt{VBoxManage startvm}, \texttt{lxc-start}).
+    \item $\Delta t_{\text{os}}$: Duration for guest kernel initialization, hardware enumeration, and systemd initialization.
+    \item $\Delta t_{\text{net}}$: Time until the domain's network stack acquires an IP address and responds to socket probes.
+    \item $\Delta t_{\text{app}}$: Duration until a background web service successfully responds to HTTP requests.
+\end{itemize}
+
+\subsection{Isolation and Security Boundary Audit (\texttt{isolation\_audit})}
+\label{subsec:isolation_methodology}
+
+The security audit probes the strength of the isolation boundary separating the guest from the underlying host. The automated inspector analyzes:
+\begin{enumerate}
+    \item \textbf{Namespace Inodes}: Probes \texttt{/proc/1/ns/*} to verify whether PID 1 inside the target environment shares inode identifiers with the host root namespace.
+    \item \textbf{Kernel Release Visibility}: Probes \texttt{uname -r} to determine whether the guest executes an independent kernel release or shares the host kernel image.
+    \item \textbf{Hypervisor Detection}: Executes \texttt{systemd-detect-virt} to determine whether the environment operates under hardware virtualization (\texttt{kvm}, \texttt{oracle}) or containerization (\texttt{lxc}).
+    \item \textbf{Control Group Hierarchies}: Inspects \texttt{/proc/self/cgroup} to verify container namespace confinement.
+\end{enumerate}

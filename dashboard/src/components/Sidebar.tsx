@@ -11,12 +11,12 @@ import {
   Network,
   Clock,
   Terminal,
+  Calendar,
   ShieldAlert,
-  GitCompare,
+  BarChart2,
   FileSearch,
   BookOpen,
-  FileCode2,
-  ChevronRight
+  FileCode2
 } from 'lucide-react';
 import { PageId } from '../types';
 
@@ -30,52 +30,45 @@ interface NavItem {
   id: PageId;
   label: string;
   icon: React.ComponentType<{ size?: number; className?: string }>;
-  section: string;
+  group: string;
 }
 
 export const NAV_ITEMS: NavItem[] = [
-  // Laboratory Platforms
-  { id: 'overview', label: '1. Overview', icon: LayoutDashboard, section: 'LAB PLATFORMS' },
-  { id: 'host', label: '2. Host Baseline', icon: Server, section: 'LAB PLATFORMS' },
-  { id: 'kvm', label: '3. KVM / QEMU', icon: Cpu, section: 'LAB PLATFORMS' },
-  { id: 'virtualbox', label: '4. VirtualBox', icon: Layers, section: 'LAB PLATFORMS' },
-  { id: 'lxc', label: '5. Native LXC', icon: Container, section: 'LAB PLATFORMS' },
+  // Environments
+  { id: 'overview', label: 'Overview', icon: LayoutDashboard, group: 'Environments' },
+  { id: 'host', label: 'Host Baseline', icon: Server, group: 'Environments' },
+  { id: 'kvm', label: 'KVM / QEMU', icon: Cpu, group: 'Environments' },
+  { id: 'virtualbox', label: 'VirtualBox', icon: Layers, group: 'Environments' },
+  { id: 'lxc', label: 'Native LXC', icon: Container, group: 'Environments' },
 
-  // Workload Benchmarks
-  { id: 'cpu', label: '6. CPU Workload', icon: Zap, section: 'BENCHMARK DOMAINS' },
-  { id: 'memory', label: '7. Memory & Cache', icon: Database, section: 'BENCHMARK DOMAINS' },
-  { id: 'storage', label: '8. Storage (FIO)', icon: HardDrive, section: 'BENCHMARK DOMAINS' },
-  { id: 'network', label: '9. Network (Ping/iperf)', icon: Network, section: 'BENCHMARK DOMAINS' },
-  { id: 'startup', label: '10. Startup Lifecycle', icon: Clock, section: 'BENCHMARK DOMAINS' },
-  { id: 'syscalls', label: '11. Syscalls & strace', icon: Terminal, section: 'BENCHMARK DOMAINS' },
+  // Benchmarks
+  { id: 'cpu', label: 'CPU', icon: Zap, group: 'Benchmarks' },
+  { id: 'memory', label: 'Memory', icon: Database, group: 'Benchmarks' },
+  { id: 'storage', label: 'Storage', icon: HardDrive, group: 'Benchmarks' },
+  { id: 'network', label: 'Network', icon: Network, group: 'Benchmarks' },
+  { id: 'startup', label: 'Startup', icon: Clock, group: 'Benchmarks' },
+  { id: 'syscalls', label: 'Syscalls', icon: Terminal, group: 'Benchmarks' },
+  { id: 'scheduling', label: 'Scheduling', icon: Calendar, group: 'Benchmarks' },
+  { id: 'isolation', label: 'Isolation', icon: ShieldAlert, group: 'Benchmarks' },
 
-  // Architecture & Evidence
-  { id: 'isolation', label: '12. Isolation & Kernel', icon: ShieldAlert, section: 'EMPIRICAL AUDIT' },
-  { id: 'comparison', label: '13. Neutral Comparison', icon: GitCompare, section: 'EMPIRICAL AUDIT' },
-  { id: 'evidence', label: '14. Traceable Evidence', icon: FileSearch, section: 'EMPIRICAL AUDIT' },
-  { id: 'methodology', label: '15. Scientific Method', icon: BookOpen, section: 'EMPIRICAL AUDIT' },
-  { id: 'raw_data', label: '16. Raw Datasets', icon: FileCode2, section: 'EMPIRICAL AUDIT' },
+  // Analysis & Data
+  { id: 'comparison', label: 'Results', icon: BarChart2, group: 'Analysis' },
+  { id: 'evidence', label: 'Forensic Evidence', icon: FileSearch, group: 'Analysis' },
+  { id: 'methodology', label: 'Methodology', icon: BookOpen, group: 'Analysis' },
+  { id: 'raw_data', label: 'Raw Data', icon: FileCode2, group: 'Analysis' },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ activePage, onSelectPage, totalRuns }) => {
-  const sections = Array.from(new Set(NAV_ITEMS.map(i => i.section)));
+  const groups = ['Environments', 'Benchmarks', 'Analysis'];
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-brand">
-        <div className="sidebar-logo">
-          <Layers size={20} color="var(--accent-cyan)" />
-          <span className="brand-title">CC2 LAB</span>
-        </div>
-        <div className="brand-badge">VIRT-BENCH v2.0</div>
-      </div>
-
       <div className="sidebar-nav">
-        {sections.map(sec => {
-          const items = NAV_ITEMS.filter(i => i.section === sec);
+        {groups.map(grp => {
+          const items = NAV_ITEMS.filter(i => i.group === grp);
           return (
-            <div key={sec} className="nav-group">
-              <div className="nav-group-title">{sec}</div>
+            <div key={grp} className="nav-group">
+              <div className="nav-group-title">{grp}</div>
               {items.map(item => {
                 const Icon = item.icon;
                 const isActive = activePage === item.id;
@@ -86,11 +79,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onSelectPage, tota
                     onClick={() => onSelectPage(item.id)}
                     aria-label={`Navigate to ${item.label}`}
                   >
-                    <div className="nav-link-content">
-                      <Icon size={16} className={isActive ? 'icon-active' : 'icon-muted'} />
-                      <span className="nav-label">{item.label}</span>
-                    </div>
-                    {isActive && <ChevronRight size={14} className="icon-indicator" />}
+                    <Icon size={16} />
+                    <span>{item.label}</span>
                   </button>
                 );
               })}
@@ -100,11 +90,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onSelectPage, tota
       </div>
 
       <div className="sidebar-footer">
-        <div className="telemetry-badge">
-          <span className="status-dot"></span>
-          <span>{totalRuns} Runs Indexed</span>
-        </div>
-        <div className="telemetry-sub">Zero Mock / Zero Fabricated</div>
+        <div>{totalRuns} total runs recorded</div>
       </div>
     </aside>
   );

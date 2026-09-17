@@ -1,5 +1,5 @@
 import React from 'react';
-import { Server, Cpu, Layers, Container, CheckCircle2, AlertCircle, Clock, XCircle } from 'lucide-react';
+import { Server, Cpu, Layers, Container, CheckCircle2, Clock, XCircle, AlertCircle } from 'lucide-react';
 import { EnvironmentStatus } from '../api';
 
 interface EnvironmentStatusBarProps {
@@ -11,70 +11,62 @@ export const EnvironmentStatusBar: React.FC<EnvironmentStatusBarProps> = ({
   environments,
   activeJobEnv
 }) => {
-  const envKeys = ['host', 'kvm', 'virtualbox', 'lxc'];
+  const envDefs = [
+    { key: 'host', label: 'Host', type: 'Bare-Metal Reference', icon: Server },
+    { key: 'kvm', label: 'KVM / QEMU', type: 'Type-1 Hypervisor (Kernel)', icon: Cpu },
+    { key: 'virtualbox', label: 'VirtualBox', type: 'Type-2 Hypervisor (Hosted)', icon: Layers },
+    { key: 'lxc', label: 'Native LXC', type: 'OS Container (cgroups v2)', icon: Container }
+  ];
 
-  const getIcon = (env: string) => {
-    switch (env) {
-      case 'host': return <Server size={18} color="var(--accent-amber)" />;
-      case 'kvm': return <Cpu size={18} color="var(--accent-cyan)" />;
-      case 'virtualbox': return <Layers size={18} color="var(--accent-indigo)" />;
-      case 'lxc': return <Container size={18} color="var(--accent-emerald)" />;
-      default: return <Server size={18} />;
-    }
-  };
-
-  const getStatusBadge = (env: string, statusInfo?: EnvironmentStatus) => {
-    if (activeJobEnv === env) {
+  const getStatusBadge = (key: string, info?: EnvironmentStatus) => {
+    if (activeJobEnv === key) {
       return (
         <span className="badge-status-running">
-          <Clock size={12} className="animate-spin" /> RUNNING
+          <Clock size={12} className="animate-spin" /> Running
         </span>
       );
     }
 
-    const state = statusInfo?.status?.toLowerCase() || 'available';
-    if (state === 'available') {
+    const state = (info?.status || 'available').toLowerCase();
+    if (state === 'available' || state === 'ready') {
       return (
         <span className="badge-status-ready">
-          <CheckCircle2 size={12} /> AVAILABLE
+          <CheckCircle2 size={12} /> Available
         </span>
       );
     }
     if (state === 'unavailable') {
       return (
         <span className="badge-status-unavail">
-          <XCircle size={12} /> UNAVAILABLE
+          <XCircle size={12} /> Unavailable
         </span>
       );
     }
     return (
       <span className="badge-status-stopped">
-        <AlertCircle size={12} /> {state.toUpperCase()}
+        <AlertCircle size={12} /> {state}
       </span>
     );
   };
 
   return (
     <div className="env-status-grid">
-      {envKeys.map(key => {
-        const info = environments[key] || {
-          name: key,
-          display_name: key.toUpperCase(),
-          classification: key === 'host' ? 'Bare-Metal Reference' : 'Virtualization Tier',
-          status: 'available'
-        };
+      {envDefs.map(def => {
+        const info = environments[def.key];
+        const Icon = def.icon;
+        const isActive = activeJobEnv === def.key;
 
         return (
-          <div key={key} className={`env-status-card ${activeJobEnv === key ? 'env-card-active' : ''}`}>
+          <div key={def.key} className={`env-status-card ${isActive ? 'env-card-active' : ''}`}>
             <div className="env-status-header">
               <div className="env-title-group">
-                {getIcon(key)}
+                <Icon size={18} color="var(--accent-primary)" />
                 <div>
-                  <div className="env-name">{info.display_name}</div>
-                  <div className="env-classification">{info.classification}</div>
+                  <div className="env-name">{def.label}</div>
+                  <div className="env-classification">{def.type}</div>
                 </div>
               </div>
-              {getStatusBadge(key, info)}
+              {getStatusBadge(def.key, info)}
             </div>
           </div>
         );

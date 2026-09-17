@@ -1,15 +1,5 @@
 import React from 'react';
-import { 
-  GitCompare, 
-  ShieldCheck, 
-  Activity, 
-  Cpu, 
-  Server, 
-  Clock, 
-  Network, 
-  Terminal,
-  FileSearch 
-} from 'lucide-react';
+import { BarChart2, FileSearch } from 'lucide-react';
 import { BenchmarkRun } from '../types';
 
 interface ComparisonPageProps {
@@ -33,7 +23,7 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({
       note: 'Observed difference: ~0.0001s hypervisor scheduling latency'
     },
     {
-      metric: 'Peak RSS Consumption',
+      metric: 'Peak RSS Memory Consumption',
       domain: 'memory_deterministic',
       unit: 'MiB',
       host: '128 MiB',
@@ -53,7 +43,7 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({
       note: 'Observed difference: Virtual NIC packet processing and software bridge traversal'
     },
     {
-      metric: 'End-to-End Startup Duration',
+      metric: 'Cold Startup Duration',
       domain: 'startup_lifecycle',
       unit: 'seconds',
       host: '0.002s',
@@ -73,100 +63,70 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({
       note: 'Median socket-level Time to First Byte over 100 requests'
     },
     {
-      metric: 'Kernel Release Isolation',
+      metric: 'Kernel Address Space Boundary',
       domain: 'isolation_audit',
-      unit: 'release',
-      host: '7.0.0-31-generic',
-      kvm: '6.8.0-40-generic (Separate)',
-      vbox: '6.8.0-40-generic (Separate)',
-      lxc: '7.0.0-31-generic (Shared)',
-      note: 'Measured result: Kernel boundary verification via uname -r'
+      unit: 'boundary',
+      host: 'Physical Ring 0',
+      kvm: 'Independent Guest Kernel',
+      vbox: 'Independent Guest Kernel',
+      lxc: 'Shared Host Kernel Namespaces',
+      note: 'Verified isolation boundary'
     }
   ];
 
   return (
     <div className="page-container">
-      {/* Neutral Scientific Directives */}
-      <div className="notice-card" style={{ marginBottom: '1.5rem' }}>
-        <ShieldCheck size={20} color="var(--accent-emerald)" />
-        <div className="notice-content">
-          <div className="notice-title">NEUTRAL SCIENTIFIC COMPARISON PROTOCOL</div>
-          <div className="notice-body">
-            This comparative matrix strictly employs objective, non-judgmental language: 
-            <strong> "Measured result", "Observed difference", "Median", "Standard deviation"</strong>. 
-            No subjective scoring, ranking, or technology "winners" are generated. Trade-offs between hardware isolation and resource efficiency are presented as empirical facts.
+      {/* Page Header */}
+      <div className="card">
+        <div className="card-header-row">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <BarChart2 size={22} color="var(--accent-primary)" />
+            <div>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Results & Comparative Evaluation</h2>
+              <div className="card-subtitle">
+                Side-by-Side Empirical Measurements Across Identical Hardware
+              </div>
+            </div>
           </div>
         </div>
+        <p style={{ marginTop: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+          Direct, empirical measurements across bare-metal Host, KVM/QEMU, Oracle VirtualBox, and Native LXC.
+          Technologies are presented with objective metrics without scoring, subjective ranking, or declaring winners.
+        </p>
       </div>
 
-      {/* Side-by-Side Comparison Matrix */}
-      <div className="section-header">
-        <h3 className="section-title">Cross-Environment Comparative Evaluation</h3>
-        <span className="section-subtitle">Side-by-side empirical measurements across identical hardware</span>
-      </div>
+      {/* Comparative Matrix Table */}
+      <div className="card">
+        <div className="card-header-row">
+          <h3 className="card-title">Comparative Performance Matrix</h3>
+          <span className="text-secondary" style={{ fontSize: '0.75rem' }}>Empirical benchmark comparison</span>
+        </div>
 
-      <div className="table-wrapper">
-        <table className="data-table font-mono">
-          <thead>
-            <tr>
-              <th>Evaluation Domain</th>
-              <th>Host Reference</th>
-              <th>KVM / QEMU</th>
-              <th>Oracle VirtualBox</th>
-              <th>Native LXC</th>
-              <th>Scientific Observation</th>
-            </tr>
-          </thead>
-          <tbody>
-            {comparisonRows.map((row, idx) => (
-              <tr key={idx}>
-                <td className="font-bold text-primary">{row.metric}</td>
-                <td className="text-cyan font-bold">{row.host}</td>
-                <td className="text-cyan">{row.kvm}</td>
-                <td className="text-indigo">{row.vbox}</td>
-                <td className="text-emerald font-bold">{row.lxc}</td>
-                <td className="text-muted" style={{ fontSize: '0.8125rem' }}>{row.note}</td>
+        <div className="table-wrapper">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Evaluated Metric</th>
+                <th>Host Baseline</th>
+                <th>KVM / QEMU</th>
+                <th>VirtualBox</th>
+                <th>Native LXC</th>
+                <th>Empirical Observation</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Trade-Off Synthesis Matrix */}
-      <div className="section-header" style={{ marginTop: '2.5rem' }}>
-        <h3 className="section-title">Architectural Trade-Off Analysis</h3>
-        <span className="section-subtitle">Comparing architectural trade-offs without subjective ranking</span>
-      </div>
-
-      <div className="grid-cols-3">
-        <div className="card font-mono">
-          <div className="card-title text-cyan">KVM / QEMU Characteristics</div>
-          <ul className="tradeoff-list" style={{ marginTop: '0.75rem', fontSize: '0.8125rem' }}>
-            <li><strong>Security Boundary:</strong> Hardware VMX ring separation with independent guest kernel.</li>
-            <li><strong>I/O Mechanism:</strong> VirtIO para-virtualization optimizes disk and network overhead.</li>
-            <li><strong>Resource Footprint:</strong> Requires dynamic memory ballooning; moderate cold boot overhead.</li>
-            <li><strong>Use Case Alignment:</strong> Multi-tenant untrusted infrastructure requiring hard kernel isolation.</li>
-          </ul>
-        </div>
-
-        <div className="card font-mono">
-          <div className="card-title text-indigo">VirtualBox Characteristics</div>
-          <ul className="tradeoff-list" style={{ marginTop: '0.75rem', fontSize: '0.8125rem' }}>
-            <li><strong>Security Boundary:</strong> Type-2 application hypervisor with independent guest kernel.</li>
-            <li><strong>I/O Mechanism:</strong> Standard emulated hardware controllers (AHCI SATA, Intel PRO/1000).</li>
-            <li><strong>Resource Footprint:</strong> Higher host process RSS footprint and longer BIOS boot sequences.</li>
-            <li><strong>Use Case Alignment:</strong> Cross-platform local workstation development and legacy OS testing.</li>
-          </ul>
-        </div>
-
-        <div className="card font-mono">
-          <div className="card-title text-emerald">Native LXC Characteristics</div>
-          <ul className="tradeoff-list" style={{ marginTop: '0.75rem', fontSize: '0.8125rem' }}>
-            <li><strong>Security Boundary:</strong> Shared host kernel bounded by 7 Linux namespaces and cgroups v2.</li>
-            <li><strong>I/O Mechanism:</strong> Direct host kernel VFS and veth software bridges with zero emulation.</li>
-            <li><strong>Resource Footprint:</strong> Sub-second startup (~0.92s) and near-zero memory virtualization tax.</li>
-            <li><strong>Use Case Alignment:</strong> High-density homogeneous Linux workloads and low-latency microservices.</li>
-          </ul>
+            </thead>
+            <tbody>
+              {comparisonRows.map(row => (
+                <tr key={row.metric}>
+                  <td className="font-semibold">{row.metric}</td>
+                  <td className="font-mono">{row.host}</td>
+                  <td className="font-mono">{row.kvm}</td>
+                  <td className="font-mono">{row.vbox}</td>
+                  <td className="font-mono">{row.lxc}</td>
+                  <td className="text-secondary" style={{ fontSize: '0.8125rem' }}>{row.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

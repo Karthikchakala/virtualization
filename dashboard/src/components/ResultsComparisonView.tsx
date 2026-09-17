@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { 
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend 
+import {
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend
 } from 'recharts';
-import { 
-  Table, BarChart2, ShieldCheck, CheckCircle2, AlertTriangle, XCircle, Info, ExternalLink 
+import {
+  Table, BarChart2, CheckCircle2, AlertTriangle, XCircle, Info, ExternalLink
 } from 'lucide-react';
 import { BenchmarkRun } from '../types';
 
@@ -38,6 +38,14 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
   const [activeTab, setActiveTab] = useState<'charts' | 'table'>('charts');
   const [selectedDomain, setSelectedDomain] = useState<string>('all');
 
+  // Palette: professional, consistent across charts
+  const envColors = {
+    Host: '#4b5563',
+    KVM: '#2563eb',
+    VirtualBox: '#0284c7',
+    LXC: '#16a34a'
+  };
+
   // Helper to extract numeric metrics
   const getMetricValue = (run: BenchmarkRun, key: string): number | null => {
     if (!run || !run.metrics) return null;
@@ -49,7 +57,6 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
     return null;
   };
 
-  // Build comparative dataset for Recharts across the 4 environments
   const environments = ['host', 'kvm', 'virtualbox', 'lxc'];
 
   const getEnvStats = (env: string, bench: string, metricKey: string) => {
@@ -64,10 +71,10 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
     return parseFloat(mean.toFixed(2));
   };
 
-  // Chart data: CPU Deterministic
+  // Chart 1: CPU Deterministic
   const cpuChartData = [
     {
-      metric: 'Elapsed Time (s)',
+      metric: 'Elapsed Time',
       unit: 's',
       Host: getEnvStats('host', 'cpu_deterministic', 'elapsed_sec') || getEnvStats('host', 'cpu_deterministic', 'wall_time_sec'),
       KVM: getEnvStats('kvm', 'cpu_deterministic', 'elapsed_sec') || getEnvStats('kvm', 'cpu_deterministic', 'wall_time_sec'),
@@ -75,7 +82,7 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
       LXC: getEnvStats('lxc', 'cpu_deterministic', 'elapsed_sec') || getEnvStats('lxc', 'cpu_deterministic', 'wall_time_sec')
     },
     {
-      metric: 'Compute GFLOPS',
+      metric: 'GFLOPS',
       unit: 'GFLOPS',
       Host: getEnvStats('host', 'cpu_deterministic', 'gflops'),
       KVM: getEnvStats('kvm', 'cpu_deterministic', 'gflops'),
@@ -84,22 +91,22 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
     }
   ];
 
-  // Chart data: Memory Subsystem
+  // Chart 2: Memory Subsystem
   const memoryChartData = [
     {
-      metric: 'Memory Throughput (MB/s)',
+      metric: 'Sequential Write',
       unit: 'MB/s',
-      Host: getEnvStats('host', 'memory_deterministic', 'throughput_mb_s'),
-      KVM: getEnvStats('kvm', 'memory_deterministic', 'throughput_mb_s'),
-      VirtualBox: getEnvStats('virtualbox', 'memory_deterministic', 'throughput_mb_s'),
-      LXC: getEnvStats('lxc', 'memory_deterministic', 'throughput_mb_s')
+      Host: getEnvStats('host', 'memory_deterministic', 'write_mb_s') || getEnvStats('host', 'memory_deterministic', 'throughput_mb_s'),
+      KVM: getEnvStats('kvm', 'memory_deterministic', 'write_mb_s') || getEnvStats('kvm', 'memory_deterministic', 'throughput_mb_s'),
+      VirtualBox: getEnvStats('virtualbox', 'memory_deterministic', 'write_mb_s') || getEnvStats('virtualbox', 'memory_deterministic', 'throughput_mb_s'),
+      LXC: getEnvStats('lxc', 'memory_deterministic', 'write_mb_s') || getEnvStats('lxc', 'memory_deterministic', 'throughput_mb_s')
     }
   ];
 
-  // Chart data: Syscall & Context Switching Latency
+  // Chart 3: Kernel Latency & Context Switching
   const latencyChartData = [
     {
-      metric: 'Syscall Latency (ns)',
+      metric: 'Syscall Latency',
       unit: 'ns',
       Host: getEnvStats('host', 'syscall_deterministic', 'latency_ns'),
       KVM: getEnvStats('kvm', 'syscall_deterministic', 'latency_ns'),
@@ -107,12 +114,24 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
       LXC: getEnvStats('lxc', 'syscall_deterministic', 'latency_ns')
     },
     {
-      metric: 'Context Switch Latency (us)',
-      unit: 'us',
+      metric: 'Context Switch Latency',
+      unit: 'μs',
       Host: getEnvStats('host', 'scheduling_deterministic', 'latency_us'),
       KVM: getEnvStats('kvm', 'scheduling_deterministic', 'latency_us'),
       VirtualBox: getEnvStats('virtualbox', 'scheduling_deterministic', 'latency_us'),
       LXC: getEnvStats('lxc', 'scheduling_deterministic', 'latency_us')
+    }
+  ];
+
+  // Chart 4: Cold Startup Duration
+  const startupChartData = [
+    {
+      metric: 'Cold Startup Duration',
+      unit: 's',
+      Host: getEnvStats('host', 'startup_lifecycle', 'total_startup_sec'),
+      KVM: getEnvStats('kvm', 'startup_lifecycle', 'total_startup_sec'),
+      VirtualBox: getEnvStats('virtualbox', 'startup_lifecycle', 'total_startup_sec'),
+      LXC: getEnvStats('lxc', 'startup_lifecycle', 'total_startup_sec')
     }
   ];
 
@@ -124,9 +143,9 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
       { bench: 'cpu_deterministic', key: 'elapsed_sec', label: 'Elapsed Time', unit: 's' },
       { bench: 'memory_deterministic', key: 'throughput_mb_s', label: 'Throughput', unit: 'MB/s' },
       { bench: 'syscall_deterministic', key: 'latency_ns', label: 'Syscall Latency', unit: 'ns' },
-      { bench: 'scheduling_deterministic', key: 'latency_us', label: 'Context Switch Latency', unit: 'us' },
+      { bench: 'scheduling_deterministic', key: 'latency_us', label: 'Context Switch Latency', unit: 'μs' },
       { bench: 'scheduling_deterministic', key: 'switches_per_sec', label: 'Switches/Sec', unit: 'switches/s' },
-      { bench: 'network_ping', key: 'rtt_avg_ms', label: 'Avg RTT', unit: 'ms' },
+      { bench: 'network_ping', key: 'rtt_avg_ms', label: 'Average RTT', unit: 'ms' },
       { bench: 'disk_fio', key: 'read_iops', label: 'Read IOPS', unit: 'IOPS' },
       { bench: 'disk_fio', key: 'write_iops', label: 'Write IOPS', unit: 'IOPS' },
       { bench: 'network_iperf3', key: 'sender_bandwidth_mbps', label: 'Bandwidth', unit: 'Mbps' },
@@ -215,14 +234,14 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
   const renderQualityBadge = (quality: string) => {
     switch (quality) {
       case 'PASS':
-        return <span className="badge-quality-pass"><CheckCircle2 size={12} /> PASS</span>;
+        return <span className="status-pill status-pass"><CheckCircle2 size={12} /> Pass</span>;
       case 'WARNING':
-        return <span className="badge-quality-warn"><AlertTriangle size={12} /> WARNING</span>;
+        return <span className="status-pill" style={{ background: 'var(--status-warning-bg)', color: 'var(--status-warning-text)', borderColor: 'var(--status-warning-border)' }}><AlertTriangle size={12} /> Warning</span>;
       case 'FAILED':
-        return <span className="badge-quality-fail"><XCircle size={12} /> FAILED</span>;
+        return <span className="status-pill status-failed"><XCircle size={12} /> Failed</span>;
       case 'UNAVAILABLE':
       default:
-        return <span className="badge-quality-unavail"><Info size={12} /> UNAVAILABLE</span>;
+        return <span className="status-pill status-unavailable"><Info size={12} /> Unavailable</span>;
     }
   };
 
@@ -237,9 +256,9 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
     <div className="results-comparison-card">
       <div className="results-header-row">
         <div>
-          <h2 className="section-title">Comparative Performance Results & Validation</h2>
-          <span className="section-subtitle font-mono">
-            Direct empirical measurements without rankings, winner declarations, or overall scores.
+          <h2 className="section-title">Benchmark Results & Statistical Validation</h2>
+          <span className="section-subtitle">
+            Empirical measurements across virtualization adapters without subjective rankings or overall scores.
           </span>
         </div>
 
@@ -248,7 +267,7 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
             className={`view-toggle-btn ${activeTab === 'charts' ? 'view-active' : ''}`}
             onClick={() => setActiveTab('charts')}
           >
-            <BarChart2 size={14} /> Visual Charts
+            <BarChart2 size={14} /> Charts
           </button>
           <button
             className={`view-toggle-btn ${activeTab === 'table' ? 'view-active' : ''}`}
@@ -261,101 +280,129 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
 
       {activeTab === 'charts' ? (
         <div className="charts-view-container">
-          {/* Chart 1: CPU Deterministic */}
-          <div className="chart-box">
-            <div className="chart-title-bar">
-              <span className="chart-title">CPU Compute Performance (GEMM Matrix Multiplication)</span>
-              <span className="chart-badge font-mono">Canonical 400x400 | 6.4e8 FLOPs</span>
+          <div className="grid-cols-2">
+            {/* Chart 1: CPU Deterministic */}
+            <div className="chart-box">
+              <div className="chart-title-bar">
+                <span className="chart-title">CPU Performance (Matrix GEMM)</span>
+                <span className="chart-badge">400x400 Float64</span>
+              </div>
+              <div style={{ height: 240 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={cpuChartData} margin={{ top: 15, right: 20, left: 0, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                    <XAxis dataKey="metric" stroke="#6b7280" fontSize={12} tickLine={false} />
+                    <YAxis stroke="#6b7280" fontSize={12} tickLine={false} />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e5e7eb', borderRadius: '6px', fontSize: '12px' }}
+                      formatter={(val: any, name: any, item: any) => [`${val} ${item.payload.unit}`, name]}
+                    />
+                    <Legend />
+                    <Bar isAnimationActive={false} dataKey="Host" fill={envColors.Host} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="KVM" fill={envColors.KVM} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="VirtualBox" fill={envColors.VirtualBox} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="LXC" fill={envColors.LXC} radius={[3, 3, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
-            <div className="chart-canvas" style={{ height: 260 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={cpuChartData} margin={{ top: 20, right: 30, left: 10, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                  <XAxis dataKey="metric" stroke="#94a3b8" />
-                  <YAxis stroke="#94a3b8" />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }}
-                    formatter={(val: any, name: any, item: any) => [`${val} ${item.payload.unit}`, name]}
-                  />
-                  <Legend />
-                  <Bar dataKey="Host" fill="var(--accent-amber)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="KVM" fill="var(--accent-cyan)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="VirtualBox" fill="var(--accent-indigo)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="LXC" fill="var(--accent-emerald)" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
 
-          {/* Chart 2: Memory & Cache Subsystem */}
-          <div className="chart-box">
-            <div className="chart-title-bar">
-              <span className="chart-title">Memory & Cache Subsystem Throughput</span>
-              <span className="chart-badge font-mono">128 MB Buffer | 4 Passes | Stride 64</span>
+            {/* Chart 2: Memory Subsystem */}
+            <div className="chart-box">
+              <div className="chart-title-bar">
+                <span className="chart-title">Memory Bandwidth</span>
+                <span className="chart-badge">128 MB Buffer</span>
+              </div>
+              <div style={{ height: 240 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={memoryChartData} margin={{ top: 15, right: 20, left: 0, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                    <XAxis dataKey="metric" stroke="#6b7280" fontSize={12} tickLine={false} />
+                    <YAxis stroke="#6b7280" fontSize={12} tickLine={false} unit=" MB/s" />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e5e7eb', borderRadius: '6px', fontSize: '12px' }}
+                      formatter={(val: any, name: any, item: any) => [`${val} ${item.payload.unit}`, name]}
+                    />
+                    <Legend />
+                    <Bar isAnimationActive={false} dataKey="Host" fill={envColors.Host} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="KVM" fill={envColors.KVM} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="VirtualBox" fill={envColors.VirtualBox} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="LXC" fill={envColors.LXC} radius={[3, 3, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
-            <div className="chart-canvas" style={{ height: 260 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={memoryChartData} margin={{ top: 20, right: 30, left: 10, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                  <XAxis dataKey="metric" stroke="#94a3b8" />
-                  <YAxis stroke="#94a3b8" />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }}
-                    formatter={(val: any, name: any, item: any) => [`${val} ${item.payload.unit}`, name]}
-                  />
-                  <Legend />
-                  <Bar dataKey="Host" fill="var(--accent-amber)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="KVM" fill="var(--accent-cyan)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="VirtualBox" fill="var(--accent-indigo)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="LXC" fill="var(--accent-emerald)" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
 
-          {/* Chart 3: Kernel Latency & Context Switching */}
-          <div className="chart-box">
-            <div className="chart-title-bar">
-              <span className="chart-title">Syscall Entry & Context Switching Overhead</span>
-              <span className="chart-badge font-mono">Raw getpid() & 2-Way Pipe Ping-Pong</span>
+            {/* Chart 3: Kernel Latency & Context Switching */}
+            <div className="chart-box">
+              <div className="chart-title-bar">
+                <span className="chart-title">Syscall & Scheduling Overhead</span>
+                <span className="chart-badge">strace & Pipe Switch</span>
+              </div>
+              <div style={{ height: 240 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={latencyChartData} margin={{ top: 15, right: 20, left: 0, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                    <XAxis dataKey="metric" stroke="#6b7280" fontSize={12} tickLine={false} />
+                    <YAxis stroke="#6b7280" fontSize={12} tickLine={false} />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e5e7eb', borderRadius: '6px', fontSize: '12px' }}
+                      formatter={(val: any, name: any, item: any) => [`${val} ${item.payload.unit}`, name]}
+                    />
+                    <Legend />
+                    <Bar isAnimationActive={false} dataKey="Host" fill={envColors.Host} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="KVM" fill={envColors.KVM} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="VirtualBox" fill={envColors.VirtualBox} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="LXC" fill={envColors.LXC} radius={[3, 3, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
-            <div className="chart-canvas" style={{ height: 260 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={latencyChartData} margin={{ top: 20, right: 30, left: 10, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                  <XAxis dataKey="metric" stroke="#94a3b8" />
-                  <YAxis stroke="#94a3b8" />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }}
-                    formatter={(val: any, name: any, item: any) => [`${val} ${item.payload.unit}`, name]}
-                  />
-                  <Legend />
-                  <Bar dataKey="Host" fill="var(--accent-amber)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="KVM" fill="var(--accent-cyan)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="VirtualBox" fill="var(--accent-indigo)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="LXC" fill="var(--accent-emerald)" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+
+            {/* Chart 4: Cold Startup Duration */}
+            <div className="chart-box">
+              <div className="chart-title-bar">
+                <span className="chart-title">Cold Startup Duration</span>
+                <span className="chart-badge">Boot to App Ready</span>
+              </div>
+              <div style={{ height: 240 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={startupChartData} margin={{ top: 15, right: 20, left: 0, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                    <XAxis dataKey="metric" stroke="#6b7280" fontSize={12} tickLine={false} />
+                    <YAxis stroke="#6b7280" fontSize={12} tickLine={false} unit=" s" />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e5e7eb', borderRadius: '6px', fontSize: '12px' }}
+                      formatter={(val: any, name: any, item: any) => [`${val} ${item.payload.unit}`, name]}
+                    />
+                    <Legend />
+                    <Bar isAnimationActive={false} dataKey="Host" fill={envColors.Host} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="KVM" fill={envColors.KVM} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="VirtualBox" fill={envColors.VirtualBox} radius={[3, 3, 0, 0]} />
+                    <Bar isAnimationActive={false} dataKey="LXC" fill={envColors.LXC} radius={[3, 3, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         </div>
       ) : (
         /* Statistical Table View */
         <div className="results-table-container">
-          <div className="table-filter-bar">
-            <span className="filter-label">Filter Domain:</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+            <span style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>Filter Workload:</span>
             <select
               value={selectedDomain}
               onChange={e => setSelectedDomain(e.target.value)}
-              className="filter-select font-mono"
+              className="filter-select"
             >
-              <option value="all">ALL DOMAINS</option>
+              <option value="all">All Domains</option>
               <option value="cpu_deterministic">CPU Deterministic</option>
               <option value="memory_deterministic">Memory Subsystem</option>
               <option value="syscall_deterministic">Syscall Latency</option>
-              <option value="scheduling_deterministic">Scheduling / Pipe</option>
+              <option value="scheduling_deterministic">Scheduling Latency</option>
               <option value="network_ping">Network Ping</option>
-              <option value="disk_fio">Disk FIO (Safe)</option>
+              <option value="disk_fio">Disk FIO</option>
               <option value="startup_lifecycle">Startup Lifecycle</option>
             </select>
           </div>
@@ -364,27 +411,27 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
             <table className="results-data-table">
               <thead>
                 <tr>
-                  <th>ENV</th>
-                  <th>BENCHMARK</th>
-                  <th>METRIC</th>
-                  <th>MEAN</th>
-                  <th>MEDIAN (p50)</th>
-                  <th>MIN</th>
-                  <th>MAX</th>
-                  <th>STD DEV</th>
+                  <th>Environment</th>
+                  <th>Benchmark</th>
+                  <th>Metric</th>
+                  <th>Mean</th>
+                  <th>Median</th>
+                  <th>Min</th>
+                  <th>Max</th>
+                  <th>Std Dev</th>
                   <th>p95</th>
                   <th>p99</th>
-                  <th>RUNS</th>
-                  <th>DATA QUALITY</th>
-                  <th>TRACEABILITY</th>
+                  <th>Runs</th>
+                  <th>Status</th>
+                  <th>Evidence</th>
                 </tr>
               </thead>
               <tbody>
                 {tableData.map((row, idx) => (
                   <tr key={`${row.environment}-${row.benchmark}-${row.metric}-${idx}`}>
-                    <td className="font-mono font-bold uppercase">{row.environment}</td>
+                    <td className="font-semibold uppercase">{row.environment}</td>
                     <td className="font-mono text-xs">{row.benchmark}</td>
-                    <td className="font-semibold">{row.metric}</td>
+                    <td>{row.metric}</td>
                     <td>{formatCell(row.mean, row.unit)}</td>
                     <td>{formatCell(row.median, row.unit)}</td>
                     <td>{formatCell(row.min, row.unit)}</td>
@@ -392,16 +439,16 @@ export const ResultsComparisonView: React.FC<ResultsComparisonViewProps> = ({
                     <td>{formatCell(row.stdDev, row.unit)}</td>
                     <td>{formatCell(row.p95, row.unit)}</td>
                     <td>{formatCell(row.p99, row.unit)}</td>
-                    <td className="font-mono text-center">{row.runsCount}</td>
+                    <td className="font-mono">{row.runsCount}</td>
                     <td>{renderQualityBadge(row.quality)}</td>
                     <td>
                       {row.rawRun && (
                         <button
                           className="btn-evidence-link"
                           onClick={() => onViewEvidence(row.rawRun!)}
-                          title="View forensic evidence"
+                          title="View raw evidence"
                         >
-                          <ExternalLink size={13} />
+                          <ExternalLink size={12} />
                           <span className="font-mono text-xs">{row.rawRun.run_id.slice(-8)}</span>
                         </button>
                       )}

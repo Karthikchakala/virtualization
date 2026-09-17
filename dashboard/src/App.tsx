@@ -3,6 +3,8 @@ import { PageId, BenchmarkRun, HostInventory } from './types';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { EvidenceModal } from './components/EvidenceModal';
+import { JobLogsModal } from './components/JobLogsModal';
+import { api, EnvironmentStatus, BenchmarkJob } from './api';
 
 // Pages
 import { OverviewPage } from './pages/OverviewPage';
@@ -16,6 +18,7 @@ import { StoragePage } from './pages/StoragePage';
 import { NetworkPage } from './pages/NetworkPage';
 import { StartupPage } from './pages/StartupPage';
 import { SyscallsPage } from './pages/SyscallsPage';
+import { SchedulingPage } from './pages/SchedulingPage';
 import { IsolationPage } from './pages/IsolationPage';
 import { ComparisonPage } from './pages/ComparisonPage';
 import { EvidencePage } from './pages/EvidencePage';
@@ -28,78 +31,105 @@ import runsData from './data/runs.json';
 
 const PAGE_METADATA: Record<PageId, { title: string; desc: string }> = {
   overview: {
-    title: '1. Laboratory Overview & Virtualization Matrix',
+    title: 'Laboratory Overview & Virtualization Matrix',
     desc: 'Comparative evaluation of KVM/QEMU, Oracle VirtualBox, and Native LXC against Bare-Metal Host Baseline.'
   },
   host: {
-    title: '2. Bare-Metal Host Reference Baseline',
-    desc: 'Hardware telemetry, Intel Core CPU topology, DDR RAM, and read-only thermal/frequency observability.'
+    title: 'Bare-Metal Host Reference Baseline',
+    desc: 'Hardware topology, logical cores, DDR RAM, and host reference measurements.'
   },
   kvm: {
-    title: '3. KVM / QEMU Virtualization Adapter',
-    desc: 'Kernel-based Virtual Machine architecture, virsh dynamic domain inspection, VirtIO drivers, and domstats.'
+    title: 'KVM / QEMU Virtualization Adapter',
+    desc: 'Kernel-based Virtual Machine architecture, libvirt domain configuration, and guest execution.'
   },
   virtualbox: {
-    title: '4. Oracle VirtualBox Hypervisor Adapter',
-    desc: 'Hosted Type-2 hypervisor architecture, VBoxHeadless host process RSS vs. allocated 2048 MB memory ceiling.'
+    title: 'Oracle VirtualBox Hypervisor Adapter',
+    desc: 'Hosted Type-2 hypervisor architecture, VBoxHeadless process execution, and memory allocation.'
   },
   lxc: {
-    title: '5. Native Linux Containers (LXC) Adapter',
+    title: 'Native Linux Containers (LXC) Adapter',
     desc: 'OS-level container virtualization using Linux cgroups v2 resource controllers and 7 namespace boundaries.'
   },
   cpu: {
-    title: '6. Deterministic CPU Compute Benchmark',
+    title: 'Deterministic CPU Compute Benchmark',
     desc: 'Double-precision matrix multiplication, wall/user/system times, CPU utilization, and context switches.'
   },
   memory: {
-    title: '7. Deterministic Memory & Cache Subsystem',
+    title: 'Deterministic Memory & Cache Subsystem',
     desc: 'Sequential write, read-accumulate, stride benchmark, allocated vs. actual RAM, and page fault accounting.'
   },
   storage: {
-    title: '8. Safe Storage I/O Benchmark (FIO)',
-    desc: 'Sequential and random 4K I/O operations strictly restricted to regular files; raw block devices prohibited.'
+    title: 'Safe Storage I/O Benchmark (FIO)',
+    desc: 'Sequential and random 4K I/O operations strictly restricted to temporary regular files.'
   },
   network: {
-    title: '9. Network Latency & Bandwidth Virtualization',
+    title: 'Network Latency & Bandwidth Virtualization',
     desc: 'ICMP ping round-trip times and standardized iperf3 TCP throughput under identical test invariants.'
   },
   startup: {
-    title: '10. Virtualization Startup Lifecycle Analysis',
+    title: 'Virtualization Startup Lifecycle Analysis',
     desc: 'Phased breakdown of cold initialization: Hypervisor VMM start, network ready, and HTTP application ready.'
   },
   syscalls: {
-    title: '11. System Call Profiling & Latency (strace -c)',
+    title: 'System Call Profiling & Latency (strace -c)',
     desc: 'User/kernel mode transition profiling, syscall invocation counts, cumulative seconds, and error traps.'
   },
+  scheduling: {
+    title: 'Scheduling Latency & Context Switches',
+    desc: 'Two-way pipe inter-process communication latency, voluntary and involuntary scheduler switches.'
+  },
   isolation: {
-    title: '12. Security & Isolation Architecture Analysis',
-    desc: 'Visual hypervisor layer diagrams and empirical evidence: systemd-detect-virt, uname, and namespace IDs.'
+    title: 'Security & Isolation Architecture Analysis',
+    desc: 'Hypervisor boundary models, systemd-detect-virt, kernel isolation, and namespace verification.'
   },
   comparison: {
-    title: '13. Neutral Scientific Comparative Evaluation',
-    desc: 'Side-by-side empirical measurements across identical hardware. Objective reporting without scores or winners.'
+    title: 'Results & Comparative Evaluation',
+    desc: 'Side-by-side empirical measurements across identical hardware without subjective scores or winner declarations.'
   },
   evidence: {
-    title: '14. Forensic Evidence & Run Traceability Engine',
-    desc: 'Auditable record of every execution: exact command, terminal standard output, standard error, and exit codes.'
+    title: 'Forensic Evidence & Run Traceability Engine',
+    desc: 'Auditable record of every execution: exact command, standard output, standard error, and exit codes.'
   },
   methodology: {
-    title: '15. Scientific Methodology & Rigorous Standards',
+    title: 'Scientific Methodology & Rigorous Standards',
     desc: 'Experimental protocol, multi-stage stabilization, static C99 compilation, and zero-fabrication guarantees.'
   },
   raw_data: {
-    title: '16. Raw Datasets & Processed Exports',
-    desc: 'Direct access to machine-readable JSON and CSV processed datasets for independent exploratory analysis.'
+    title: 'Raw Datasets & Processed Exports',
+    desc: 'Direct access to machine-readable JSON datasets for independent exploratory analysis.'
   }
 };
 
-import { api, EnvironmentStatus, BenchmarkJob } from './api';
-import { JobLogsModal } from './components/JobLogsModal';
-
 export function App() {
-  const [activePage, setActivePage] = useState<PageId>('overview');
+  const getInitialPage = (): PageId => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const hash = window.location.hash.replace('#', '') as PageId;
+      if (PAGE_METADATA[hash]) return hash;
+    }
+    return 'overview';
+  };
+
+  const [activePage, setActivePage] = useState<PageId>(getInitialPage);
   const [selectedRun, setSelectedRun] = useState<BenchmarkRun | null>(null);
   const [activeLogJobId, setActiveLogJobId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '') as PageId;
+      if (PAGE_METADATA[hash]) {
+        setActivePage(hash);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleSelectPage = (page: PageId) => {
+    setActivePage(page);
+    if (typeof window !== 'undefined') {
+      window.location.hash = page;
+    }
+  };
 
   // Global Filters
   const [filterEnv, setFilterEnv] = useState<string>('all');
@@ -148,7 +178,6 @@ export function App() {
         if (mounted && jobsResp?.jobs?.length) {
           const latest = jobsResp.jobs[0];
           setActiveJob(prev => {
-            // If previous was running and latest completed, refresh results
             if (prev && prev.status === 'running' && latest.status === 'completed') {
               refreshResults();
             }
@@ -283,6 +312,13 @@ export function App() {
             onViewEvidence={handleViewEvidence}
           />
         );
+      case 'scheduling':
+        return (
+          <SchedulingPage
+            runs={filteredRuns}
+            onViewEvidence={handleViewEvidence}
+          />
+        );
       case 'isolation':
         return (
           <IsolationPage
@@ -328,32 +364,35 @@ export function App() {
 
   return (
     <div className="app-layout">
-      {/* 16-Page Navigation Sidebar */}
-      <Sidebar
-        activePage={activePage}
-        onSelectPage={page => setActivePage(page)}
-        totalRuns={rawRuns.length}
+      {/* Full-width Top Header */}
+      <Header
+        activePageTitle={activeMeta.title}
+        activePageDesc={activeMeta.desc}
+        filterEnv={filterEnv}
+        onFilterEnvChange={setFilterEnv}
+        filterBenchmark={filterBenchmark}
+        onFilterBenchmarkChange={setFilterBenchmark}
+        searchQuery={searchQuery}
+        onSearchQueryChange={setSearchQuery}
+        totalFilteredRuns={filteredRuns.length}
+        experimentId={rawRuns[0]?.experiment_id || 'exp-20260916-105528-ba33df'}
+        isQuickMode={true}
+        activeJob={activeJob}
       />
 
-      {/* Main Laboratory Dashboard Area */}
-      <div className="main-content-area">
-        <Header
-          activePageTitle={activeMeta.title}
-          activePageDesc={activeMeta.desc}
-          filterEnv={filterEnv}
-          onFilterEnvChange={setFilterEnv}
-          filterBenchmark={filterBenchmark}
-          onFilterBenchmarkChange={setFilterBenchmark}
-          searchQuery={searchQuery}
-          onSearchQueryChange={setSearchQuery}
-          totalFilteredRuns={filteredRuns.length}
-          experimentId={rawRuns[0]?.experiment_id || 'exp-cc2-host'}
-          isQuickMode={true}
+      {/* Main Layout Body: Sidebar + Main Content */}
+      <div className="layout-body">
+        <Sidebar
+          activePage={activePage}
+          onSelectPage={handleSelectPage}
+          totalRuns={rawRuns.length}
         />
 
-        <main className="content-viewport">
-          {renderActivePage()}
-        </main>
+        <div className="main-content-area">
+          <main className="content-viewport">
+            {renderActivePage()}
+          </main>
+        </div>
       </div>
 
       {/* Forensic Evidence Modal */}
@@ -362,7 +401,7 @@ export function App() {
         onClose={() => setSelectedRun(null)}
       />
 
-      {/* Sanitized Job Execution Logs Modal */}
+      {/* Execution Logs Modal */}
       <JobLogsModal
         jobId={activeLogJobId}
         onClose={() => setActiveLogJobId(null)}
@@ -372,4 +411,3 @@ export function App() {
 }
 
 export default App;
-

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, Clock, Terminal, AlertTriangle, CheckCircle, XCircle, StopCircle } from 'lucide-react';
+import { Clock, Terminal, AlertTriangle, CheckCircle2, XCircle, StopCircle, Loader2 } from 'lucide-react';
 import { BenchmarkJob, api } from '../api';
 
 interface JobProgressCardProps {
@@ -56,32 +56,34 @@ export const JobProgressCard: React.FC<JobProgressCardProps> = ({
   const getStatusBadge = () => {
     switch (job.status) {
       case 'running':
-        return <span className="badge-job-running"><Clock size={12} className="animate-spin" /> RUNNING</span>;
+        return (
+          <span className="badge-status-running">
+            <Loader2 size={12} className="animate-spin" /> Running
+          </span>
+        );
       case 'queued':
-        return <span className="badge-job-queued"><Clock size={12} /> QUEUED</span>;
+        return <span className="badge-status-unavail"><Clock size={12} /> Queued</span>;
       case 'completed':
-        return <span className="badge-job-completed"><CheckCircle size={12} /> COMPLETED</span>;
+        return <span className="badge-status-ready"><CheckCircle2 size={12} /> Completed</span>;
       case 'failed':
-        return <span className="badge-job-failed"><AlertTriangle size={12} /> FAILED</span>;
+        return <span className="status-pill status-failed"><AlertTriangle size={12} /> Failed</span>;
       case 'cancelled':
-        return <span className="badge-job-cancelled"><XCircle size={12} /> CANCELLED</span>;
+        return <span className="badge-status-unavail"><XCircle size={12} /> Cancelled</span>;
       default:
-        return <span className="badge-job-default">{String(job.status).toUpperCase()}</span>;
+        return <span className="badge-status-unavail">{job.status}</span>;
     }
   };
 
   const percent = job.progress?.percent || (job.status === 'completed' ? 100 : 0);
-  const phase = job.progress?.phase || 'initializing';
+  const currentRun = job.progress?.run || 0;
+  const totalRuns = job.progress?.total_runs || job.runs || 0;
 
   return (
     <div className="job-progress-card">
       <div className="job-progress-header">
         <div className="job-meta-left">
-          <Activity size={16} color="var(--accent-cyan)" />
-          <div>
-            <span className="job-label">Active Experiment Job:</span>
-            <span className="job-id font-mono">{job.job_id}</span>
-          </div>
+          <span className="job-label">Active Job:</span>
+          <span className="job-id font-mono">{job.job_id}</span>
           {getStatusBadge()}
         </div>
 
@@ -93,67 +95,67 @@ export const JobProgressCard: React.FC<JobProgressCardProps> = ({
             </div>
           )}
 
-          <button 
-            className="btn-secondary-sm font-mono"
+          <button
+            className="btn-secondary-sm"
             onClick={() => onViewLogs(job.job_id)}
           >
-            <Terminal size={13} /> View Logs
+            <Terminal size={13} />
+            <span>View Logs</span>
           </button>
 
           {job.status === 'running' && (
             <button
-              className="btn-danger-sm font-mono"
+              className="btn-danger-sm"
               onClick={handleCancel}
               disabled={cancelling}
             >
-              <StopCircle size={13} /> {cancelling ? 'Stopping...' : 'Cancel'}
+              <StopCircle size={13} />
+              <span>{cancelling ? 'Stopping...' : 'Cancel Job'}</span>
             </button>
           )}
         </div>
       </div>
 
-      <div className="job-progress-body">
-        <div className="job-details-grid">
-          <div className="job-detail-item">
-            <span className="detail-label">ENVIRONMENT</span>
-            <span className="detail-val font-mono uppercase">{job.environment}</span>
-          </div>
-          <div className="job-detail-item">
-            <span className="detail-label">BENCHMARK</span>
-            <span className="detail-val font-mono">{job.benchmark}</span>
-          </div>
-          <div className="job-detail-item">
-            <span className="detail-label">MODE / RUNS</span>
-            <span className="detail-val font-mono uppercase">{job.mode} ({job.runs} runs)</span>
-          </div>
-          <div className="job-detail-item">
-            <span className="detail-label">CURRENT PHASE</span>
-            <span className="detail-val font-mono text-cyan">{phase}</span>
-          </div>
+      <div className="job-details-grid">
+        <div className="job-detail-item">
+          <span className="detail-label">Benchmark</span>
+          <span className="detail-val font-mono">{job.benchmark}</span>
         </div>
-
-        <div className="progress-bar-container">
-          <div className="progress-bar-track">
-            <div 
-              className={`progress-bar-fill ${job.status === 'running' ? 'progress-animated' : ''}`}
-              style={{ width: `${percent}%` }}
-            />
-          </div>
-          <div className="progress-bar-meta font-mono">
-            <span>Progress: {percent}%</span>
-            {job.progress && job.progress.total_runs > 0 && (
-              <span>Iteration: {job.progress.run} / {job.progress.total_runs}</span>
-            )}
-          </div>
+        <div className="job-detail-item">
+          <span className="detail-label">Environment</span>
+          <span className="detail-val font-mono uppercase">{job.environment}</span>
         </div>
-
-        {job.error && (
-          <div className="job-error-banner font-mono">
-            <AlertTriangle size={14} />
-            <span>{job.error}</span>
-          </div>
-        )}
+        <div className="job-detail-item">
+          <span className="detail-label">Progress</span>
+          <span className="detail-val">
+            {totalRuns > 0 ? `Run ${currentRun} of ${totalRuns}` : `${percent}%`}
+          </span>
+        </div>
+        <div className="job-detail-item">
+          <span className="detail-label">Status</span>
+          <span className="detail-val">{job.progress?.phase || job.status}</span>
+        </div>
       </div>
+
+      <div className="progress-bar-container">
+        <div className="progress-bar-track">
+          <div
+            className="progress-bar-fill"
+            style={{ width: `${percent}%` }}
+          />
+        </div>
+        <div className="progress-bar-meta">
+          <span>{percent}% completed</span>
+          {totalRuns > 0 && <span>Run {currentRun} of {totalRuns}</span>}
+        </div>
+      </div>
+
+      {job.error && (
+        <div className="control-alert control-alert-error" style={{ marginTop: '0.75rem' }}>
+          <AlertTriangle size={14} />
+          <span>{job.error}</span>
+        </div>
+      )}
     </div>
   );
 };
